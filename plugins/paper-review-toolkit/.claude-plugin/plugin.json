@@ -1,0 +1,21 @@
+{
+  "name": "paper-review-toolkit",
+  "version": "0.1.0",
+  "description": "Pipeline for ionogel-style paper-review projects: PDF → vision-checked markdown → structured samples + notes + auto-append master Excel.",
+  "author": "iZHENGjy",
+  "keywords": [
+    "obsidian",
+    "claudesidian",
+    "paper-review",
+    "mineru",
+    "vision-pipeline",
+    "literature-review"
+  ],
+  "skills": [
+    "skills/extract-paper-note"
+  ],
+  "depends_on": [
+    "claudesidian-notes"
+  ],
+  "depends_on_note": "ingest-paper skill 由 claudesidian-notes plugin 提供（vault 已装）。"
+}

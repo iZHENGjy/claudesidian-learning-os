@@ -1,0 +1,10 @@
+{
+  "name": "chemeng-coursework",
+  "version": "0.1.0",
+  "description": "Chemical engineering coursework companion with a human-led decision flow. AI maps out the decision points (methods, assumptions) for the student to decide, then does calc + verify + format — student decides and writes the prose. Avoids the 'AI ghostwriting + obvious AI tone' trap.",
+  "author": "iZHENGjy",
+  "keywords": ["claudesidian", "chemical-engineering", "coursework", "homework", "tutorial"],
+  "skills": [
+    "skills/homework-coach"
+  ]
+}

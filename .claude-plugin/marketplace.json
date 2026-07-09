@@ -1,0 +1,27 @@
+{
+  "name": "claudesidian-learning-os",
+  "owner": {
+    "name": "iZHENGjy"
+  },
+  "metadata": {
+    "description": "A personal learning OS for Claude Code + Obsidian: a domain-agnostic course/paper ingest framework with machine-verifiable feedback loops, plus swappable domain plugins (chemical engineering ships as the reference implementation). 通用学习操作系统框架：领域无关的课程/论文流水线 + 可替换的领域插件。",
+    "version": "0.2.0"
+  },
+  "plugins": [
+    {
+      "name": "claudesidian-notes",
+      "source": "./plugins/claudesidian-notes",
+      "description": "Framework layer — study pipeline for ANY subject: ingest lectures/tutorials/papers (MinerU + vision check) → distill first-principles formula maps → reverse-audit solutions against them. Battle-tested on engineering, economics, CS and physics courses. 通用课程/论文流水线（任何学科可用）。"
+    },
+    {
+      "name": "chemeng-coursework",
+      "source": "./plugins/chemeng-coursework",
+      "description": "Domain plugin (reference implementation) — chemical engineering coursework companion: decision-first problem coaching, a ChemE plotting library (ternary/McCabe-Thiele/psychrometric...), and docx polishing. Shows how to build a domain plugin on the framework. 领域插件参考实现：化工作业助手。"
+    },
+    {
+      "name": "paper-review-toolkit",
+      "source": "./plugins/paper-review-toolkit",
+      "description": "Framework layer — literature-review pipeline: PDF → vision-checked markdown → structured data extraction into a master spreadsheet. Domain-agnostic mechanics, shipped with an ionogel-review example. 文献综述流水线（机制通用，附离子凝胶示例）。"
+    }
+  ]
+}

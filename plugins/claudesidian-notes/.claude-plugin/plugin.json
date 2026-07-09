@@ -1,0 +1,23 @@
+{
+  "name": "claudesidian-notes",
+  "version": "0.1.0",
+  "description": "Course notes pipeline: ingest lectures / tutorials / papers → distill _principles.md → reverse audit. Includes 4 skills, 2 slash commands, shared scripts + style-guides + schemas.",
+  "author": "iZHENGjy",
+  "keywords": [
+    "claudesidian",
+    "obsidian",
+    "course-notes",
+    "study-notes",
+    "learning"
+  ],
+  "skills": [
+    "skills/ingest-lecture",
+    "skills/ingest-tutorial",
+    "skills/distill-principles",
+    "skills/ingest-paper"
+  ],
+  "commands": [
+    "commands/distill-all.md",
+    "commands/audit-tutorials.md"
+  ]
+}
