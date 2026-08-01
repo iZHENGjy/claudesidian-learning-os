@@ -66,8 +66,8 @@ def generate_paper_id(year, first_author, journal) -> str:
     示例：
         generate_paper_id(2024, "Zhang Wei", "Nature Communications")
             → "2024-zhang-natcom"
-        generate_paper_id(2025, "Neoh", "ACS Applied Materials & Interfaces")
-            → "2025-neoh-acsami"
+        generate_paper_id(2025, "Smith", "ACS Applied Materials & Interfaces")
+            → "2025-smith-acsami"
     """
     year_str = str(int(year)) if year else "unknown"
     auth_raw = str(first_author).split(',')[0].split()[0] if first_author else "na"
@@ -102,7 +102,7 @@ if __name__ == "__main__":
     else:
         # 自测
         tests = [
-            (2025, "Neoh", "ACS Applied Materials & Interfaces", "2025-neoh-acsami"),
+            (2025, "Smith", "ACS Applied Materials & Interfaces", "2025-smith-acsami"),
             (2024, "Zhang", "Nature Communications", "2024-zhang-natcom"),
             (2023, "Liu", "Advanced Materials", "2023-liu-advmat"),
             (2024, "Wang", "Some Unknown Journal That Is Long", None),  # 启发式

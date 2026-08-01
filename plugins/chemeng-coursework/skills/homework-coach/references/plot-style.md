@@ -46,9 +46,9 @@
 
 化工报告 / 论文几乎都用这种, 老师看着舒服。不要用 `plt.style.use('seaborn')` 之类的彩色 preset。
 
-## CME214 图解法专用图 → 用 chemeng_plots，别手写
+## 分离过程图解法专用图 → 用 chemeng_plots，别手写
 
-单元操作 II 的三元相图 / 阶梯法 / 干燥曲线，**坐标变换、stepping、积分这些 AI 临时写必踩坑**。已经写成测好的函数，直接喂数据，别从零推：
+单元操作 / 分离过程课（如 CME214 单元操作 II）的三元相图 / 阶梯法 / 干燥曲线，**坐标变换、stepping、积分这些 AI 临时写必踩坑**。已经写成测好的函数，直接喂数据，别从零推：
 
 ```python
 from chemeng_plots import plot_ternary, plot_distribution, \
@@ -119,7 +119,7 @@ fig.savefig('figures/conversion_vs_T.png')
 
 ## 画完必做 vision check
 
-按 user 的 [feedback_vision_check_figures](memory) 规则, 画完必须 Read 一下 PNG 自查:
+画完必须 Read 一下 PNG 自查 (不能只看代码或 agent 报告就交付):
 - outlier 有没有压扁主趋势 (check_axis_range 是机器判断, vision 是兜底)
 - 中文有没有显示正常
 - legend 有没有遮数据

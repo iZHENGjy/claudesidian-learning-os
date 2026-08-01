@@ -1,6 +1,6 @@
-"""CME214 单元操作 II 图解法专用画图库。
+"""分离过程 / 单元操作图解法专用画图库（作者用在 CME214 单元操作 II 上）。
 
-这门课的题大半要画图：三元相图、阶梯法、干燥曲线。以前 AI 临时画每次都从零
+这类课的题大半要画图：三元相图、阶梯法、干燥曲线。以前 AI 临时画每次都从零
 推坐标变换 / stepping / 积分，又慢又错。这里把这几种图写成测好的函数，喂干净
 数据就出正确的图。准确率靠 examples_cme214.py 拿 tutorial 已知答案当基准卡死。
 
@@ -20,7 +20,7 @@
 
 用法（在 calc.py 里）:
     import sys
-    sys.path.insert(0, '.claude/plugins/chemeng-coursework/skills/homework-coach/scripts')
+    sys.path.insert(0, '${CLAUDE_PLUGIN_ROOT}/skills/homework-coach/scripts')  # 换成本机实际路径
     from chemeng_plots import plot_ternary, plot_drying_curve, ...
 """
 
@@ -688,9 +688,22 @@ def plot_sle_right_triangle(under_n, under_r, feed_underflow, exit_overflow,
         ax.scatter([delta[0]], [delta[1]], s=50, marker="x", color="black", zorder=5)
         ax.annotate("Δ", delta, textcoords="offset points", xytext=(6, 4), fontsize=10)
 
-    ax.set_xlim(-0.05, 1.05)
-    ax.set_ylim(-0.05, 1.05)
+    # 轴范围默认罩住三角形；Δ 在三角形外时扩展到包含 Δ（否则净流点被裁掉，图上看不到）
+    x_lo, x_hi, y_lo, y_hi = -0.05, 1.05, -0.05, 1.05
+    if delta is not None and np.all(np.isfinite(delta)):
+        x_lo = min(x_lo, delta[0] - 0.08)
+        x_hi = max(x_hi, delta[0] + 0.08)
+        y_lo = min(y_lo, delta[1] - 0.12)
+        y_hi = max(y_hi, delta[1] + 0.12)
+    ax.set_xlim(x_lo, x_hi)
+    ax.set_ylim(y_lo, y_hi)
     ax.set_aspect("equal")
+    # 跨度悬殊时按比例拉长画布，防止等比例轴把三角形挤小
+    xspan, yspan = x_hi - x_lo, y_hi - y_lo
+    if yspan > 1.6 * xspan:
+        fig.set_size_inches(6.5, min(12.0, 6.0 * yspan / xspan))
+    elif xspan > 1.6 * yspan:
+        fig.set_size_inches(min(12.0, 6.5 * xspan / yspan), 6.0)
     ax.set_title(title)
     ax.set_xlabel(f"$x_A$ = {labels[0]} 质量分数")
     ax.set_ylabel(f"$x_S$ = {labels[1]} 质量分数")

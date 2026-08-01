@@ -12,7 +12,7 @@ description: 化工作业助手，双模式。**Mode A 做题伙伴（默认，�
 | "帮我算这道题"、"做这份 tutorial" | **A 做题伙伴（默认，决策前置）** | AI 先出决策简报，你拍板方法+假设，AI 才算/验/排版，**不代写正文**。走下面 Phase 0-4。 |
 | "从0做这份小组报告"、"整份 assignment / lab report 帮我做" | **B 整报告模式（opt-in）** | AI 出完整草稿（算+图+文+引用+排版+评审）。**Read `references/report-builder.md` 照着 8 阶段跑**。 |
 
-⚠️ **Mode B 是显式 opt-in**：用户没明说"整份/从0做整个报告"就默认走 Mode A，守住"不代写正文"（记忆 `feedback_no_ai_writing_homework`）。下面的 Phase 0-4 是 Mode A 的细节。
+⚠️ **Mode B 是显式 opt-in**：用户没明说"整份/从0做整个报告"就默认走 Mode A，守住"不代写正文"。下面的 Phase 0-4 是 Mode A 的细节。
 
 ## 这个 skill 干嘛的
 
@@ -56,17 +56,18 @@ ${CLAUDE_PLUGIN_ROOT}/skills/homework-coach/
 ├── references/
 │   ├── decision-briefing.md  # ◆Phase 0/0.5/4 决策导航完整规则（简报模板/降级链/交互协议）
 │   ├── plot-style.md         # 画图前 Claude 读一遍这个
-│   ├── chemeng-plots.md      # CME214 三元图/阶梯/干燥曲线专用函数用法
+│   ├── chemeng-plots.md      # 分离过程图解法（三元图/阶梯/干燥曲线）专用函数用法
 │   ├── docx-format.md        # 排版前 Claude 读一遍这个
 │   ├── report-builder.md     # ★Mode B 整报告 8 阶段流水线（主文档）
 │   └── report-agents.md      # ★Mode B 可复用 agent prompt 模板
 └── scripts/
     ├── plot_setup.py         # apply_chemeng_style() 灰阶工程图风
     ├── plot_pro.py           # ★apply_pro_style() Okabe-Ito 彩色专业风
-    ├── chemeng_plots.py      # CME214 图解法专用画图库（8 个函数）
+    ├── chemeng_plots.py      # 分离过程图解法专用画图库（8 个函数）
     ├── examples_cme214.py    # 拿 tutorial 数据验证 + 出参考图
     ├── assemble_template.py  # ★Mode B 组装模板（拼节+APA引用+插表图，复制改）
-    └── docx_polish.py        # pandoc 转完 docx 后跑, 字体兜底 + 三线表DXA + 图居中
+    ├── docx_polish.py        # pandoc 转完 docx 后跑, 字体兜底 + 三线表DXA + 图居中
+    └── format_compliance.py  # 课程说明有硬性格式要求时, 在 docx_polish 之后跑（可选）
 ```
 
 （★ = Mode B 整报告模式专用）
@@ -102,7 +103,7 @@ ${CLAUDE_PLUGIN_ROOT}/skills/homework-coach/
 2. **AI 写 calc.py**：把你的决策翻译成 Python，每步带中文注释；用户拍板的方法/参数在注释里标出（如 `# 方法选择：变夹带图解（用户定，见 decisions.md #2）`）
 3. **AI 跑出 output.txt**：每个数字带单位 + 中间步骤
 4. **题目要图就画**：
-   - **CME214 的三元相图 / 阶梯法 / 干燥曲线 / 过滤线性图 / SLE 直角三角图 / LLE [D] 差点图解 / 湿度图 → 先看 `references/chemeng-plots.md`，用 `chemeng_plots.py` 里 8 个测好的函数，别从零写**（坐标变换 / stepping / 积分临时写必踩坑；湿度图要 `pip install psychrolib`）
+   - **分离过程课（如 CME214 单元操作 II）的三元相图 / 阶梯法 / 干燥曲线 / 过滤线性图 / SLE 直角三角图 / LLE [D] 差点图解 / 湿度图 → 先看 `references/chemeng-plots.md`，用 `chemeng_plots.py` 里 8 个测好的函数，别从零写**（坐标变换 / stepping / 积分临时写必踩坑；湿度图要 `pip install psychrolib`）
    - 其他图：Claude 先 Read `references/plot-style.md` 一遍（中文字体 / 黑白工程图 / 防 outlier 压扁 / 单位规范）
    - calc.py 顶部必 import `plot_setup`：
      ```python
@@ -112,7 +113,7 @@ ${CLAUDE_PLUGIN_ROOT}/skills/homework-coach/
      apply_chemeng_style()
      ```
    - 画完每张图必跑 `check_axis_range(ax, y_data)`，warn 了就修 ylim
-   - **画完 Read 一遍 PNG 自查**（vision check，跟 [feedback_vision_check_figures](memory) 规则一致）
+   - **画完 Read 一遍 PNG 自查**（vision check）：不能只看代码或 agent 报告就交付，要亲眼确认没有 outlier 把主趋势压扁
 
 **红线**：AI 不替你做关键假设（限制剂 / 操作小时 / 物性来源）。题目少参数 → STOP 问你。
 
@@ -139,11 +140,15 @@ Claude 先 Read `references/docx-format.md` 一遍。然后两步走，**不能�
 pandoc draft.md -o final.docx --from markdown+tex_math_dollars
 
 # 2. 后处理: 中文字体兜底 + 三线表DXA列宽 + 表头加粗 + 图片居中
-python ${CLAUDE_PLUGIN_ROOT}/${CLAUDE_PLUGIN_ROOT}/skills/homework-coach/scripts/docx_polish.py final.docx
+python ${CLAUDE_PLUGIN_ROOT}/skills/homework-coach/scripts/docx_polish.py final.docx
 # (默认三线表; 想要旧的全网格表加 --grid)
 ```
 
 学校有 Word 模板：第 1 步加 `--reference-doc=学校模板.docx`，第 2 步照跑。
+
+**课程说明写死了格式要求**（正文 Times New Roman 10pt / 公式右侧编号 / 三栏页眉 / 页脚页码之类）→ 再跑一步
+`python ${CLAUDE_PLUGIN_ROOT}/skills/homework-coach/scripts/format_compliance.py final.docx <课程代码>`。
+可选，没有硬性格式要求就不用跑；踩到新的格式坑往这个脚本里加规则，别只改单份作业。
 
 **跳过 docx_polish.py → 必然踩中文字体 / 表格 / 图片居中三个坑**（详见 references/docx-format.md）。
 

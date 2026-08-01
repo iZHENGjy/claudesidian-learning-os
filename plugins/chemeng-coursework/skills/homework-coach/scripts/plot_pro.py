@@ -4,11 +4,11 @@
 什么时候用哪个:
 - `plot_setup.apply_chemeng_style()` —— 黑白灰阶, 适合纯工程图 / 要打印省墨 / 老师要黑白。
 - `plot_pro.apply_pro_style()` (本文件) —— Okabe-Ito 色盲友好彩色, 适合报告里要好看、要区分多条线、
-  英文报告封面级图。源自 CME222 报告实战图。
+  英文报告封面级图。源自一份化工课程报告的实战图（作者这边是 CME222）。
 
 用法:
     import sys
-    sys.path.insert(0, '.claude/plugins/chemeng-coursework/skills/homework-coach/scripts')
+    sys.path.insert(0, '${CLAUDE_PLUGIN_ROOT}/skills/homework-coach/scripts')  # 换成本机实际路径
     from plot_pro import apply_pro_style, PALETTE, mark_points, shade_spans
     apply_pro_style()
     fig, ax = plt.subplots(figsize=(6.4, 4.4), constrained_layout=True)

@@ -1,6 +1,6 @@
 ---
 name: ingest-lecture
-description: 把 PPT/PDF 课程材料整理成一份知识块组织的笔记,放到 01_Projects/<CODE>_课名/L##.md。Triggers - "整理这节课" / "处理这份 PPT" / "ingest lecture" / "process slides" / "把这份 ppt 变成笔记"。
+description: 把一份 lecture 材料（.pptx/.pdf/截图/文本）整理成知识块组织的课程笔记,写入 01_Projects/<CODE>_课名/L##.md,并更新 index.md 和 manifest.md。只要用户提到"整理这节课 / 处理这份 PPT / 把 slides 变成笔记 / ingest lecture / process slides",或附上课程 PPT/PDF 要做笔记,就用本 skill,即使没说"ingest"。用户说"生成完整 index / 结课整理 index / 升级 MOC"也用本 skill（走 §结课 MOC 升级独立入口,不跑常规步骤）。不要用于:tutorial/习题（→ ingest-tutorial）、科研论文（→ ingest-paper）、要交的作业报告（→ chemeng-coursework plugin）。
 ---
 
 # Skill: ingest-lecture
@@ -14,6 +14,7 @@ description: 把 PPT/PDF 课程材料整理成一份知识块组织的笔记,放
 
 - "整理这份 lecture" / "处理这节课" / "把这份 ppt 变成笔记"
 - 用户附 `.pptx` / `.pdf` / 截图 / 课程文本
+- "生成完整 index" / "结课整理 index" / "升级 MOC" → **跳过 Step 1-7，走文末 §结课 MOC 升级**
 
 不应触发:tutorial(走 ingest-tutorial)/ 模糊"summarize this"(先问)。
 
@@ -32,6 +33,7 @@ description: 把 PPT/PDF 课程材料整理成一份知识块组织的笔记,放
 
 启动时读:
 - `${CLAUDE_PLUGIN_ROOT}/skills/ingest-lecture/assets/lecture-topic.md`(笔记模板)
+- `${CLAUDE_PLUGIN_ROOT}/skills/ingest-lecture/assets/index-moc.md`(index.md 三阶段模板:桩 / Week 追加 / 结课完整 MOC)
 - `01_Projects/<CODE>_课名/index.md`(MOC,若存在)
 
 工具:
@@ -43,8 +45,8 @@ description: 把 PPT/PDF 课程材料整理成一份知识块组织的笔记,放
 
 ### Step 1: 加载上下文
 
-1. 检查 `01_Projects/<CODE>_课名/` 是否存在;若不存在,**问用户**课程
-   课程名 + 学期,创建文件夹 + 桩 `index.md`(MOC)。
+1. 检查 `01_Projects/<CODE>_课名/` 是否存在;若不存在,**问用户**
+   课程名 + 学期,创建文件夹 + 桩 `index.md`(按 `assets/index-moc.md` **阶段①**格式)。
 2. 读 MOC 看历史(domain_tags / 之前的 Week)。
 3. 加载 `${CLAUDE_PLUGIN_ROOT}/skills/ingest-lecture/assets/lecture-topic.md`。
 4. **Read `manifest.md`(若存在)** —— 看 Lectures 段是否有本次要处理的 PDF 那行(下次 Step 6.5 要更新它)。若整份 manifest 不存在,**不强制建**,只在 Step 7 报告里提示用户考虑建一份。
@@ -107,20 +109,11 @@ Read `_attachments/<pdf_stem>/full.md`,作为内容基础底稿。
 
 #### 3c: 主线程聚合(批量 mv + 同步 full.md + verify Read)
 
-收齐所有 sub-agent 报告后,主线程做三件事:**1) 批量 mv 图片**、**2) 同步 full.md 图引用**（❗易漏）、**3) verify Read 推荐度 ≥ 4 的图**。详细 PowerShell 步骤 + verdict 分类 → 见 `references/workflow-detail.md` §3c。
+收齐所有 sub-agent 报告后,主线程做三件事:**1) 批量 mv 图片**（mv 必须主线程做——sub-agent 的 Bash 写操作会被沙箱拒）、**2) 同步 full.md 图引用**（❗易漏）、**3) verify Read 推荐度 ≥ 4 的图**。详细 PowerShell 步骤 + verdict 分类 → 见 `references/workflow-detail.md` §3c。
 
 #### 3d: 覆盖率确认
 
 每页 slide 都必须在块 1 里出现。缺失就 Read 补读。
-
-### Step 3.5: 清理临时页
-
-```bash
-# 清理逐页 PNG(供 vision 用,vision 跑完不再需要)
-rm -rf 01_Projects/<CODE>_课名/_attachments/_pages/
-```
-
-**保留** `_attachments/<pdf_stem>/`(MinerU 抽的 markdown + 已重命名的图,这是图片唯一存档)。
 
 ### Step 4: 生成笔记
 
@@ -143,11 +136,14 @@ rm -rf 01_Projects/<CODE>_课名/_attachments/_pages/
 - **Tutorial 反向校验**(若同目录有对应 `T##*.md`):
   1. Glob `01_Projects/<CODE>_课名/T*.md`,挑出 frontmatter `related:`
      字段含 `[[L##_*]]`(当前 lecture)的 tutorial 文件。无则跳过这条。
-  2. 对每个匹配的 tutorial:
-     - Read `## 本次公式速查` 段(固定标题),从"来源"列抽出指向
-       当前 L## 的所有公式
-     - 再 grep 该 tutorial 全文 `[[L##_*]]` 行(覆盖各题 `**涉及知识点**`
-       的 wiki link),收所有指回当前 L## 的概念 / 术语
+  2. 对每个匹配的 tutorial,收集它引用的知识点(两代格式都支持):
+     - **新规范**:grep tutorial 里所有 `(X.Y)` 公式编号 → Read `_principles.md`
+       找到对应 `\tag{X.Y}` 公式,看该公式在 _principles 里标注的来源 lecture
+       是否为当前 L##;是 → 该公式进校验清单
+     - **老规范兜底**:grep 该 tutorial 全文 `[[L##_*]]`(公式速查来源列 +
+       各题 wiki link),收所有指回当前 L## 的概念 / 术语
+     - 两路都空 → 报告里写"反向校验: 该 tutorial 未引用本讲内容(或格式无法
+       识别)",**不要报 N/N 通过**
   3. 对每条公式/术语,在新生成的 L## 笔记里 grep 同名公式 / 术语 /
      wiki link(`[[术语]]`)。**找不到 = 缺漏**。
   4. 报告 `Tutorial 反向校验: N/N 命中` — 若有缺漏,列出缺哪些 +
@@ -156,9 +152,20 @@ rm -rf 01_Projects/<CODE>_课名/_attachments/_pages/
   5. 若当前 L## 是新讲(对应 T## 还没生成),跳过这条,Step 7 报告里提示
      "T## 生成后建议回头跑一次反向校验"。
 
+### Step 5.5: 清理临时页
+
+**必须在 Step 5 自检通过后才删**——自检发现缺页时要回来 Read 对应 PNG 补读。
+
+```bash
+# 清理逐页 PNG(供 vision 用,自检通过后不再需要)
+rm -rf 01_Projects/<CODE>_课名/_attachments/_pages/
+```
+
+**保留** `_attachments/<pdf_stem>/`(MinerU 抽的 markdown + 已重命名的图,这是图片唯一存档)。
+
 ### Step 6: 增量 MOC 更新
 
-`index.md` **追加** Week 段落(不改已有):
+`index.md` **追加** Week 段落(不改已有;格式 = `assets/index-moc.md` **阶段②**):
 
 ```markdown
 ## Week {{WEEK}}
@@ -184,7 +191,7 @@ rm -rf 01_Projects/<CODE>_课名/_attachments/_pages/
    - **没找到该行**(用户没在 manifest 预登记) → 在 Lectures 表末尾**追加新行**
 2. 在文件末尾"修改记录"段追加一行:`YYYY-MM-DD: ingest-lecture 更新 <PDF 文件名>`
 
-若 manifest.md **不存在**:跳过本步,Step 7 报告里提示用户"考虑建 manifest.md(参考 CME110 格式)跟踪状态"。
+若 manifest.md **不存在**:跳过本步,Step 7 报告里提示用户"考虑建 manifest.md 跟踪状态"——用户点头就按 `${CLAUDE_PLUGIN_ROOT}/shared/assets/manifest-example.md` 模板建。
 
 ⚠️ **只动你刚处理的那一行 + 修改记录段**。不要碰其他课程笔记的行,不要重排表格,不要改 Tutorials / References 段。
 
@@ -201,16 +208,29 @@ rm -rf 01_Projects/<CODE>_课名/_attachments/_pages/
 - (笔记里的疑问)
 ```
 
+## §结课 MOC 升级(独立入口)
+
+用户明说"生成完整 index / 结课整理 index / 升级 MOC"时走这里(不跑 Step 1-7):
+
+1. Glob `01_Projects/<CODE>_课名/L*.md` + `T*.md`,确认 lecture 齐了(缺很多就提醒用户,问要不要继续)
+2. Read 全部 L##(至少读每份的标题层级 + 核心公式段)+ 现有 index.md 的各 Week 疑问段
+3. 按 `assets/index-moc.md` **阶段③** 的 10 段结构**整体重写** index.md
+   (这是唯一允许重写 index 的场合)
+4. 写完报告:Phase 划分 / 覆盖 lecture 数 / 疑问汇总条数,让用户审
+
 ## Rules
 
 1. **不编造 slide 内容** — PPT 文字稀疏时写"原文未明",不要自己编
 2. **解读长度匹配 slide 密度** — 一行 slide 一行解读。术语首次定义除外
 3. **AI 延伸必须用 `> [!tip] 延伸(非 PPT 内容)` callout** — 不混进正文
-4. **MOC 更新 append-only** — 不改已有 Week 段落
+4. **MOC 更新 append-only** — 不改已有 Week 段落(唯一例外:§结课 MOC 升级是显式整体重写)
 
 ## Reference index
 
 | 文件 | 何时翻 |
 |---|---|
+| `assets/lecture-topic.md` | Step 4 写 L## 笔记时的模板 |
+| `assets/index-moc.md` | 一切 index.md 操作:Step 1 建桩(阶段①)/ Step 6 追加 Week(阶段②)/ §结课 MOC 升级(阶段③) |
+| `../../shared/assets/manifest-example.md` | 给课程新建 manifest.md 时照抄 |
 | `references/workflow-detail.md` | 改 sub-agent 协议（§3b 块 1/2/3 字段）/ 主线程聚合三步细节（§3c）/ 笔记模板规则（§4 frontmatter / 知识块 / 术语 / 图片嵌入 / 内容层次） |
 | `references/lessons.md` | 遇到怪现象先查 Failure modes 表 / 写笔记前看 Good 示例对齐风格 |

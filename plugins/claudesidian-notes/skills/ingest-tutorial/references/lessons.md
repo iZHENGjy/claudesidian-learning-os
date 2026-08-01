@@ -6,6 +6,8 @@
 
 ## Example
 
+> ⚠️ 本例写于老规范时期,公式引用格式以 SKILL.md Step 3/5 为准(_principles 编号,不用 wikilink 引 lecture / 概念);看结构(一气呵成解答 + English Concise Answer),别抄"来源"列和"涉及知识点"的引用格式。
+
 **Good**(方案 B 结构):
 ```markdown
 ## 本次公式速查

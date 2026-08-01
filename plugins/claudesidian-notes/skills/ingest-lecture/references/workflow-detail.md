@@ -60,7 +60,7 @@
 
 批量替换 `_attachments/<pdf_stem>/full.md` 里所有 `![](images/<旧 hash>.jpg)` 为 `![](images/<新语义名>.jpg)`。
 
-**不做这一步的后果**：笔记本身没事（它用新名），但 `full.md` 在 Obsidian 里所有图全坏（指向已不存在的 hash 文件），且 Step 3.5 备份的也是坏掉的 full.md。
+**不做这一步的后果**：笔记本身没事（它用新名），但 `full.md` 在 Obsidian 里所有图全坏（指向已不存在的 hash 文件），留档的 full.md 也是坏的。
 
 - PowerShell 实操：读 full.md 内容 → 对块 2 清单每行做 `-replace [regex]::Escape($oldHash), $newName` → 写回。
 - 块 2 清单里的 hash 必须是**完整 32 位**（不是缩写），否则替换不到。

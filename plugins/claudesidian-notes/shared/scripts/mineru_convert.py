@@ -1,11 +1,11 @@
 """PDF → Markdown 批量转换（MinerU API + 本地双模式，main + SI 配对）。
 
 用法：
-    python scripts/mineru_convert.py                                 # 处理 papers_pdf/ 全部
-    python scripts/mineru_convert.py --paper-id 2025-neoh-acsami     # 单篇
-    python scripts/mineru_convert.py --pdf path/to/file_main.pdf     # 单文件
-    python scripts/mineru_convert.py --dry-run                       # 只列任务
-    python scripts/mineru_convert.py --force                         # 忽略已存在的 md
+    python ${CLAUDE_PLUGIN_ROOT}/shared/scripts/mineru_convert.py                                 # 处理 papers_pdf/ 全部
+    python ${CLAUDE_PLUGIN_ROOT}/shared/scripts/mineru_convert.py --paper-id YYYY-author-journal  # 单篇
+    python ${CLAUDE_PLUGIN_ROOT}/shared/scripts/mineru_convert.py --pdf path/to/file_main.pdf     # 单文件
+    python ${CLAUDE_PLUGIN_ROOT}/shared/scripts/mineru_convert.py --dry-run                       # 只列任务
+    python ${CLAUDE_PLUGIN_ROOT}/shared/scripts/mineru_convert.py --force                         # 忽略已存在的 md
 
 特性：
 - 自动识别 *_main.pdf 和 *_si.pdf 配对
@@ -425,7 +425,7 @@ def convert_via_api(
         - 如果 cache 中已有 batch_id 但未 done → 直接续轮询，不重复提交
         - 否则全新提交流程
     """
-    # 兼容两个项目的 .env：ionogel-review 用 MINERU_API_KEY，claudesidian 用 MINERU_API_TOKEN
+    # 两个环境变量名都认：MINERU_API_TOKEN 优先，其次 MINERU_API_KEY
     api_key = (os.getenv("MINERU_API_TOKEN", "").strip()
                or os.getenv("MINERU_API_KEY", "").strip())
     if not api_key or api_key == "your_token_here":

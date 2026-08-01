@@ -20,17 +20,17 @@
 
 ---
 
-## Example: Neoh 2025
+## Example: 一篇带 SI 的论文
 
-输入：`01_Projects/Review_离子凝胶/(2025) Neoh - .../`，含 `main.pdf` (8 页) + `si.pdf` (12 页)
+输入：`01_Projects/Review_<主题>/(YYYY) Author - Title/`，含 `main.pdf` (8 页) + `si.pdf` (12 页)
 
 跑完后：
 ```
-(2025) Neoh - .../
+(YYYY) Author - Title/
 ├── main.pdf, si.pdf       (不动)
 ├── main.md                # 8 页正文，含 5 个 Figure caption + 2 个公式
 ├── si.md                  # 12 页 SI，含 8 个 Figure S* + 3 个 Table S*
 ├── images/                # fig1_stress-strain.jpg, fig2_morphology.jpg ... 5 张
 ├── images_si/             # figS1_dsc.jpg, figS2_xrd.jpg ... 8 张
-└── meta.yaml              # title, authors, DOI: 10.1021/acsami.5c09387, ...
+└── meta.yaml              # title, authors, DOI, journal, year
 ```

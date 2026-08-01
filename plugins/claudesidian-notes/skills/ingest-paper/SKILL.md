@@ -25,11 +25,11 @@ description: 把一篇论文（main + 多格式 SI）转成 markdown，含 visio
 不应触发：
 - lecture（走 `ingest-lecture`）/ tutorial（走 `ingest-tutorial`）
 - 模糊"summarize this paper"（先问用户）
-- Stage 1 拉 PDF（那是 ionogel-review 项目的事，不在这边）
+- Stage 1 拉 PDF（那是上游文献采集流程的事，不在本 skill 范围）
 
 ## Inputs
 
-- **论文文件夹路径**，例：`01_Projects/Review_离子凝胶/papers/(2025) Neoh - Strain-Sensing Aqueous Ionogels`
+- **论文文件夹路径**，例：`01_Projects/Review_<主题>/papers/(YYYY) Author - Title`
 - 文件夹必须有 `main.pdf`；可选 `si.<ext>`（多格式）
 - 可选：`backup_log.csv`（项目根 `Review_<主题>/`，用于查 Zotero metadata）
 
@@ -165,7 +165,7 @@ rm -rf <folder>/_pages_main/ <folder>/_pages_si/ <folder>/_tmp_si/
 ## 跟其他 skill 的关系
 
 - **`ingest-lecture`**：思路相似（MinerU + vision），但 lecture 是 slide-by-slide 模式 + 嵌入推荐；本 skill 是论文专用，砍嵌入推荐、加多格式 SI、加 metadata 核对
-- **Stage 1（拉 PDF）**：归 `D:\project\ionogel-review\scripts\zotero_to_papers_pdf.py`，不在本 skill 范围；本 skill 处理已经在 vault 里的 PDF
+- **Stage 1（从文献管理软件拉 PDF）**：归上游的文献采集脚本，不在本 skill 范围；本 skill 处理已经落到 vault 里的 PDF
 - **未来 笔记模板**：等用户定下来后，写新 skill `extract-paper-note`，从本 skill 产出的 md 里提取字段
 
 ## Reference index
@@ -173,4 +173,4 @@ rm -rf <folder>/_pages_main/ <folder>/_pages_si/ <folder>/_tmp_si/
 | 文件 | 什么时候翻 |
 |---|---|
 | `references/workflow-detail.md` | Step 3 派 sub-agent 前 → 看完整四块输出格式 + 命名规则 + alt text 分级 + 多 panel 写法；Step 5 聚合前 → 看 mv/替换/verify 的精确步骤 |
-| `references/lessons.md` | 跑出错时 → 查 Failure modes 表对症处理；要看完整跑通的样子 → 翻 Neoh 2025 Example |
+| `references/lessons.md` | 跑出错时 → 查 Failure modes 表对症处理；要看完整跑通的样子 → 翻文末的 Example |

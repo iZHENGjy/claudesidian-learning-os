@@ -217,6 +217,46 @@ def polish_tables(doc, three_line: bool = True) -> int:
     return n
 
 
+def _keep_next(p_elem) -> None:
+    """给一个段落 (w:p) 加 keepNext (与下一段同页)。"""
+    pPr = p_elem.find(qn("w:pPr"))
+    if pPr is None:
+        pPr = OxmlElement("w:pPr")
+        p_elem.insert(0, pPr)
+    if pPr.find(qn("w:keepNext")) is None:
+        pPr.append(OxmlElement("w:keepNext"))
+
+
+def paginate_tables(doc) -> int:
+    """表格分页友好化 (治"表格拦腰截断 / 标题吊页尾"):
+    1. 每行 cantSplit —— 行内容绝不跨页拆
+    2. 表头 + 前 2 行数据 keepNext —— 表格开头不会只剩标题或 1 行留在页尾;
+       其余行自然接排, 跨页时表头 (pandoc 的 tblHeader) 自动重复, 页面填得满、不留大白
+    3. 每张表前的标题段落 keepNext —— 标题跟着表格走
+    返回处理的表数。"""
+    n = 0
+    for table in doc.tables:
+        rows = table.rows
+        if not rows:
+            continue
+        for r in rows:
+            _set(r._tr.get_or_add_trPr(), "w:cantSplit")
+        for r in rows[:3]:                       # 表头(row0) + 前2行数据
+            for cell in r.cells:
+                for para in cell.paragraphs:
+                    _keep_next(para._p)
+        n += 1
+    # 表格前的标题段落
+    body = doc.element.body
+    for tbl in body.findall(qn("w:tbl")):
+        prev = tbl.getprevious()
+        while prev is not None and prev.tag != qn("w:p"):
+            prev = prev.getprevious()
+        if prev is not None and "".join(prev.itertext()).strip():
+            _keep_next(prev)
+    return n
+
+
 def center_figures(doc) -> int:
     """所有包含图片 (w:drawing) 的段落居中。返回处理的段数。"""
     n = 0
@@ -252,6 +292,7 @@ def main() -> int:
 
     n_runs = polish_paragraphs(doc)
     n_tables = polish_tables(doc, three_line=three_line)
+    paginate_tables(doc)                        # 分页友好: 防拆行 + 表头/标题不孤儿
     n_figs = center_figures(doc)
 
     try:

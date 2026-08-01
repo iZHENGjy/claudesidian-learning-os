@@ -6,7 +6,7 @@ lecture: {{LECTURE_NUM}}
 title: "{{TITLE_EN}}"
 title_zh: "{{TITLE_ZH}}"
 date: {{DATE}}
-source_ppt: "[[课程笔记/{{COURSE_CODE}}_课名/附件/L{{LECTURE_NUM}}.pdf]]"
+source_ppt: "[[_attachments/source/{{ORIGINAL_FILENAME}}]]"
 related: []
 ---
 
@@ -64,14 +64,14 @@ $$公式$$
 
 ## 本节引入的核心概念
 
-<!-- seed-concept skill populates this list automatically. -->
+<!-- 手动列本讲首次引入、值得单独建概念页的术语；没有就删本段 -->
 
 - [[]]
 - [[]]
 
 ---
 
-## 疑问 我的疑问
+## 我的疑问
 
 > [!question]
 > 1. (具体、可操作的问题——能通过查资料或问老师回答的)

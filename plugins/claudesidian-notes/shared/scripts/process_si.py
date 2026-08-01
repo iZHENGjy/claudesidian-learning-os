@@ -9,8 +9,8 @@
   - 其他   → 原文件存档进 _attachments_orig/，si.md 加占位
 
 用法：
-    py .scripts/process_si.py "<paper-folder>"
-    py .scripts/process_si.py "<paper-folder>" --force
+    py ${CLAUDE_PLUGIN_ROOT}/shared/scripts/process_si.py "<paper-folder>"
+    py ${CLAUDE_PLUGIN_ROOT}/shared/scripts/process_si.py "<paper-folder>" --force
 """
 from __future__ import annotations
 import argparse

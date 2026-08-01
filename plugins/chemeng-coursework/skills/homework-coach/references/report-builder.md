@@ -11,8 +11,8 @@
 1. **引用必须真**：作者名一律 Crossref/WebFetch 查证，**绝不编造作者**。查不到作者的网页用 APA 无作者规则 `("Title," n.d.)`。
 2. **Turnitin 归用户**：交前用户必跑查重；教科书定义句（平均自由程定义、机制描述这种）**让用户/组员用自己话改写**——AI 不替写这步。
 3. **关键假设问用户**：建模岔路（气体体系、固定分压 vs 浓度驱动力、限制剂、操作小时…）**不默拍**，AskUserQuestion 让用户定。
-4. **每张图 Read PNG vision 核对**（见记忆 `feedback_vision_check_figures`）——不能只看代码或 agent 报告就交。
-5. **本科生 lab report 口吻**（见记忆 `feedback_student_tone`）——禁研究生套话 / AI 腔。
+4. **每张图 Read PNG vision 核对**——不能只看代码或 agent 报告就交。
+5. **本科生 lab report 口吻**——禁研究生套话 / AI 腔（comprised of / monotonic / propagated uncertainty 这类）。
 6. **用户拥有最终版**：skill 只出草稿；填名、查重、个性化、核对数据源都是用户的事，交接时列清。
 
 ---

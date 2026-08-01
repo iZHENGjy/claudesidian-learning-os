@@ -6,7 +6,7 @@
 
 用法（在 calc.py 顶部）:
     import sys
-    sys.path.insert(0, '.claude/plugins/chemeng-coursework/skills/homework-coach/scripts')
+    sys.path.insert(0, '${CLAUDE_PLUGIN_ROOT}/skills/homework-coach/scripts')  # 换成本机实际路径
     from plot_setup import apply_chemeng_style, check_axis_range
 
     apply_chemeng_style()

@@ -4,20 +4,20 @@ extract_images.py — 从 PPT/PDF 中提取嵌入图片 / 逐页渲染 PDF 为 P
 
 用法:
   # 提取嵌入图片（原有功能）
-  py .scripts/extract_images.py <input_file> <output_dir> [--prefix PREFIX]
+  py ${CLAUDE_PLUGIN_ROOT}/shared/scripts/extract_images.py <input_file> <output_dir> [--prefix PREFIX]
 
   # 逐页渲染 PDF 为 PNG（供 vision 读取）
-  py .scripts/extract_images.py <input_file> <output_dir> --prefix PREFIX --pages [--dpi 150]
+  py ${CLAUDE_PLUGIN_ROOT}/shared/scripts/extract_images.py <input_file> <output_dir> --prefix PREFIX --pages [--dpi 150]
 
 示例:
   # 从 PPT 提取课件图片
-  py .scripts/extract_images.py "附件/L05.pptx" "附件/" --prefix CME222_L05
+  py ${CLAUDE_PLUGIN_ROOT}/shared/scripts/extract_images.py "附件/L05.pptx" "附件/" --prefix CME222_L05
 
   # 从 PDF 提取嵌入图片
-  py .scripts/extract_images.py "附件/L01.pdf" "附件/" --prefix CME213_L01
+  py ${CLAUDE_PLUGIN_ROOT}/shared/scripts/extract_images.py "附件/L01.pdf" "附件/" --prefix CME213_L01
 
   # PDF 逐页渲染为 PNG（用于 Claude Code vision 读取）
-  py .scripts/extract_images.py "附件/L01.pdf" "附件/_pages/" --prefix CME213_L01 --pages --dpi 150
+  py ${CLAUDE_PLUGIN_ROOT}/shared/scripts/extract_images.py "附件/L01.pdf" "附件/_pages/" --prefix CME213_L01 --pages --dpi 150
 
 输出:
   - 提取模式：图片文件（去重+压缩后）+ 控制台报告

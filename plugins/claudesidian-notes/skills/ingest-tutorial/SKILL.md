@@ -1,6 +1,6 @@
 ---
 name: ingest-tutorial
-description: 解一份 tutorial / 习题集,产出教学质量的解答(公式速查 + 量级估算 + 推导步骤 + 易错 + 知识盲区)放到 01_Projects/<CODE>_课名/T##.md。Triggers - "解这份 tutorial" / "做这份习题" / "solve these problems" / "帮我做练习"(不是要交的作业)。
+description: 解一份 tutorial/习题集/往年考卷,产出教学质量解答(公式速查引 _principles 编号 + 量级估算 + 一气呵成推导 + English Concise Answer + 知识盲区报告),写入 01_Projects/<CODE>_课名/T##.md。只要用户说"解这份 tutorial / 做这份习题 / 解 T05 / 做练习 / solve these problems / 把这份 past paper 做一遍",或附上习题 PDF/图片/含答案的 .doc,就用本 skill。不要用于:要提交计分的作业(拒绝代解,引导到复习概念/做相似题,正式作业走 chemeng-coursework)、lecture 材料(→ ingest-lecture)。模糊说"help with homework"时先问是练习还是要交的。
 ---
 
 # Skill: ingest-tutorial
@@ -90,7 +90,7 @@ Read `01_Projects/<CODE>_课名/manifest.md`(若存在),从 **References 段**�
 
 **找不到 manifest.md 时**:
 - 检查 `_attachments/source/` 下有没有典型参考资料文件名(`Appendix*.pdf` / `Table*.pdf` / `Handbook*.pdf` / `*物性*.pdf` 等)
-- 有 → chat 提示用户:"发现 `<filename>` 是疑似参考资料但未处理,**建议先跑 MinerU + 建 manifest.md**(参考 CME110/manifest.md 格式),做 tutorial 时能自动查。要现在做吗?"
+- 有 → chat 提示用户:"发现 `<filename>` 是疑似参考资料但未处理,**建议先跑 MinerU + 建 manifest.md**,做 tutorial 时能自动查。要现在做吗?"——用户点头就按 `${CLAUDE_PLUGIN_ROOT}/shared/assets/manifest-example.md` 模板建
 - 没有 → 跳过,Step 4 走原 fallback("请核实")
 
 **注意**:
@@ -147,7 +147,7 @@ Read `01_Projects/<CODE>_课名/_principles.md`(若存在),拿到整门课的**�
 | 题目明确给出 | 直接用,标"题目给定" |
 | 通用常数(R / g / Avogadro) | 直接用,无需标 |
 | **物性数据 → 先按 type 优先级 grep Step 1.6 加载的所有 MinerU 索引** | 命中 → 给值 + 标"<资料名(从 manifest)> 表<X>,已抽可信" |
-| 物性数据 → manifest 已声明索引但 grep 未命中(MinerU 表格识别失败) | 主线程 Read 对应页 vision 抽 + 标"vision 抽自 <资料名> p.NN,**请核实**" |
+| 物性数据 → manifest 已声明索引但 grep 未命中(MinerU 表格识别失败) | 主线程 Read 对应页 vision 抽(先 grep 资料 full.md 里的表标题/物质名拿到临近页码,再 Read 原 PDF 对应页) + 标"vision 抽自 <资料名> p.NN,**请核实**" |
 | 物性数据 → manifest 里没有索引、`source/` 也无对应 PDF | 凭训练数据估,标 `> [!warning] 请核实: 见 <课本> 对应附录`,**绝不省"请核实"** |
 
 **绝不默默编造物性数据**。宁可留空让用户查,也不给可能错的值。

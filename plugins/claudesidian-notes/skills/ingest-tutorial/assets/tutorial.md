@@ -2,9 +2,14 @@
 type: tutorial
 course: "{{COURSE_CODE}}"
 week: {{WEEK}}
-tutorial: {{TUTORIAL_NUM}}
+tutorial: T{{TUTORIAL_NUM}}
+title: "Tutorial {{TUTORIAL_NUM}}: {{TITLE_EN}}"
+title_zh: "{{TITLE_ZH}}（N 题）"
+date: {{DATE}}
+source_pdf: "[[_attachments/source/{{ORIGINAL_FILENAME}}]]"
+related:
+ - "[[L##_topic_snake]]"
 topics: []
-related_lectures: []
 ---
 
 # Tutorial {{TUTORIAL_NUM}} — {{TOPIC}}
@@ -18,12 +23,12 @@ related_lectures: []
 
 ## 本次公式速查
 
-从关联 lecture 笔记中提取本次 tutorial 需要用到的公式。
+提取本次 tutorial 需要用到的公式，第三列引 `_principles` 编号（不用 wikilink 引 lecture）。
 
-| 公式 | 含义 | 来源 |
+| 公式 | 含义 | _principles 编号 |
 |------|------|------|
-| $...$ | ... | [[L##_...]] |
-| $...$ | ... | [[L##_...]] |
+| $...$ | ... | [[_principles#§X.Y 标题\|(X.Y)]] |
+| $...$ | ... | ⚠️ _principles 缺 |
 
 ## 本次数据与常数
 
@@ -42,25 +47,19 @@ related_lectures: []
 >
 > ...
 
-**涉及知识点**: [[]], [[]]
+**中文翻译**：（长题必带；<20 词的纯英文概念题可跳过）
 
-### 思路与估算
+**用到公式**：(X.Y), (X.Z)；_principles 缺的标 ⚠️
 
-**思路**: (用中文讲清楚"为什么这么想",不是直接列步骤)
+### 解答
 
-**量级估算**: (在正式计算前,先用简化假设粗估答案范围。例如:"气相扩散系数通常 ~10⁻⁵ m²/s 量级,如果最终算出 10⁻² 就需要检查。")
+（一条线性叙事，不拆"思路/解答/最终答案"三段：开头一句点明题目本质 → 量级估算内嵌为第一步 → 逐步推导，每步的 why 写在该步上方 → 答案出来后对照估算 → 结尾：）
 
-### 解答 / Solution
+**最终答案**: ...（带单位）
 
-$$
-...
-$$
+### English Concise Answer
 
-**步骤说明**:
-1. ...
-2. ...
-
-**最终答案**: ... (带单位)
+（100–200 词完整句子段落，可直接抄考卷；含关键公式 + 关键数字 + 最终结论，不是 bullet points）
 
 ### 易错 / Pitfalls
 
@@ -68,10 +67,9 @@ $$
 > - ...
 > - ...
 
-### 变式 / Variants
+### 变式 / Variants（可选，不强制）
 
 - 如果条件改成 X,答案会是 ...
-- 如果问的不是 A 而是 B,则 ...
 
 ---
 
@@ -97,3 +95,9 @@ $$
 >
 > - [[]] — 为什么薄弱
 > - [[]] — ...
+
+---
+
+## 给 `distill-principles` 的反馈（_principles bug 报告）
+
+<!-- Step 7.6 自动填；无缺漏则写"本次无" -->

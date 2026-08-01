@@ -9,14 +9,14 @@ Phase 3 排版按这份操作。**两步**: pandoc 转 docx, 再跑 docx_polish.
 pandoc draft.md -o final.docx --from markdown+tex_math_dollars
 
 # 2. 后处理 (字体兜底 + 表格 grid + 图片居中)
-python ${CLAUDE_PLUGIN_ROOT}/${CLAUDE_PLUGIN_ROOT}/skills/homework-coach/scripts/docx_polish.py final.docx
+python ${CLAUDE_PLUGIN_ROOT}/skills/homework-coach/scripts/docx_polish.py final.docx
 ```
 
 学校提供 Word 模板时:
 ```powershell
 pandoc draft.md -o final.docx --from markdown+tex_math_dollars `
   --reference-doc=path/to/学校模板.docx
-python ${CLAUDE_PLUGIN_ROOT}/${CLAUDE_PLUGIN_ROOT}/skills/homework-coach/scripts/docx_polish.py final.docx
+python ${CLAUDE_PLUGIN_ROOT}/skills/homework-coach/scripts/docx_polish.py final.docx
 ```
 
 `--reference-doc` 决定段距 / margin / 字号 / heading 样式; docx_polish.py 只补 reference docx 漏掉的中文字体 + 表格 / 图片细节, **两者职责不冲突**, 都要跑。
