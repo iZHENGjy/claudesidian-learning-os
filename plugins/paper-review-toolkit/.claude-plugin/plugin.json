@@ -2,7 +2,9 @@
   "name": "paper-review-toolkit",
   "version": "0.1.0",
   "description": "Pipeline for ionogel-style paper-review projects: PDF → vision-checked markdown → structured samples + notes + auto-append master Excel.",
-  "author": "iZHENGjy",
+  "author": {
+    "name": "iZHENGjy"
+  },
   "keywords": [
     "obsidian",
     "claudesidian",
@@ -12,7 +14,7 @@
     "literature-review"
   ],
   "skills": [
-    "skills/extract-paper-note"
+    "./skills/extract-paper-note"
   ],
   "depends_on": [
     "claudesidian-notes"
