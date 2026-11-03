@@ -76,7 +76,7 @@ description: 把一门课已有的 lecture / tutorial 笔记（和 _principles.m
 
 ### Step 5: 验算
 
-所有应用题的数字写进 `复习库/verify.py`，每个答案一条 `assert`：
+所有应用题的数字写进 `复习库/verify.py`，每个答案一条 `assert`（先在脚本里算出结果，再写进题目答案；用文件写入工具写脚本，不用 shell heredoc）：
 
 ```bash
 python "01_Projects/<CODE>_课名/复习库/verify.py"
@@ -84,9 +84,12 @@ python "01_Projects/<CODE>_课名/复习库/verify.py"
 
 不过 → 改题目答案，不许改断言凑数。
 
-### Step 6: 总览（`00-总览.md`）
+### Step 6: 总览（`00-总览.md`）和空掌握度文件
 
-按 `references/templates.md` 的总览模板：主题地图（主题 → 来源讲次 → 题库链接 → 题数）、学习工具链接、掌握度看板（初始全部 ⬜ 未测）、薄弱点（初始为空，由 quiz 填）。
+1. 为每个主题建一个空的 `掌握度/<主题>.md`（模板见 `references/templates.md`），这样看板里的链接从一开始就有效。已存在的掌握度文件不动。
+2. 按 `references/templates.md` 的总览模板写：主题地图（主题 → 来源讲次 → 题库链接 → 题数）、学习工具链接、掌握度看板（初始全部 ⬜ 未测）、薄弱点（初始为空，由 quiz 填）。
+
+主题地图的"来自"列链接到具体小节标题。旧格式笔记（`## 知识块 N — …`）直接链接知识块标题，标题要逐字复制。
 
 ### Step 7: 自检 + 报告
 
