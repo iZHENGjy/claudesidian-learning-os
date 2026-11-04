@@ -63,7 +63,7 @@ git clone https://github.com/iZHENGjy/claudesidian-learning-os
 In Claude Code, inside your vault:
 
 ```
-/plugin marketplace add <path-or-url-of-this-repo>
+/plugin marketplace add iZHENGjy/claudesidian-learning-os
 /plugin install claudesidian-notes@claudesidian-learning-os
 ```
 
