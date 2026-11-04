@@ -82,7 +82,7 @@ pip install requests PyMuPDF Pillow python-docx openpyxl
 ### Step 2: PDF → md（main + SI 一条命令搞定）
 
 ```bash
-py ${CLAUDE_PLUGIN_ROOT}/shared/scripts/mineru_convert.py --paper-dir "<folder>"
+python ${CLAUDE_PLUGIN_ROOT}/shared/scripts/mineru_convert.py --paper-dir "<folder>"
 ```
 
 `--paper-dir` 模式自动检测 `<folder>` 下的 SI 文件并分发处理：
@@ -104,10 +104,10 @@ py ${CLAUDE_PLUGIN_ROOT}/shared/scripts/mineru_convert.py --paper-dir "<folder>"
 
 ```bash
 # main
-py ${CLAUDE_PLUGIN_ROOT}/shared/scripts/extract_images.py "<folder>/main.pdf" "<folder>/_pages_main/" --prefix main --pages --dpi 150
+python ${CLAUDE_PLUGIN_ROOT}/shared/scripts/extract_images.py "<folder>/main.pdf" "<folder>/_pages_main/" --prefix main --pages --dpi 150
 
 # SI（只对 PDF SI 跑，DOCX/XLSX 已经准确转过 md 不需要 vision）
-py ${CLAUDE_PLUGIN_ROOT}/shared/scripts/extract_images.py "<folder>/si.pdf" "<folder>/_pages_si/" --prefix si --pages --dpi 150
+python ${CLAUDE_PLUGIN_ROOT}/shared/scripts/extract_images.py "<folder>/si.pdf" "<folder>/_pages_si/" --prefix si --pages --dpi 150
 ```
 
 ### Step 4: 多 sub-agent 并行 vision 核对

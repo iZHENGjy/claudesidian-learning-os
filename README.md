@@ -16,6 +16,19 @@ Three Claude Code plugins that turn an Obsidian vault into a study pipeline:
 
 The framework layer has **zero domain knowledge** — it has ingested engineering, economics, CS, physics and polymer courses without a line changed. The chemical-engineering plugin is the worked example of how to build your own domain plugin (law, medicine, music — see `docs/PLUGIN_SPEC.md`).
 
+## See it on a real course
+
+[`examples/CME222-mass-transfer`](examples/CME222-mass-transfer) is a real chemical-engineering course run through the pipeline. Same 32-slide lecture, old notes vs new:
+
+| | Before | After |
+|---|---|---|
+| Lecture examples worked to a number | 0 / 4 | **4 / 4**, checked by `verify.py` |
+| Formula errors | 1 (Brokaw coefficient 0.19 instead of 0.196) | 0 |
+| Self-checks | none | 8 own-words checks, 4 prediction questions, 10 exercises |
+| Dead links | 10 | 0 |
+
+Plus a review vault for the whole course: 5 topics, 50 questions with folded answers, every application answer script-verified, and a mastery dashboard after one quiz round.
+
 ## Why it's different
 
 - **Two outputs for two jobs** — while the course runs, each lecture becomes a teaching note: every idea starts from the problem it solves, every lecture example is worked to a number, and every section ends with a "say it in your own words" self-check and a prediction question. Before the exam, the whole course is condensed into a review vault (one-page formulas, all traps, a question bank with folded answers) that the `quiz` skill drills you on, tracking which concepts you still miss.
@@ -32,7 +45,7 @@ The framework layer has **zero domain knowledge** — it has ingested engineerin
 ## Quickstart
 
 ```bash
-git clone https://github.com/<you>/claudesidian-learning-os
+git clone https://github.com/iZHENGjy/claudesidian-learning-os
 ```
 
 In Claude Code, inside your vault:
@@ -86,6 +99,19 @@ Grew out of a vault based on [claudesidian](https://github.com/heyitsnoah/claude
 | `chemeng-coursework` | 领域层（参考实现） | 化工作业助手：决策前置辅导、化工画图库、docx 排版 |
 
 框架层**没有任何领域知识**——工科、经济学、CS、物理、高分子课程都跑过，一行没改。化工插件是"怎么做自己领域插件"的现成示范（法学/医学/音乐都行，见 `docs/PLUGIN_SPEC.md`）。
+
+## 真实课程效果
+
+[`examples/CME222-mass-transfer`](examples/CME222-mass-transfer) 是一门真实化工课程（传质）跑完流水线的产出。同一讲 32 页课件，新旧笔记对比：
+
+| | 旧版 | 新版 |
+|---|---|---|
+| 课件例题算到结果 | 0 / 4 | **4 / 4**，verify.py 验算 |
+| 公式错误 | 1 处（Brokaw 系数 0.196 写成 0.19） | 0 |
+| 自测 | 无 | 8 个"用自己的话说"、4 道预测题、10 道练习 |
+| 空链接 | 10 个 | 0 |
+
+另有整门课的复习库：5 个主题 50 题、答案折叠、应用题全部脚本验算，以及一轮测验后的掌握度看板。
 
 ## 差异点
 

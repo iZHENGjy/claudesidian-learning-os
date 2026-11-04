@@ -70,7 +70,7 @@ cp "<source_path>" "01_Projects/<CODE>_课名/_attachments/source/"
 #### 2a: PDF — 用 MinerU API 抽 markdown(基础底稿)
 
 ```bash
-py ${CLAUDE_PLUGIN_ROOT}/shared/scripts/mineru_extract.py "<pdf_path>" "01_Projects/<CODE>_课名/_attachments/" --model vlm
+python ${CLAUDE_PLUGIN_ROOT}/shared/scripts/mineru_extract.py "<pdf_path>" "01_Projects/<CODE>_课名/_attachments/" --model vlm
 ```
 
 输出:
@@ -82,7 +82,7 @@ py ${CLAUDE_PLUGIN_ROOT}/shared/scripts/mineru_extract.py "<pdf_path>" "01_Proje
 #### 2b: 逐页渲染 PNG(供 vision 核对;PPT 唯一处理方式)
 
 ```bash
-py ${CLAUDE_PLUGIN_ROOT}/shared/scripts/extract_images.py "<source>" "01_Projects/<CODE>_课名/_attachments/_pages/" --prefix <CODE>_L## --pages --dpi 150
+python ${CLAUDE_PLUGIN_ROOT}/shared/scripts/extract_images.py "<source>" "01_Projects/<CODE>_课名/_attachments/_pages/" --prefix <CODE>_L## --pages --dpi 150
 ```
 
 **PDF 也跑 2b**(供 vision 对照 MinerU 结果,补 MinerU 漏抽的内容)。
