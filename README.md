@@ -2,6 +2,20 @@
 
 **A personal learning OS for Claude Code + Obsidian — ingest any course or paper into machine-verifiable notes, in any language, for any subject.**
 
+[![Live demo](https://img.shields.io/badge/live%20demo-online-1f4e8c)](https://izhengjy.github.io/claudesidian-learning-os/)
+[![Claude Code plugin](https://img.shields.io/badge/Claude%20Code-plugin-5b6b72)](https://claude.com/claude-code)
+[![Version](https://img.shields.io/badge/version-0.3.0-2f7a4c)](.claude-plugin/marketplace.json)
+[![License: MIT](https://img.shields.io/badge/license-MIT-b8412c)](LICENSE)
+
+**[Live demo / 在线展示 →](https://izhengjy.github.io/claudesidian-learning-os/)** — before/after on a real course, and a 3-question quiz you can try in the browser.
+
+[![Same lecture example, old notes vs new notes](docs/assets/compare.png)](https://izhengjy.github.io/claudesidian-learning-os/)
+
+```
+/plugin marketplace add iZHENGjy/claudesidian-learning-os
+/plugin install claudesidian-notes@claudesidian-learning-os
+```
+
 [中文版在下面 ↓](#中文版)
 
 ## What is this
@@ -51,7 +65,7 @@ git clone https://github.com/iZHENGjy/claudesidian-learning-os
 In Claude Code, inside your vault:
 
 ```
-/plugin marketplace add <path-or-url-of-this-repo>
+/plugin marketplace add iZHENGjy/claudesidian-learning-os
 /plugin install claudesidian-notes@claudesidian-learning-os
 ```
 
