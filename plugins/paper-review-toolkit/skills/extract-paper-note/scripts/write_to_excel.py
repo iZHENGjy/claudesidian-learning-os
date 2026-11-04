@@ -9,8 +9,8 @@
 输出：直接写主 Excel（写前自动备份）
 
 用法：
-    py write_to_excel.py <handoff.json>
-    py write_to_excel.py <handoff.json> --dry-run    # 只打印要写什么，不真写
+    python write_to_excel.py <handoff.json> [--master <主 Excel 路径>]
+    python write_to_excel.py <handoff.json> --dry-run    # 只打印要写什么，不真写
 
 4 个 sheet 写入规则：
     论文清单：每篇 1 行，append 到最后一个真数据行之后
@@ -22,6 +22,7 @@ from __future__ import annotations
 import argparse
 import io
 import json
+import os
 import re
 import shutil
 import sys
@@ -324,7 +325,13 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("handoff", help="模型产出的 json 交接文件")
     ap.add_argument("--dry-run", action="store_true", help="只打印不真写")
+    ap.add_argument("--master", help="主 Excel 路径（默认读环境变量 REVIEW_MASTER_XLSX）")
     args = ap.parse_args()
+
+    global MASTER
+    master = args.master or os.environ.get("REVIEW_MASTER_XLSX")
+    if master:
+        MASTER = Path(master) if Path(master).is_absolute() else PROJECT_ROOT / master
 
     hp = Path(args.handoff)
     if not hp.is_absolute():

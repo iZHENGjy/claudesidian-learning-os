@@ -1,7 +1,7 @@
 {
   "name": "claudesidian-notes",
-  "version": "0.1.0",
-  "description": "Course notes pipeline: ingest lectures / tutorials / papers → distill _principles.md → reverse audit. Includes 4 skills, 2 slash commands, shared scripts + style-guides + schemas.",
+  "version": "0.2.0",
+  "description": "Course notes pipeline: ingest lectures into step-by-step teaching notes (self-checks, script-verified examples, cited supplements) / tutorials / papers → distill _principles.md → reverse audit → build an exam review vault (cheat sheet, traps, question bank) → quiz with concept-level mastery tracking. 6 skills, 2 slash commands, shared scripts.",
   "author": "iZHENGjy",
   "keywords": [
     "claudesidian",
@@ -14,7 +14,9 @@
     "skills/ingest-lecture",
     "skills/ingest-tutorial",
     "skills/distill-principles",
-    "skills/ingest-paper"
+    "skills/ingest-paper",
+    "skills/build-review-vault",
+    "skills/quiz"
   ],
   "commands": [
     "commands/distill-all.md",
