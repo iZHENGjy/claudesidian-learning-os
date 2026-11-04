@@ -9,6 +9,8 @@
 
 **[Live demo / 在线展示 →](https://izhengjy.github.io/claudesidian-learning-os/)** — before/after on a real course, and a 3-question quiz you can try in the browser.
 
+[![Same lecture example, old notes vs new notes](docs/assets/compare.png)](https://izhengjy.github.io/claudesidian-learning-os/)
+
 ```
 /plugin marketplace add iZHENGjy/claudesidian-learning-os
 /plugin install claudesidian-notes@claudesidian-learning-os
