@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""全 lecture 扫公式 — Step 1.5 自动化（治 CME222-bug 关键脚本）
+"""全 lecture 扫公式 — Step 1.5 自动化（防止漏抽公式）
 
 逐节 grep `$$ ... $$` 公式块 + 读 tutorial 公式速查表 → 输出大清单。
 用 LLM 接着判断哪些进 _principles、哪些归到哪节。

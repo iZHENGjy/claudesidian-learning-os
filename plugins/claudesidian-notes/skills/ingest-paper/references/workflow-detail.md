@@ -38,7 +38,7 @@ main 和 SI **分别拆 sub-agent**（不混在一起，避免 caption 编号串
 ```json
 [
   {
-    "old_hash": "45f8a3b9c1d2e4f5...完整 32 位...",
+    "old_hash": "45f8a3b9c1d2e4f5...完整 64 位...",
     "new_name": "fig3_stress-strain.jpg",
     "type": "data",
     "tier": "critical",
@@ -83,7 +83,7 @@ main 和 SI **分别拆 sub-agent**（不混在一起，避免 caption 编号串
 - critical → **C 级密集描述**：关键数字 + 趋势 + 反直觉点 + 跟其他图关系。可以很长（一行 markdown 没事），可英文，技术，**给 AI 看不是给人看**
 - general → **一句话简短**（"experimental setup photo" 这种就够）
 
-⚠️ **`old_hash` 必须给完整 32 位**，主线程做精确替换。
+⚠️ **`old_hash` 必须给完整 64 位**（MinerU 2026-10 起图名是 sha256 hex，校验用 `[0-9a-f]{64}`），主线程做精确替换。
 ⚠️ **alt 里双引号要 escape**（用 `\"` 或换单引号），别破坏 markdown 语法。
 
 ### 块 3 — Figure/Table caption 完整性 + metadata 核对

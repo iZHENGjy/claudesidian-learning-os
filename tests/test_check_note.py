@@ -19,7 +19,7 @@ NOTE_TRAP_11_COUNTER = ("> **反例：** 表 J.1 中 CO₂–空气 273 K 一栏
                         "如果压力是 2 atm，$D_{AB}$ 是 0.068 cm²/s，不是 0.136（p.5）。")
 VERIFY_ASSERT_D3 = "assert round(D3, 3) == 0.344"
 VERIFY_MARK_32 = "# 实例 3.2（p.24）：苯–空气，303 K，1 atm，Fuller。课件未给答案（扩散体积取自课件 p.23）"
-VERIFIED_LINE = 'verified: "_attachments/verify.py 全部通过"'
+VERIFIED_LINE = 'verified: "_attachments/CME 222 Lecture 3/verify.py 全部通过"'
 
 
 # ---------------------------------------------------------------------------
@@ -93,17 +93,17 @@ def test_constant_missing_from_source_is_reported(ws: Workspace, source_without_
 def test_constants_manual_template_comment_does_not_whitelist(ws: Workspace, source_without_0196):
     """The template's own inline comment mentions "0.196 (p.26)" as an example;
     it must not count as a manually confirmed constant."""
-    ws.mutate_note('related: ["[[L02_diffusive_mass_transfer]]"]',
+    ws.mutate_note('related: []',
                    'constants_manual: ""  # 只填 OCR 漏抽、已对照原页 PNG 确认的公式常数，如 "0.196 (p.26)"\n'
-                   'related: ["[[L02_diffusive_mass_transfer]]"]')
+                   'related: []')
     r = ws.run("--source", str(source_without_0196))
     assert not r.passed
     assert r.has_error("公式常数 0.196 在课件原文里找不到"), r.summary()
 
 
 def test_constants_manual_real_value_does_whitelist(ws: Workspace, source_without_0196):
-    ws.mutate_note('related: ["[[L02_diffusive_mass_transfer]]"]',
-                   'constants_manual: "0.196 (p.26)"\nrelated: ["[[L02_diffusive_mass_transfer]]"]')
+    ws.mutate_note('related: []',
+                   'constants_manual: "0.196 (p.26)"\nrelated: []')
     r = ws.run("--source", str(source_without_0196))
     assert r.passed, r.summary()
 
@@ -187,7 +187,15 @@ def test_example_without_result_line(ws: Workspace):
 
 
 def test_verify_path_with_spaces(ws: Workspace):
-    ws.move_verify("_attachments/CME 222 Lecture 3/verify.py")
+    # the example already keeps verify.py under "_attachments/CME 222 Lecture 3/"
+    assert " " in str(ws.verify.relative_to(ws.root))
+    r = ws.run()
+    assert r.passed, r.summary()
+    assert "verify.py: 实际运行通过" in r.stdout
+
+
+def test_verify_path_can_move(ws: Workspace):
+    ws.move_verify("_attachments/other deck/verify.py")
     r = ws.run()
     assert r.passed, r.summary()
     assert "verify.py: 实际运行通过" in r.stdout
@@ -355,13 +363,19 @@ def test_citation_missing_from_references(ws: Workspace):
     assert r.has_error("引用 [Pearce et al., 2020] 不在\"参考文献\"段"), r.summary()
 
 
+LINK_TO_L02 = ("| 用到（全讲） | 默认已掌握（上一讲内容） |",
+               "| 用到（全讲） | 见 [[L02_diffusive_mass_transfer]] |")
+
+
 def test_dead_wikilink_with_vault(ws: Workspace):
+    ws.mutate_note(*LINK_TO_L02)
     r = ws.run("--vault", str(ws.root))      # tmp vault has no L02 note
     assert not r.passed
     assert r.has_error("空链接 [[L02_diffusive_mass_transfer]]"), r.summary()
 
 
 def test_wikilinks_resolve_with_vault(ws: Workspace):
+    ws.mutate_note(*LINK_TO_L02)
     (ws.root / "L02_diffusive_mass_transfer.md").write_text("# L02\n", encoding="utf-8")
     r = ws.run("--vault", str(ws.root))
     assert r.passed, r.summary()

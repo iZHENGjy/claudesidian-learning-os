@@ -32,7 +32,7 @@
     python check_note.py <note.md> [--vault <vault 根目录>] [--source <full.md>] [--no-run]
 
 例:
-    python check_note.py 01_Projects/CME222_传质/L03_diffusion_coefficient_estimation.md --vault .
+    python check_note.py 01_Projects/<CODE>_课名/L03_<topic>.md --vault .
 
 `--source` 可省略：默认读 frontmatter `source_md:`（相对笔记所在目录）。
 

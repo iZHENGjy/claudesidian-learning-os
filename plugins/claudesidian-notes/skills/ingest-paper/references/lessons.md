@@ -22,7 +22,7 @@
 
 ## Example: 一篇带 SI 的论文
 
-输入：`01_Projects/Review_<主题>/(YYYY) Author - Title/`，含 `main.pdf` (8 页) + `si.pdf` (12 页)
+输入：`01_Projects/Review_<主题>/papers/(YYYY) Author - Title/`，含 `main.pdf` (8 页) + `si.pdf` (12 页)
 
 跑完后：
 ```

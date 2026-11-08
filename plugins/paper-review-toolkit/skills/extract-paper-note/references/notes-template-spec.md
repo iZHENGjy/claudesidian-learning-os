@@ -138,7 +138,7 @@ cross_paper_relations: []
 
 ## contributes_to slug 规则
 
-- 用 Paper 1 综述大纲 (`00_Inbox/Ionogel_Paper_Outlines_Final.docx`) Heading 2/3 转 slug
+- 用综述大纲 (`<你的综述大纲 .docx>`) Heading 2/3 转 slug
 - 转换：去章节号 + 中划线 + 小写
   - `2.3 Phase Separation Mechanisms` → `phase-separation-mechanisms`
   - `3.1 Ionic Conductivity` → `ionic-conductivity`

@@ -117,7 +117,7 @@ python ${CLAUDE_PLUGIN_ROOT}/shared/scripts/validate_principles.py 01_Projects/<
 
 | 脚本 | 何时跑 | 输出 |
 |---|---|---|
-| `extract_formulas.py <CODE>` | **Step 1.5**（治 CME222-bug 关键）| 整门课所有 L## 的 `$$ ... $$` 公式块 + 所有 T## 公式速查表 |
+| `extract_formulas.py <CODE>` | **Step 1.5**（防止漏抽公式的关键）| 整门课所有 L## 的 `$$ ... $$` 公式块 + 所有 T## 公式速查表 |
 | `validate_principles.py <path>` | **Step 6** 自检 | 检查编号连续 / 跨节引用 / 长度 / 无 callout，输出问题清单 |
 | `reverse_audit.py <tutorial.md>` | 给 `ingest-tutorial` Step 7.6 调用 | 扫 tutorial 引用 `(X.Y)` + ⚠️ 缺标记，跟 _principles 对账 |
 

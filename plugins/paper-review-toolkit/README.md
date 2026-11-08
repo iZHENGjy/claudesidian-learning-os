@@ -51,15 +51,12 @@ skills/extract-paper-note/
 
 ```bash
 python scripts/write_to_excel.py extract_handoff.json --master "path/to/master.xlsx"
-python scripts/write_to_excel.py extract_handoff.json --dry-run     # print what would be written
+python scripts/write_to_excel.py extract_handoff.json --master "path/to/master.xlsx" --dry-run   # print what would be written
+export REVIEW_MASTER_XLSX="path/to/master.xlsx"     # or set once; then --master can be omitted
 ```
+
+The script has no built-in spreadsheet path: it exits with an error unless `--master` or `REVIEW_MASTER_XLSX` is given. It backs up the spreadsheet before every real write.
 
 ## Adapting to your own review
 
-The default master-spreadsheet path and the four sheet layouts come from the author's ionogel review. For another topic: point `--master` (or the `REVIEW_MASTER_XLSX` environment variable) at your spreadsheet, and rewrite `references/data-mapping-spec.md` for your columns. `write_to_excel.py` writes by column name, so the sheet structure is the only thing that needs to match.
-
-## Planned
-
-- `outline-migrate` — update every note's outline tags after the review outline changes
-- `cross-paper-review` — compare papers and fill the cross-paper section of `notes.md`
-- `extra-fields-promote` — suggest frequently used extra fields for promotion to real columns
+The four sheet layouts and the shipped column mapping come from the author's ionogel review and are an example. For another topic: point `--master` (or the `REVIEW_MASTER_XLSX` environment variable) at your spreadsheet, and rewrite `references/data-mapping-spec.md` for your columns. `write_to_excel.py` writes by column name, so the sheet structure is the only thing that needs to match.

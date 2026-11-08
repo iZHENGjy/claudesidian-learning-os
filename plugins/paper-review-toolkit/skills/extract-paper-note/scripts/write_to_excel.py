@@ -37,7 +37,8 @@ sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding="utf-8", errors="repla
 sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding="utf-8", errors="replace")
 
 PROJECT_ROOT = Path(__file__).resolve().parents[6]
-MASTER = PROJECT_ROOT / "01_Projects" / "Review_离子凝胶" / "IONOGEL_dynamic (8).xlsx"
+# 主 Excel 路径没有内置默认值：由 --master 或环境变量 REVIEW_MASTER_XLSX 指定
+MASTER: Path | None = None
 
 # 每个 sheet 的"主键列"（用来从下往上找最后一个真数据行）
 SHEET_KEY_COL = {
@@ -325,13 +326,15 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0])
     ap.add_argument("handoff", help="模型产出的 json 交接文件")
     ap.add_argument("--dry-run", action="store_true", help="只打印不真写")
-    ap.add_argument("--master", help="主 Excel 路径（默认读环境变量 REVIEW_MASTER_XLSX）")
+    ap.add_argument("--master", help="主 Excel 路径（不给则读环境变量 REVIEW_MASTER_XLSX；二者必须有一个）")
     args = ap.parse_args()
 
     global MASTER
     master = args.master or os.environ.get("REVIEW_MASTER_XLSX")
-    if master:
-        MASTER = Path(master) if Path(master).is_absolute() else PROJECT_ROOT / master
+    if not master:
+        print("❌ 未指定主 Excel：请用 --master <路径> 或设置环境变量 REVIEW_MASTER_XLSX")
+        sys.exit(1)
+    MASTER = Path(master) if Path(master).is_absolute() else PROJECT_ROOT / master
 
     hp = Path(args.handoff)
     if not hp.is_absolute():

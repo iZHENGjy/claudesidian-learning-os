@@ -826,7 +826,7 @@ def plot_lle_d_system(raffinate, extract, F, S, RN, E1=None, S_over_F=None,
 
     跟 SLE 净流点同一套思路，但画在 LLE 的等边三元相图上：
     差点 P = line(E1,F) 与 line(RN,S) 的交点；从 E1 起，tie line（平衡）↔ 过 P 射线
-    （操作）交替走阶梯，数到 RN 为止。期末最高频题型（知识块 13）。
+    （操作）交替走阶梯，数到 RN 为止。期末最高频题型（小节 13）。
 
     参数
     ----

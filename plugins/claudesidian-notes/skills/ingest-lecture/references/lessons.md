@@ -18,11 +18,11 @@
 | 关键图 MinerU 没导出 | 整页蓝底图、公式截图被抽成零散文字，没有图片文件 | 从 `_pages/*.png` 按坐标裁剪成 `<CODE>_L##_p##_<slug>_<type>.jpg` 放进 images/；课件漏画的图可自绘并在文件名和说明里标 selfdrawn |
 | sub-agent 报告主导写笔记 | 主线程拿到 sub-agent 输出 + MinerU md 后**没 Read 旧笔记 / 模板**就动笔 | **STOP**，回到 Step 4 开头先 Read 旧笔记列章节清单，再决定 Edit 还是 Write |
 
-| 例题只写"思路"没算完 | 赶进度、觉得"读者自己会算" | 课件例题一律算到**计算结果**，并进 verify.py；2026-11 对比发现旧版 L02 的 Example 2、3 都停在思路 |
-| 质量通量差 1000 倍 | 分子量 12 g/mol 直接乘，结果标成 kg | 算 kg 单位时分子量写成 0.012 kg/mol；verify.py 里用 kg/mol 写断言（旧版 L02 Example 4 写成 2.4×10⁻⁶ kg/(m²·s)，正确是 2.4×10⁻⁹） |
+| 例题只写"思路"没算完 | 赶进度、觉得"读者自己会算" | 课件例题一律算到**计算结果**，并进 verify.py；早期试跑时 L02 的 Example 2、3 都停在思路 |
+| 质量通量差 1000 倍 | 分子量 12 g/mol 直接乘，结果标成 kg | 算 kg 单位时分子量写成 0.012 kg/mol；verify.py 里用 kg/mol 写断言（早期试跑的 L02 Example 4 写成 2.4×10⁻⁶ kg/(m²·s)，正确是 2.4×10⁻⁹） |
 | 大量空链接 | 给"以后可能建"的概念页预留 `[[术语]]` | 只链接已存在的笔记；check_note.py 会报出 |
 | AI 补充里有错 | 凭记忆写"APF 高 → 熔点高"这类说法，没有出处 | 课件以外的内容先上网核对，写进带来源的"补充"折叠块；核对不了就删 |
-| 公式系数 / 组合规则抄错 | 凭印象写公式（旧版 L03 把 Brokaw 的 0.196 写成 0.19；新版初稿 Brokaw 用了算术平均 σ） | 写每个公式前对照课件原页；同一讲不同方法的混合规则分开写清 |
+| 公式系数 / 组合规则抄错 | 凭印象写公式（早期试跑的 L03 把 Brokaw 的 0.196 写成 0.19；重写初稿又把 Brokaw 的 σ 用成了算术平均） | 写每个公式前对照课件原页；同一讲不同方法的混合规则分开写清 |
 | 例题依赖课件外数据 | L03 例题要 Lennard-Jones 参数、沸点下摩尔体积，课件没给 | 上网核对后标出处；核对不了标"待核实"，verify.py 里同样注明 |
 | verify.py 通过但公式是错的 | 笔记和 verify.py 用同一个抄错的系数，assert 照样全过 | check_note.py 用 MinerU full.md 核对公式常数；有课件答案的实例用 assert_slide() 对答案 |
 | 总结页没人引用 | L03 的 Take Home Message（p.30–32）内容写进了本讲小结，但没标页码，旧检查没发现 | check_note.py 按 frontmatter `pages` 逐页查覆盖；总结页在"本讲小结"里标 p.N |
@@ -31,7 +31,7 @@
 
 ## Example — Good
 
-一个知识点小节（节选，完整范例见 `examples/` 或对比文件夹里的 L02）：
+一个知识点小节（节选，完整范例见 `examples/CME222-mass-transfer/CME222_传质/L03_diffusion_coefficient_estimation.md`）：
 
 ```markdown
 ### 3.1 通量与 Fick 第一定律（Flux & Fick's first law）（p.15）

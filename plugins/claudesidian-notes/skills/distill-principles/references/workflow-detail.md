@@ -85,7 +85,7 @@ Glob `01_Projects/<CODE>_课名/T*.md`。对每个存在的 tutorial:
 - **多义符号**列出每个含义 + 节号（如 "$a$ 化学计量 §1.3 / 催化剂活性 §9.2 / 外表面积 §10.3"）
 - **易混符号**加提醒（如 "$Da$（**不要跟 $D_a$ 混**）"、"$\phi$ vs $\phi_1$ vs $\phi_D$"）
 
-英文术语用 **Fogler / Levenspiel 标准用语**：
+英文术语用该领域标准教材的用语。以下是反应工程课的例子（教材为 Fogler / Levenspiel）：
 - $\eta$ → Effectiveness factor
 - $\tau$ → Space time
 - $\phi$ → Thiele modulus

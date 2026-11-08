@@ -1,7 +1,7 @@
 """Shared fixtures for the check_note.py test-suite.
 
 Every test gets a fresh copy of the known-good L03 example note (plus its
-``_attachments/verify.py``) inside ``tmp_path``, applies exactly one mutation,
+``_attachments/<deck>/verify.py``) inside ``tmp_path``, applies exactly one mutation,
 and runs ``check_note.py`` as a subprocess, the same way a user or CI would.
 """
 from __future__ import annotations
@@ -17,9 +17,10 @@ import pytest
 
 REPO = Path(__file__).resolve().parents[1]
 CHECK_NOTE = REPO / "plugins" / "claudesidian-notes" / "shared" / "scripts" / "check_note.py"
-EXAMPLE_DIR = REPO / "examples" / "CME222-mass-transfer" / "vault" / "CME222_传质"
+EXAMPLE_DIR = REPO / "examples" / "CME222-mass-transfer" / "CME222_传质"
 EXAMPLE_NOTE = EXAMPLE_DIR / "L03_diffusion_coefficient_estimation.md"
-EXAMPLE_VERIFY = EXAMPLE_DIR / "_attachments" / "verify.py"
+VERIFY_REL = "_attachments/CME 222 Lecture 3/verify.py"   # 和讲义模板一致：_attachments/<课件名>/verify.py
+EXAMPLE_VERIFY = EXAMPLE_DIR / VERIFY_REL
 SOURCE_EXCERPT = Path(__file__).resolve().parent / "fixtures" / "source_excerpt.md"
 
 
@@ -93,7 +94,7 @@ class Workspace:
         dst.parent.mkdir(parents=True, exist_ok=True)
         shutil.move(str(self.verify), str(dst))
         self.verify = dst
-        self.mutate_note('verified: "_attachments/verify.py 全部通过"', f'verified: "{rel} 全部通过"')
+        self.mutate_note(f'verified: "{VERIFY_REL} 全部通过"', f'verified: "{rel} 全部通过"')
 
     # -- running ----------------------------------------------------------
     def run(self, *args: str, timeout: int = 180) -> CheckResult:
@@ -108,10 +109,10 @@ class Workspace:
 
 @pytest.fixture
 def ws(tmp_path: Path) -> Workspace:
-    """Fresh copy of the L03 example (note + _attachments/verify.py) in tmp_path."""
+    """Fresh copy of the L03 example (note + its verify.py) in tmp_path."""
     note = tmp_path / EXAMPLE_NOTE.name
-    verify = tmp_path / "_attachments" / "verify.py"
-    verify.parent.mkdir()
+    verify = tmp_path / VERIFY_REL
+    verify.parent.mkdir(parents=True)
     # Copy with LF endings regardless of how git checked the files out
     # (core.autocrlf on Windows gives CRLF), so mutation targets written with
     # "\n" match and the CRLF test can inject real CRLFs.

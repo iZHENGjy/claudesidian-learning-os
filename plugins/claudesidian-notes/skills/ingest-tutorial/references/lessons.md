@@ -100,7 +100,6 @@ $doc.Close(0); $word.Quit()
 
 **转完 pandoc**:`pandoc "<stem>.docx" -o "<stem>/full.md" --extract-media="<stem>" --wrap=none`,然后删中间 `.docx`。
 
-→ 全局记忆版:`~/.claude/.../memory/env_word_com_doc_convert.md`
 
 ---
 

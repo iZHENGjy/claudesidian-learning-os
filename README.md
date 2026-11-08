@@ -4,7 +4,7 @@
 
 # claudesidian-learning-os
 
-**在 Obsidian 里把一门课从第一节课串到期末考：课件 → 讲解型笔记 → 习题解答 → 公式图谱 → 复习库 → 测验。**
+**在 Obsidian 里把一门课从第一节课串到期末考：课件 → 讲义笔记 → 习题解答 → 公式图谱 → 复习库 → 测验。**
 
 Claude Code 插件 · 任何学科 · 任何语言的课件
 
@@ -59,9 +59,7 @@ flowchart LR
 
 ## 一门课生成后的样子
 
-下面用一门微积分课（MATH101）做示意。仓库里的[示例课程](examples/CME222-mass-transfer)是一门化工课按同样结构的真实产出。
-
-一门课的所有产出都在一个文件夹里：
+一门课的所有产出都在一个文件夹里。下面用一门微积分课（MATH101）做示意；真实产出见[示例](examples/CME222-mass-transfer)：一门化工课的第 3 讲，从课件一路做到测验。
 
 ```text
 01_Projects/MATH101_微积分/
@@ -146,15 +144,15 @@ L02_derivatives.md
 >
 > $$f'(x) = \lim_{h\to 0}\frac{f(x+h) - f(x)}{h} \tag{1.2}$$
 >
-> 几何上， $f'(a)$ 是曲线 $y = f(x)$ 在 $x = a$ 处切线的斜率。
+> 几何上，导数 $f'(a)$ 是曲线 $y = f(x)$ 在 $x = a$ 处切线的斜率。
 >
-> **实例 1.2**： $s(t) = 5t^2$，求 $t = 2$ s 时的瞬时速度（p.8）
+> **实例 1.2**（p.8）已知位置 $s(t) = 5t^2$，求 $t = 2$ s 时的瞬时速度。
 >
 > $$\frac{s(2+h) - s(2)}{h} = \frac{5(2+h)^2 - 20}{h} = \frac{20h + 5h^2}{h} = 20 + 5h$$
 >
 > $$s'(2) = \lim_{h\to 0} (20 + 5h) = 20\ \text{m/s}$$
 >
-> **计算结果**： $t = 2$ s 时的瞬时速度为 20 m/s。
+> **计算结果**：t = 2 s 时的瞬时速度为 20 m/s。
 >
 > **专业说法**：导数是函数在一点的瞬时变化率，几何上是切线斜率。*EN: The derivative is the instantaneous rate of change of a function at a point — the slope of its tangent line.*
 >
@@ -274,27 +272,35 @@ claudesidian-learning-os/
 │   │           └── mineru_convert.py · process_si.py   论文正文和补充材料转换
 │   ├── chemeng-coursework/              化工作业助手（领域插件示范）
 │   └── paper-review-toolkit/            文献综述：论文数据抽进一张总表
-├── examples/CME222-mass-transfer/       一门真实课程的完整产出
+├── examples/CME222-mass-transfer/       真实示例：一讲从课件到测验的全部产出
 ├── tests/                               check_note.py 的测试
 └── docs/                                在线展示页 · 插件规范 PLUGIN_SPEC.md
 ```
 
 ## 快速上手
 
-需要：[Claude Code](https://claude.com/claude-code)、一个 Obsidian vault、Python 3.10+、免费的 [MinerU](https://mineru.net) token（用来把 PDF 课件转成文字）。
+**准备**：[Claude Code](https://claude.com/claude-code)、一个 Obsidian vault、Python 3.10+、一个免费的 [MinerU](https://mineru.net) token（用来把 PDF 课件转成文字）。
+
+**1. 安装 Python 依赖**
 
 ```bash
 pip install requests PyMuPDF Pillow python-pptx python-dotenv rich pyyaml
 ```
 
-在 vault 根目录建 `.env`，写一行 `MINERU_API_TOKEN=你的token`。然后在 vault 里打开 Claude Code：
+**2. 配置 token**：在 vault 根目录新建 `.env` 文件，写入一行
+
+```text
+MINERU_API_TOKEN=你的token
+```
+
+**3. 安装插件**：在 vault 里打开 Claude Code，输入
 
 ```text
 /plugin marketplace add iZHENGjy/claudesidian-learning-os
 /plugin install claudesidian-notes@claudesidian-learning-os
 ```
 
-丢一份课件说"整理这节课"。第一次处理一门课时会问课程代码和课名，然后建好 `01_Projects/<课程代码>_<课名>/`，课名用什么语言都可以。
+**4. 开始用**：把一份课件交给 Claude，说"整理这节课"。第一次处理某门课时，会先问课程代码和课名，再建好 `01_Projects/<课程代码>_<课名>/`。课名用什么语言都可以。
 
 ## 命令速查
 
@@ -318,10 +324,10 @@ pip install requests PyMuPDF Pillow python-pptx python-dotenv rich pyyaml
 
 - skill 的提示词是中文写的；课件用什么语言都能处理，笔记用你工作的语言输出。
 - 检查脚本能保证数字算对、公式抄对、课件讲全；引用只能查有没有写出处，查不了出处真假，笔记仍然值得你自己过一遍。
-- 示例课程不附课件原图。
+- 示例不附课件原图和课件原文。
 
 ## 致谢
 
-源自基于 [claudesidian](https://github.com/heyitsnoah/claudesidian) 搭的 vault；PDF 抽取用 [MinerU](https://github.com/opendatalab/MinerU)；讲解型笔记结构借鉴 [Love Learning Anything](https://github.com/RAIZ-Zzz/love-learning-anything)，复习库和测验借鉴 [tutor-skills](https://github.com/RoundTable02/tutor-skills)。
+源自基于 [claudesidian](https://github.com/heyitsnoah/claudesidian) 搭的 vault；PDF 抽取用 [MinerU](https://github.com/opendatalab/MinerU)；讲义笔记结构借鉴 [Love Learning Anything](https://github.com/RAIZ-Zzz/love-learning-anything)，复习库和测验借鉴 [tutor-skills](https://github.com/RoundTable02/tutor-skills)。
 
 [更新日志](CHANGELOG.md) · [参与贡献](CONTRIBUTING.md) · [MIT 许可证](LICENSE)

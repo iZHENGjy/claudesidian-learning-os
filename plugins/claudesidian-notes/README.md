@@ -21,7 +21,7 @@
 
 | Command | 用 |
 |---|---|
-| `/distill-all` | 扫 `01_Projects/CME*` 所有有 lecture 的课 → 批量跑 distill-principles |
+| `/distill-all` | 扫 `01_Projects/*/` 下所有有讲义笔记（`L##.md`）的课 → 批量跑 distill-principles |
 | `/audit-tutorials CMEXXX` | 扫一个课所有 `T##` → 批量反向校验 `_principles` → 汇总 bug 报告 |
 
 ## 目录结构

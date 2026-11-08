@@ -3,9 +3,9 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="description" content="把课件变成讲解型笔记、复习库和测验的 Claude Code + Obsidian 插件：例题全部脚本验算，附真实课程新旧对比。">
+<meta name="description" content="把课件变成讲解型笔记、复习库和测验的 Claude Code + Obsidian 插件：例题全部脚本验算，附一门真实课程从课件到测验的完整示例。">
 <meta property="og:title" content="Claudesidian Learning OS">
-<meta property="og:description" content="把课件变成讲解型笔记、复习库和测验的 Claude Code + Obsidian 插件：例题全部脚本验算，附真实课程新旧对比。">
+<meta property="og:description" content="把课件变成讲解型笔记、复习库和测验的 Claude Code + Obsidian 插件：例题全部脚本验算，附一门真实课程从课件到测验的完整示例。">
 <meta property="og:type" content="website">
 <meta property="og:url" content="https://izhengjy.github.io/claudesidian-learning-os/">
 <meta property="og:image" content="https://izhengjy.github.io/claudesidian-learning-os/assets/showcase.png">
@@ -21,7 +21,7 @@ img { max-width: 100%; }
 [hidden] { display: none !important; }
 </style>
 <style>
-/* Layout: an engineering calculation pad — faint grid paper, ink-blue working, red-pencil corrections on the "before" side */
+/* Layout: an engineering calculation pad — faint grid paper, ink-blue working, red pencil for wrong answers */
 :root {
   --paper: #f4f6f3;
   --grid: #dfe6e0;
@@ -111,37 +111,11 @@ section { display: grid; gap: 24px; }
 .step .n { font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
 .step b { font-family: var(--f-display); font-size: 16px; }
 .step span { font-size: 14px; color: var(--muted); }
-.step.new { background: var(--blue-soft); }
-.step.new .n::after { content: " · 新"; color: var(--blue); }
 @media (max-width: 760px) {
   .pipe { grid-template-columns: 1fr; }
   .step { border-right: 0; border-bottom: 1px solid var(--line); }
   .step:last-child { border-bottom: 0; }
 }
-
-/* before / after */
-.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
-@media (max-width: 760px) { .compare { grid-template-columns: 1fr; } }
-.sheet { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 18px; display: grid; gap: 12px; align-content: start; min-width: 0; }
-.sheet header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
-.tag { font-family: var(--f-mono); font-size: 12px; padding: 2px 8px; border-radius: 999px; }
-.tag.bad { background: var(--red-soft); color: var(--red); }
-.tag.good { background: var(--ok-soft); color: var(--ok); }
-.snip { font-family: var(--f-mono); font-size: 13px; line-height: 1.65; background: var(--paper); border-radius: 4px; padding: 12px; overflow-x: auto; white-space: pre; }
-.snip .x { color: var(--red); text-decoration: line-through; text-decoration-thickness: 2px; }
-.snip .note { color: var(--red); }
-.snip .res { color: var(--ok); font-weight: 600; }
-.snip .h { color: var(--blue); font-weight: 600; }
-
-/* metrics table */
-.tablebox { overflow-x: auto; background: var(--card); border: 1px solid var(--line); border-radius: 6px; }
-table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 15px; }
-th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
-th { font-family: var(--f-mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
-tr:last-child td { border-bottom: 0; }
-td.before { color: var(--red); }
-td.after { color: var(--ok); font-weight: 500; }
-td.num { font-variant-numeric: tabular-nums; }
 
 /* quiz demo */
 .quiz { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 16px; align-items: start; }
@@ -197,67 +171,16 @@ footer { font-size: 14px; color: var(--muted); display: grid; gap: 6px; }
     <div class="eyebrow">流水线</div>
     <h2 id="pipe-h">一个学期的五步</h2>
     <div class="pipe">
-      <div class="step new"><span class="n">1 · ingest-lecture</span><b>讲解型笔记</b><span>每讲一份。先讲为什么需要，再给概念；例题算到结果。</span></div>
+      <div class="step"><span class="n">1 · ingest-lecture</span><b>讲解型笔记</b><span>每讲一份。先讲为什么需要，再给概念；例题算到结果。</span></div>
       <div class="step"><span class="n">2 · ingest-tutorial</span><b>习题解答</b><span>量级估算、推导、英文作答、知识盲区。</span></div>
       <div class="step"><span class="n">3 · distill-principles</span><b>公式图谱</b><span>整门课压成带编号的第一原理推导树。</span></div>
-      <div class="step new"><span class="n">4 · build-review-vault</span><b>复习库</b><span>公式速查、易错点合集、按主题的题库。</span></div>
-      <div class="step new"><span class="n">5 · quiz</span><b>测验</b><span>零提示选择题 + 复述题，按概念记录掌握度。</span></div>
-    </div>
-  </section>
-
-  <section aria-labelledby="cmp-h">
-    <div class="eyebrow">CME222 传质 · L03 · 同一份 32 页课件</div>
-    <h2 id="cmp-h">同一道例题，新旧笔记</h2>
-    <p class="lede">课件例 3：373 K 下氨在空气中的扩散系数（Brokaw 方法）。</p>
-    <div class="compare">
-      <article class="sheet">
-        <header><h3>旧版笔记</h3><span class="tag bad">停在思路</span></header>
-<div class="snip"><span class="h">### 例题 3: NH₃ 在空气中</span>
-
-思路: 计算 δ_NH₃ → 修正后的 σ, ε/k
-→ T* → 修正 Ω_D → 代 Hirschfelder。
-
-Ω_D,polar = Ω_D + <span class="x">0.19</span> δ_AB² / T*
-<span class="note">  ↑ 课件 p.25 写的是 0.196</span>
-
-<span class="note">（没有数字结果）</span></div>
-      </article>
-      <article class="sheet">
-        <header><h3>新版笔记</h3><span class="tag good">verify.py 通过</span></header>
-<div class="snip"><span class="h">实例 4.1：NH₃–空气，373 K（p.27）</span>
-① δ_NH₃ = 1.94e3×1.46² / (25.8×239.81)
-       = 0.668，空气 δ = 0 ⇒ δ_AB = 0
-② σ_AB = √(2.958 × 3.619) = 3.272 Å
-   <span class="note">几何平均，课件 p.26</span>
-③ T* = 373 / √(447.3×93.0) = 1.829
-   Ω_D = 1.110
-④ D = 0.001858×373^1.5×(1/17+1/29)^½
-      / (1 × 3.272² × 1.110)
-
-<span class="res">计算结果：D = 0.344 cm²/s</span></div>
-      </article>
-    </div>
-  </section>
-
-  <section aria-labelledby="num-h">
-    <div class="eyebrow">L03 整讲对比</div>
-    <h2 id="num-h">改了多少</h2>
-    <div class="tablebox">
-      <table>
-        <thead><tr><th>检查项</th><th>旧版</th><th>新版</th></tr></thead>
-        <tbody>
-          <tr><td>课件例题算到结果</td><td class="before num">0 / 4</td><td class="after num">4 / 4，脚本断言验算</td></tr>
-          <tr><td>公式错误</td><td class="before">1 处（0.196 写成 0.19）</td><td class="after">0</td></tr>
-          <tr><td>课件外数据</td><td class="before">无出处</td><td class="after">核对后标出处，查不到标"待核实"</td></tr>
-          <tr><td>自测</td><td class="before">AI 以"我"的口吻写的 6 个疑问</td><td class="after num">8 个复述检查、4 道预测题、10 道练习</td></tr>
-          <tr><td>空链接</td><td class="before num">10</td><td class="after num">0</td></tr>
-        </tbody>
-      </table>
+      <div class="step"><span class="n">4 · build-review-vault</span><b>复习库</b><span>公式速查、易错点合集、按主题的题库。</span></div>
+      <div class="step"><span class="n">5 · quiz</span><b>测验</b><span>零提示选择题 + 复述题，按概念记录掌握度。</span></div>
     </div>
   </section>
 
   <section aria-labelledby="quiz-h">
-    <div class="eyebrow">复习库 · 5 个主题 · 50 题</div>
+    <div class="eyebrow">复习库 · 1 个主题 · 10 题</div>
     <h2 id="quiz-h">试一轮测验</h2>
     <p class="lede">下面 3 道题取自示例复习库的"气体扩散系数"题库。答错的概念会进入右边的掌握度记录。</p>
     <div class="quiz">

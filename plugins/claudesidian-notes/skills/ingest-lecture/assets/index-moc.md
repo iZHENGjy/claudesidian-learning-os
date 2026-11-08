@@ -22,7 +22,7 @@ title_en: Course Name
 title_zh: 课名
 semester: YYYY-Spring
 tags:
-  - 化工
+  - {{领域}}
   - 课名
   - 课程笔记
   - 主笔记
@@ -101,7 +101,7 @@ $$\boxed{\;N_A = -c\,D_{AB}\,\nabla y_A + y_A\,(N_A + N_B)\;}$$
 | 第二项 | 对流贡献 |
 
 > [!example] 🔗 深入了解
-> **Fick 推导 + 总通量公式 + 浓度速度换算速查** → [[L02_diffusive_mass_transfer]]
+> **Fick 推导 + 总通量公式 + 浓度速度换算速查** → [[L02_<topic>]]
 ```
 
 ### 硬规则

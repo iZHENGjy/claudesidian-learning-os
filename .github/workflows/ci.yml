@@ -85,15 +85,15 @@ jobs:
 
       - name: Run example verify.py scripts and the verify template
         run: |
-          python "examples/CME222-mass-transfer/vault/CME222_传质/_attachments/verify.py"
-          python "examples/CME222-mass-transfer/vault/CME222_传质/复习库/verify.py"
+          python "examples/CME222-mass-transfer/CME222_传质/_attachments/CME 222 Lecture 3/verify.py"
+          python "examples/CME222-mass-transfer/CME222_传质/复习库/verify.py"
           python "plugins/claudesidian-notes/skills/ingest-lecture/assets/verify-template.py"
 
       - name: check_note.py on the example lecture note
         run: |
           python plugins/claudesidian-notes/shared/scripts/check_note.py \
-            "examples/CME222-mass-transfer/vault/CME222_传质/L03_diffusion_coefficient_estimation.md" \
-            --vault examples/CME222-mass-transfer/vault \
+            "examples/CME222-mass-transfer/CME222_传质/L03_diffusion_coefficient_estimation.md" \
+            --vault examples/CME222-mass-transfer \
             --source tests/fixtures/source_excerpt.md
 
       - name: pytest

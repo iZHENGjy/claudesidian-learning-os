@@ -1,7 +1,7 @@
 {
   "name": "paper-review-toolkit",
   "version": "0.1.0",
-  "description": "Pipeline for ionogel-style paper-review projects: PDF → vision-checked markdown → structured samples + notes + auto-append master Excel.",
+  "description": "Pipeline for literature-review data extraction (ionogel column mapping shipped as the example): PDF → vision-checked markdown → structured samples + notes + auto-append master Excel.",
   "author": {
     "name": "iZHENGjy"
   },

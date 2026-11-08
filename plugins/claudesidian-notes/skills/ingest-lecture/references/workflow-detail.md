@@ -24,9 +24,9 @@
 
 | 旧 hash | 新文件名 | 类型 |
 |---|---|---|
-| `45f8a3b9c1d2e4f5...完整 32 位` | `<CODE>_L##_p<2位页码>_<topic-slug>_<type>.jpg` | concept |
+| `45f8a3b9c1d2e4f5...完整 64 位` | `<CODE>_L##_p<2位页码>_<topic-slug>_<type>.jpg` | concept |
 
-⚠️ **旧 hash 必须给完整 32 位**（从 full.md 里 `![](images/<hash>.jpg)` 直接抄），不要缩写 — 主线程要用它做精确替换。
+⚠️ **旧 hash 必须给完整 64 位**（从 full.md 里 `![](images/<hash>.jpg)` 直接抄），不要缩写 — 主线程要用它做精确替换。
 
 ⚠️ **页号映射**：PNG `<prefix>_pageNN.png` 中的 NN 直接 = slide N，新名前缀写 `p<NN>`。不要做任何 ±1 偏移猜测（过往 sub-agent 误以为"封面占一页 → slide=page+1"导致整批图错位 +1）。
 
@@ -36,7 +36,7 @@
 
 只列推荐度 ≥ 3：
 
-| 新文件名 | 推荐度 | 理由 | 建议放哪个知识块 |
+| 新文件名 | 推荐度 | 理由 | 建议放哪个小节（### x.y） |
 |---|---|---|---|
 | ... | 5 | ... | ... |
 
@@ -63,7 +63,7 @@
 **不做这一步的后果**：笔记本身没事（它用新名），但 `full.md` 在 Obsidian 里所有图全坏（指向已不存在的 hash 文件），留档的 full.md 也是坏的。
 
 - PowerShell 实操：读 full.md 内容 → 对块 2 清单每行做 `-replace [regex]::Escape($oldHash), $newName` → 写回。
-- 块 2 清单里的 hash 必须是**完整 32 位**（不是缩写），否则替换不到。
+- 块 2 清单里的 hash 必须是**完整 64 位**（不是缩写），否则替换不到。
 
 ### 3. verify Read
 

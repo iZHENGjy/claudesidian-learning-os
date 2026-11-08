@@ -1,6 +1,6 @@
 ---
 name: homework-coach
-description: 化工作业助手，双模式。**Mode A 做题伙伴（默认，决策前置）**：AI 先出"决策简报"（待求参数/课内候选方法/适用条件），方法级+假设级决策由用户拍板后才算数/验算/排版，不代写正文；用户明说"直接算"可跳过引导。**Mode B 整报告模式（显式 opt-in）**：用户说"从0做整份报告/小组报告"才触发，出完整草稿（算+图+文+APA引用+排版+多agent评审）+ 内置护栏。Triggers - 做题:"帮我算这道题"/"做这份 tutorial"/"帮我做这道作业题"；整报告:"从0做这份小组报告"/"整份 assignment 帮我做"/"帮我写整份 lab report"。Not-triggers - "解释概念"→explain-concept；"整理这节课笔记"→ingest-lecture；"和我讨论思路"→直接对话。
+description: 化工作业助手，双模式。**Mode A 做题伙伴（默认，决策前置）**：AI 先出"决策简报"（待求参数/课内候选方法/适用条件），方法级+假设级决策由用户拍板后才算数/验算/排版，不代写正文；用户明说"直接算"可跳过引导。**Mode B 整报告模式（显式 opt-in）**：用户说"从0做整份报告/小组报告"才触发，出完整草稿（算+图+文+APA引用+排版+多agent评审）+ 内置护栏。Triggers - 做题:"帮我算这道题"/"做这份 tutorial"/"帮我做这道作业题"；整报告:"从0做这份小组报告"/"整份 assignment 帮我做"/"帮我写整份 lab report"。Not-triggers - "解释概念"→直接对话；"整理这节课笔记"→ingest-lecture；"和我讨论思路"→直接对话。
 ---
 
 # Skill: homework-coach
@@ -30,7 +30,7 @@ description: 化工作业助手，双模式。**Mode A 做题伙伴（默认，�
 - "做这份作业"
 
 不该触发：
-- "解释概念" → `/explain-concept`
+- "解释概念" → 直接对话，别套 skill
 - "整理这节课笔记" → `/ingest-lecture`
 - "把这份 tutorial 的题目和答案归档到笔记" → `/ingest-tutorial`
 - "和我讨论思路" → 直接对话，别套 skill
@@ -81,7 +81,7 @@ ${CLAUDE_PLUGIN_ROOT}/skills/homework-coach/
 **动手算之前必走**。先 Read `references/decision-briefing.md`，开头问一次档位——**学习**（0基础，边做边教）/ **练习**（默认，判别条件后置）/ **冲刺**（熟练/赶due，完整简报）——然后每道题出一份简报：
 
 - **已知 / 待求 / 参数缺口**（要到 X 得先求 a、b 的倒推链）
-- **课内工具箱**：候选方法表，**不标推荐**。练习/学习模式只列方法名+出处（判别条件你试答后才揭示）；冲刺模式才带"适用条件"列。依据从课程笔记按降级链查（`_principles` → 知识块/index → manifest → 联网），绝不凭印象编
+- **课内工具箱**：候选方法表，**不标推荐**。练习/学习模式只列方法名+出处（判别条件你试答后才揭示）；冲刺模式才带"适用条件"列。依据从课程笔记按降级链查（`_principles` → L## 小节 / index → manifest → 联网），绝不凭印象编
 - **课外资源**：需要外部物性/数据时去哪查
 - 结尾把问题抛回给你："你觉得哪个能用？依据是什么？"
 
@@ -195,5 +195,5 @@ python ${CLAUDE_PLUGIN_ROOT}/skills/homework-coach/scripts/docx_polish.py final.
 ## 跟其他 skill 的关系
 
 - `/ingest-paper` — 罕见，题目明确要外部 paper 时才调
-- `/explain-concept` — 卡在某个概念时单独跑
+- 卡在某个概念 — 直接对话讲清，不走 skill
 - `/ingest-tutorial` — 不一样的任务（归档 tutorial 到笔记），不是当下做题

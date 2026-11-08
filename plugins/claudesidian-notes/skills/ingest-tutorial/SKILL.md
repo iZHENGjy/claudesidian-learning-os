@@ -172,8 +172,8 @@ Read `01_Projects/<CODE>_课名/_principles.md`(若存在),拿到整门课的**�
 
 | 题号 | 最终答案 | 涉及概念 |
 |---|---|---|
-| 1 | $P = 49.9$ kPa | [[状态方程]] |
-| 2(a) | $J_A = 3.2 \times 10^{-4}$ mol/(m²·s) | [[Fick 第一定律]] |
+| 1 | $P = 49.9$ kPa | 状态方程 → [[L01_<topic>#1.2 …]] |
+| 2(a) | $J_A = 3.2 \times 10^{-4}$ mol/(m²·s) | Fick 第一定律 → [[L02_<topic>#3.1 …]] |
 
 ### Step 7: 知识盲区报告
 
@@ -207,12 +207,12 @@ tutorial 写完后,自动跟 `_principles.md` 对账:Read _principles → grep t
 ## Tutorial solved: <CODE> T##
 
 **Problems**: N solved
-**Covers**: [[concept-A]], [[concept-B]]
+**Covers**: 概念 A、概念 B
 **公式速查**: N formulas from [[L##_...]]
 **数据标记**: N values used, K marked "请核实"
 
 **Gaps identified**:
-1. [[concept-X]] — 相关 lecture 笔记弱
+1. 概念 X（[[L##_<topic>#x.y …]]）— 相关 lecture 笔记弱
 2. "Maxwell relations" — 没笔记,考虑 ingest 相关 lecture
 
 **Verification steps for you**:

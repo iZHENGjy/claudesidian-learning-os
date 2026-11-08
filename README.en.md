@@ -59,9 +59,7 @@ flowchart LR
 
 ## A course folder when it's done
 
-The examples below use a calculus course (MATH101) for illustration. The [example course](examples/CME222-mass-transfer) in this repo is real output from a chemical-engineering course with the same structure.
-
-Everything for one course lives in one folder:
+Everything for one course lives in one folder. The examples below use a calculus course (MATH101) for illustration; for real output, see the [example](examples/CME222-mass-transfer): lecture 3 of a chemical-engineering course, taken all the way from slides to a quiz.
 
 ```text
 01_Projects/MATH101_Calculus/
@@ -148,7 +146,7 @@ Every concept (`###` section) follows the same order:
 >
 > Geometrically, $f'(a)$ is the slope of the tangent to $y = f(x)$ at $x = a$.
 >
-> **Example 1.2**: $s(t) = 5t^2$; find the instantaneous speed at $t = 2$ s (p.8)
+> **Example 1.2** (p.8) Given position $s(t) = 5t^2$, find the instantaneous speed at $t = 2$ s.
 >
 > $$\frac{s(2+h) - s(2)}{h} = \frac{5(2+h)^2 - 20}{h} = \frac{20h + 5h^2}{h} = 20 + 5h$$
 >
@@ -274,27 +272,35 @@ claudesidian-learning-os/
 │   │           └── mineru_convert.py · process_si.py   paper and supplementary-file conversion
 │   ├── chemeng-coursework/              chemical-engineering homework coach (example domain plugin)
 │   └── paper-review-toolkit/            literature reviews: pull paper data into one spreadsheet
-├── examples/CME222-mass-transfer/       a real course run through the pipeline
+├── examples/CME222-mass-transfer/       real example: one lecture from slides to quiz
 ├── tests/                               tests for check_note.py
 └── docs/                                demo site · plugin spec PLUGIN_SPEC.md
 ```
 
 ## Quickstart
 
-You need [Claude Code](https://claude.com/claude-code), an Obsidian vault, Python 3.10+, and a free [MinerU](https://mineru.net) token (it turns PDF slides into text).
+**You need**: [Claude Code](https://claude.com/claude-code), an Obsidian vault, Python 3.10+, and a free [MinerU](https://mineru.net) token (it turns PDF slides into text).
+
+**1. Install the Python dependencies**
 
 ```bash
 pip install requests PyMuPDF Pillow python-pptx python-dotenv rich pyyaml
 ```
 
-Create `.env` at the vault root with `MINERU_API_TOKEN=<your token>`. Then, in Claude Code inside the vault:
+**2. Add your token**: create a `.env` file at the vault root containing
+
+```text
+MINERU_API_TOKEN=<your token>
+```
+
+**3. Install the plugin**: open Claude Code inside the vault and enter
 
 ```text
 /plugin marketplace add iZHENGjy/claudesidian-learning-os
 /plugin install claudesidian-notes@claudesidian-learning-os
 ```
 
-Drop in some slides and say "ingest this lecture". The first time for a course, it asks for the course code and name and creates `01_Projects/<CODE>_<course name>/`; the name can be in any language.
+**4. Start**: give Claude a slide deck and say "ingest this lecture". The first time for a course, it asks for the course code and name, then creates `01_Projects/<CODE>_<course name>/`. The name can be in any language.
 
 ## Commands
 
@@ -318,7 +324,7 @@ The core plugin has no subject knowledge built in; the author has used it unchan
 
 - Skill prompts are written in Chinese. They handle slides in any language and write notes in the language you work in.
 - The checks make sure numbers are computed right, formulas copied right and every slide covered. Citations can only be checked for being present, not for being true, so the notes are still worth a read-through.
-- The example course doesn't include the original slides.
+- The example doesn't include the original slides or their extracted text.
 
 ## Credits
 

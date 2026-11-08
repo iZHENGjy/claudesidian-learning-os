@@ -7,7 +7,15 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); version
 ## [Unreleased]
 
 ### Changed
-- README rewritten around what the project produces: the main `README.md` is now Chinese, with the semester workflow, the full folder a course ends up as, the complete structure of each output (lecture note, tutorial solutions, formula map, review vault), the repository layout, and a command reference. Examples use a general calculus course (MATH101) so any reader can follow them; the real chemical-engineering example course stays linked. English moved to `README.en.md`; `README.zh-CN.md` removed.
+- README rewritten around what the project produces: the main `README.md` is now Chinese, with the semester workflow, the full folder a course ends up as, the complete structure of each output (lecture note, tutorial solutions, formula map, review vault), the repository layout, numbered quickstart steps and a command reference. Examples use a general calculus course (MATH101) so any reader can follow them. English moved to `README.en.md`; `README.zh-CN.md` removed.
+- The example is now one lecture end to end — lecture note, its check script, a one-topic review vault and a quiz record — laid out exactly as a course folder in a vault: `examples/CME222-mass-transfer/CME222_传质/`. Its `index.md`, frontmatter and `verify.py` location (`_attachments/<deck>/verify.py`) now match the templates.
+- Demo site, issue template, plugin spec and skill references brought in line with the current notes: numbered `### x.y` sections instead of 知识块, 64-character MinerU image hashes, concept links that point to lecture sections, no subject-specific defaults in framework templates.
+- `docs/PLUGIN_SPEC.md` lists the note checker, the check-script template and the review loop.
+
+### Removed
+- All before/after comparisons: `docs/assets/compare.png`, `compare-en.svg`, the comparison sections of the demo site, and the example's `before/` folder and early-format notes (L01, L02, L04, T01–T03).
+- Personal leftovers: private paths, the author's review-spreadsheet default and links to files that were never in the repo.
+- References to the non-existent `/explain-concept` skill, and a duplicate plugin-level `.gitignore`.
 
 ## [0.4.0] — 2026-11-08
 

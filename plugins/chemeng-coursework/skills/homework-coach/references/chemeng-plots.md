@@ -70,10 +70,10 @@ from chemeng_plots import plot_ternary, plot_drying_curve, coords_table  # 按�
 - ⚠️ 这是张"读图"用的标准工程图，不是从题目数据画的。用 `psychrolib` 库算物性（要 `pip install psychrolib`）。
 - **喂**：`points` 列表，每个状态点给 `Tdb`（干球℃）+ 下面之一：`RH`(0-1) / `Twb`(湿球℃) / `Hr`(湿度比)。
 - **出**：饱和线 + RH 曲线族 + 等湿球/焓斜线，每个状态点标 (Tdb, Twb, RH, H, 焓)。返回 `coords` 含各点算全的物性。
-- 对应：L03 知识块3 湿度图读图（example-4 套路）。
+- 对应：L03 小节 3 湿度图读图（example-4 套路）。
 
 ### 8. `plot_lle_d_system(raffinate, extract, F, S, RN, ...)` — LLE [D] 差点图解
-- ⚠️ **期末最高频题型**（知识块13）：部分互溶逆流，在**等边**三元相图上用差点 P + stepping 数级数。
+- ⚠️ **期末最高频题型**（小节 13）：部分互溶逆流，在**等边**三元相图上用差点 P + stepping 数级数。
 - **喂**：`raffinate`/`extract` tie-line 配对数据 + 进料 `F` + 溶剂 `S` + 目标萃余 `RN`（都 (A,B,C)）+ **`S_over_F`（溶剂/进料比）**自动算 E1（或直接给 `E1=`）。
 - **出**：等边三角 + binodal + tie line + 混合点 M + 差点 P + stepping 阶梯，返回 `n_stages`。差点 P 常落在三角外（正常）。
 - 算法跟 SLE 净流点同一套，只是三角形不同。⚠️ T02 Q2 是这类题但没给数据；用别的体系数据喂就能跑。

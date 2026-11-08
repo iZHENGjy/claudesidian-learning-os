@@ -12,7 +12,7 @@ Domain plugins   chemeng-coursework (chemical engineering, reference impl.) │ 
 领域插件层         ↑ domain knowledge only: specialty plotting, handbooks, conventions
 
 Framework        claudesidian-notes (course + paper pipeline) + paper-review-toolkit
-框架层             ↑ domain-agnostic: ingest → distill → reverse-audit;
+框架层             ↑ domain-agnostic: ingest → check → distill → reverse-audit → review vault → quiz;
                    battle-tested on engineering / economics / CS / physics courses
 
 Kernel           vault structure (PARA) · manifest mechanism · MinerU wrapper
@@ -31,9 +31,11 @@ Rules / 原则:
 | Page renderer | `shared/scripts/extract_images.py` | per-page PNGs for vision checking |
 | SI dispatcher | `shared/scripts/process_si.py` | multi-format supplementary-info handling |
 | Manifest mechanism | each course's `manifest.md` | declare materials/indexes; skills grep on demand, never hardcode globs |
-| Note templates | each skill's `assets/*.md` | lecture / tutorial / principles skeletons |
+| Note templates | each skill's `assets/*.md`, `ingest-lecture/assets/verify-template.py` | lecture / tutorial / principles skeletons; per-lecture check script with `assert_slide()` |
+| Note checker | `shared/scripts/check_note.py` | 15 checks on every lecture note: structure, teaching order, coverage, runs `verify.py`, formula constants against the slide text |
 | Formula loop | `shared/scripts/extract_formulas.py` / `validate_principles.py` / `reverse_audit.py` | force-scan (no LLM recall) / self-check / solutions-vs-principles audit |
-| Data honesty rule | ingest-tutorial SKILL | unfound reference data gets "please verify", never fabricated |
+| Review loop | `build-review-vault` + `quiz` skills | condense a course into a review vault; quiz with per-concept mastery tracking |
+| Data honesty rule | ingest-lecture / ingest-tutorial SKILL | outside claims need a checked source; unfound reference data gets "please verify", never fabricated |
 
 ## 3. New domain plugin checklist / 新领域插件清单
 

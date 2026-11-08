@@ -11,7 +11,7 @@
     python scripts/validate_principles.py <path_to_principles.md>
 
 例:
-    python scripts/validate_principles.py 01_Projects/CME222_传质/_principles.md
+    python scripts/validate_principles.py 01_Projects/<CODE>_课名/_principles.md
 
 退出码: 0 = 全通过, 1 = 有问题
 """

@@ -6,12 +6,12 @@ lecture: 3
 title: "Molecular Diffusivity & Estimation of Gas Diffusion Coefficients"
 title_zh: "分子扩散系数与气体扩散系数的估算"
 date: 2026-Spring
-source_ppt: "[[_attachments/CME 222 Lecture 3/L03.pdf]]"
+source_ppt: "[[_attachments/source/CME 222 Lecture 3.pdf]]"
 pages: "1-32"
 pages_skipped: "1 (封面), 2 (目录), 3 (章节页), 10 (章节页)"
-verified: "_attachments/verify.py 全部通过"
+verified: "_attachments/CME 222 Lecture 3/verify.py 全部通过"
 source_md: "无：示例仓库不附课件原文（课件版权）；作者本地用 --source 核对过公式常数 7/7"
-related: ["[[L02_diffusive_mass_transfer]]"]
+related: []
 ---
 
 # 分子扩散系数与气体扩散系数的估算 / Molecular Diffusivity & Gas Diffusivity Estimation
@@ -30,7 +30,7 @@ related: ["[[L02_diffusive_mass_transfer]]"]
 
 | 前置知识 | 本讲是否用到 | 处理 |
 | --- | --- | --- |
-| Fick 第一定律、$D_{AB}$ 的含义 | 用到（全讲） | 见 [[L02_diffusive_mass_transfer]] |
+| Fick 第一定律、$D_{AB}$ 的含义 | 用到（全讲） | 默认已掌握（上一讲内容） |
 | 理想气体、$c = P/RT$ | 用到（p.9、11） | 默认已掌握 |
 | 摩尔分数 | 用到（p.28） | 默认已掌握 |
 

@@ -15,7 +15,7 @@ description: 把一篇论文（main + 多格式 SI）转成 markdown，含 visio
 
 **不做**：
 - 字段抽取（拉伸强度、电导率等专属字段）—— 那是后续 `extract-paper-note` skill 的事
-- 生成 notes.md / staging.xlsx / checklist.md —— 笔记模板是独立步骤，本 skill 不碰
+- 生成 notes.md / checklist.md / extract_handoff.json —— 那是 `extract-paper-note`（paper-review-toolkit 插件）的事，本 skill 不碰
 
 ## When to trigger
 
@@ -67,8 +67,9 @@ main.md 里图引用形如：
 
 依赖包（一次性）：
 ```bash
-pip install requests PyMuPDF Pillow python-docx openpyxl
+pip install requests python-dotenv rich pyyaml PyMuPDF Pillow python-docx pandas openpyxl
 ```
+（`mineru_convert.py` 直接 import `requests` / `dotenv` / `rich`，经 `utils/` 间接 import `yaml`；其余是 `extract_images.py` / `process_si.py` 用的）
 
 ## Workflow
 
@@ -117,7 +118,7 @@ python ${CLAUDE_PLUGIN_ROOT}/shared/scripts/extract_images.py "<folder>/si.pdf" 
 每个 sub-agent 读 `_pages_<main|si>/<page>.png` + `<main|si>.md` 对应段，输出**四块结构化报告**：
 
 1. **块 1 — patches**：用 anchor 文本（非行号）定位的 md 修正
-2. **块 2 — 图重命名清单**：完整 32 位 old_hash + 新名 + tier + alt text
+2. **块 2 — 图重命名清单**：完整 64 位 old_hash（sha256 hex，2026-10 起）+ 新名 + tier + alt text
 3. **块 3 — caption 完整性 + metadata 核对**（仅第一个 sub-agent）
 4. **块 4 — 跨页公式/表格/段落核对**
 
@@ -155,9 +156,9 @@ rm -rf <folder>/_pages_main/ <folder>/_pages_si/ <folder>/_tmp_si/
 
 1. **不动 PDF / 原 SI 文件**（只读，纯单向产出）
 2. **vision 修正必须写回 main.md / si.md**——本 skill 的核心价值。修正只在 console 里 print 出来等于浪费
-3. **图重命名按 Figure/Table 编号**，不用 hash。已经是语义名（不是 32 位 hex）的图跳过，不重复重命名
+3. **图重命名按 Figure/Table 编号**，不用 hash。已经是语义名（不是 64 位 hex）的图跳过，不重复重命名
 3.5. **图必须有分级 alt text**（本 skill 默认行为）：critical 图 C 级密集描述、general 图一句话。写给 AI 看不是给人看。已经有非空 alt（不是占位）的图跳过，不重复改
-4. **不抽字段 / 不生成 notes.md**——笔记模板（notes.md / staging.xlsx / checklist.md）是 `extract-paper-note` skill 的事，本 skill 完全不碰。但 vision 必须保证表格/caption/公式/数值**完整准确进 md**，为后续 skill 铺路
+4. **不抽字段 / 不生成 notes.md**——笔记产物（notes.md / checklist.md / extract_handoff.json）是 `extract-paper-note` skill 的事，本 skill 完全不碰。但 vision 必须保证表格/caption/公式/数值**完整准确进 md**，为后续 skill 铺路
 5. **MinerU 失败有 fallback**——纯 vision 模式仍可生成 main.md（质量略低但不阻塞）
 6. **DOCX/XLSX/ZIP 不走 vision**——这些格式 python-docx / pandas 转换已经精准，不需要 vision 核对，也不加 alt text
 7. **跨 sub-agent 不要让它们看对方的 md**——main 的 sub-agent 看 main.pdf，SI 的看 si.pdf，避免 caption 编号串位
@@ -166,7 +167,7 @@ rm -rf <folder>/_pages_main/ <folder>/_pages_si/ <folder>/_tmp_si/
 
 - **`ingest-lecture`**：思路相似（MinerU + vision），但 lecture 是 slide-by-slide 模式 + 嵌入推荐；本 skill 是论文专用，砍嵌入推荐、加多格式 SI、加 metadata 核对
 - **Stage 1（从文献管理软件拉 PDF）**：归上游的文献采集脚本，不在本 skill 范围；本 skill 处理已经落到 vault 里的 PDF
-- **未来 笔记模板**：等用户定下来后，写新 skill `extract-paper-note`，从本 skill 产出的 md 里提取字段
+- **`extract-paper-note`**（`paper-review-toolkit` 插件）：下游 skill，从本 skill 产出的 main.md / si.md / alt text 里逆向实验设计，产出 `extract_handoff.json` + `notes.md` + `checklist.md` 并写入主 Excel
 
 ## Reference index
 

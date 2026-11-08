@@ -190,11 +190,17 @@ def _request_upload_urls(
     api_url: str,
     api_key: str,
     file_names: list[str],
+    data_id_prefix: str = "paper",
 ) -> tuple[str, list[str]]:
-    """POST /file-urls/batch → (batch_id, [presigned_url, ...])。"""
+    """POST /file-urls/batch → (batch_id, [presigned_url, ...])。
+
+    data_id 只是回传给调用方的标签（MinerU 要求 ASCII 字母/数字/_/-，≤128 字符），
+    用 paper_id + doc_type 派生，方便在 MinerU 控制台对上是哪篇论文。
+    """
+    safe_prefix = re.sub(r"[^A-Za-z0-9_\-]", "_", data_id_prefix).strip("_") or "paper"
     payload = {
         "files": [
-            {"name": name, "data_id": f"ionogel-{i}", "is_ocr": False}
+            {"name": name, "data_id": f"{safe_prefix}-{i}"[:128], "is_ocr": False}
             for i, name in enumerate(file_names)
         ],
         "enable_formula": True,
@@ -506,7 +512,9 @@ def convert_via_api(
 
     # === 全新提交路径 ===
     file_name = pdf_path.name
-    batch_id, file_urls = _request_upload_urls(api_url, api_key, [file_name])
+    batch_id, file_urls = _request_upload_urls(
+        api_url, api_key, [file_name], data_id_prefix=f"{paper_id}-{doc_type}",
+    )
     if len(file_urls) != 1:
         raise RuntimeError(f"预期 1 个上传 URL，实际 {len(file_urls)} 个")
 
