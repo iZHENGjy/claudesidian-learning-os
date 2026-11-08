@@ -130,13 +130,17 @@ Read `_attachments/<pdf_stem>/full.md`,作为内容基础底稿。
 
 #### Step 4.5: 验算所有数字(强制)
 
-把课件例题、实例、练习答案里的每个数字写进 `01_Projects/<CODE>_课名/_attachments/<pdf_stem>/verify.py`,每个结果一条 `assert`,然后:
+从 `${CLAUDE_PLUGIN_ROOT}/skills/ingest-lecture/assets/verify-template.py` 复制出 `01_Projects/<CODE>_课名/_attachments/<pdf_stem>/verify.py`,把课件例题、实例、练习答案里的每个数字写进去,每个结果一条 `assert`。三条硬约定(check_note.py 会查):
+
+1. **每道实例一段,以 `# 实例 x.y(p.N)` 注释开头**,编号和笔记里的 `> [!example] 实例 x.y` 一致
+2. **课件印了答案** → 该段必须 `assert_slide(算得值, 课件答案, "p.N")`;**课件没印答案** → 该段注释写明 `课件未给答案`。逐题翻原页确认,不许默认写"未给"
+3. 笔记"计算结果"里的数,必须是某条 `assert` 里的数(相对误差 ≤ 1%)。**单位要一致**:笔记写 m²/s,assert 就用 m²/s 的值(两种单位都写就两条 assert)——不做 10 倍数容差,差 1000 倍正是要抓的错
 
 ```bash
 python "01_Projects/<CODE>_课名/_attachments/<pdf_stem>/verify.py"
 ```
 
-不通过 → 改笔记,不许改断言凑数。通过后在 frontmatter 写 `verified: "_attachments/<pdf_stem>/verify.py 全部通过"`;本讲无计算则写 `verified: "无计算"`。
+不通过 → 改笔记,不许改断言凑数。通过后在 frontmatter 写 `verified: "_attachments/<pdf_stem>/verify.py 全部通过"`;本讲无计算则写 `verified: "无计算"`。同时填 `source_md: "_attachments/<pdf_stem>/full.md"`(MinerU 失败 / PPT 输入写 `"无：<原因>"`)。
 
 ### Step 5: 自检
 
@@ -144,9 +148,14 @@ python "01_Projects/<CODE>_课名/_attachments/<pdf_stem>/verify.py"
   ```bash
   python ${CLAUDE_PLUGIN_ROOT}/shared/scripts/check_note.py "01_Projects/<CODE>_课名/L##_topic_snake.md" --vault .
   ```
-  检查:每个知识点有"用自己的话说"、每部分有"误区与陷阱"和"暂停"、每个实例以"计算结果"收尾、补充都有来源且在参考文献里、`[[链接]]` 都指向已存在的笔记、`verified:` 已填。退出码 0 = 通过;1 = 按输出修。
-- **slide 覆盖率**:每页核心信息是否在某个知识点小节?未覆盖标"跳过(装饰
-  /过渡)"或补充。报告 `Slides 覆盖: 18/20`。
+  检查分四类:
+  - **结构**:每个知识点有"用自己的话说"、每部分有"误区与陷阱"和"暂停"、每个实例以"计算结果"收尾、补充都有来源且在参考文献里、`[[链接]]` 都指向已存在的笔记
+  - **内容**:每个知识点以"为什么需要它"开场且第一句不是公式 / 列表 / 定义;每条误区有带数字的反例 + 为什么不对 + 正确说法;暂停里有预测题;练习 ≥ 8 题;`pages` 里每页要么被正文 `p.N` 引用、要么在 `pages_skipped`
+  - **数字**:**真跑** verify.py(不信 frontmatter 自报);每个实例在 verify.py 有同编号段且对过课件答案或写明"课件未给答案";每个"计算结果"的数能在 assert 里找到
+  - **课件原文**:带 `\tag` 的公式里每个小数常数都能在 `source_md`(MinerU full.md)里找到——这是唯一不依赖模型自己的参照,专治"笔记和 verify.py 一起抄错系数"。OCR 漏抽的常数,Read 原页 PNG 确认后写进 frontmatter `constants_manual: "0.196 (p.26)"`,**不许没看原页就填**
+
+  退出码 0 = 通过;1 = 按输出修。**不许为了过检查改检查对象**(删实例、把页塞进 `pages_skipped`、往 `constants_manual` 填没核对的数)——这些在 Step 7 报告里都要逐条列出。
+- **slide 覆盖率**:脚本只查"每页被引用过";还要人工确认被引用的那一节真的讲了该页核心信息。
 - **术语自洽**:首次术语是否已定义?未定义补完。
 - **Tutorial 反向校验**(若同目录有对应 `T##*.md`):
   1. Glob `01_Projects/<CODE>_课名/T*.md`,挑出 frontmatter `related:`
@@ -218,10 +227,12 @@ rm -rf 01_Projects/<CODE>_课名/_attachments/_pages/
 **笔记**: [[L##_topic_snake]]
 **Slides 覆盖**: X/Y(跳过 Z 页:课程信息页/装饰页)
 **知识点**: N 节(每节含"用自己的话说")/ 误区 M 条 / 练习 K 题
-**实例**: N 道,verify.py 全部通过
+**实例**: N 道,verify.py 全部通过(其中 K 道对上课件印的答案,其余课件未给答案)
+**公式常数**: N 个,课件原文找到 M 个;constants_manual K 个(逐个列出页码)
+**pages_skipped**: 列出每页和理由
 **课件以外内容**: N 条,均已上网核对并标出处(或:K 条标"待核实")
 **图片**: N 张嵌入
-**结构检查**: check_note.py 通过
+**检查**: check_note.py 通过
 ```
 
 课程有多讲笔记、快考试时,提示用户可以跑 `build-review-vault` 生成复习库。
@@ -250,6 +261,7 @@ rm -rf 01_Projects/<CODE>_课名/_attachments/_pages/
 | 文件 | 何时翻 |
 |---|---|
 | `assets/lecture-topic.md` | Step 4 写 L## 笔记时的模板 |
+| `assets/verify-template.py` | Step 4.5 写 verify.py 时复制（含 assert_slide 和段落编号约定） |
 | `assets/index-moc.md` | 一切 index.md 操作:Step 1 建桩(阶段①)/ Step 6 追加 Week(阶段②)/ §结课 MOC 升级(阶段③) |
 | `../../shared/assets/manifest-example.md` | 给课程新建 manifest.md 时照抄 |
 | `references/workflow-detail.md` | 改 sub-agent 协议（§3b 块 1/2/3 字段）/ 主线程聚合三步细节（§3c）/ 讲解型笔记规则（§4 开头三件套 / 知识点固定结构 / 误区与暂停 / 实例验算 / 出处 / 链接） |

@@ -10,6 +10,7 @@ source_ppt: "[[_attachments/CME 222 Lecture 3/L03.pdf]]"
 pages: "1-32"
 pages_skipped: "1 (封面), 2 (目录), 3 (章节页), 10 (章节页)"
 verified: "_attachments/verify.py 全部通过"
+source_md: "无：示例仓库不附课件原文（课件版权）；作者本地用 --source 核对过公式常数 7/7"
 related: ["[[L02_diffusive_mass_transfer]]"]
 ---
 
@@ -439,6 +440,8 @@ $D_{1\text{-}n}$：组分 1 对组分 n 的二元扩散系数；$y_n'$：按不�
 ## 复习与练习
 
 ### 本讲小结
+
+（对应课件 Take Home Message，p.30–32。）
 
 | 概念 | 一句话 | 关键公式 |
 | --- | --- | --- |

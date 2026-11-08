@@ -104,7 +104,7 @@ L## + T## + _principles ─► build-review-vault ─► 复习库/（速查 · 
 | `extract_formulas.py <CODE>` | 扫整门课所有 lecture 公式（治 distill-principles "漏抽"病） |
 | `validate_principles.py <path>` | `_principles.md` 自检（编号连续 / 跨节引用 / 长度 / 无 callout） |
 | `reverse_audit.py <tutorial.md>` | tutorial → `_principles` 对账（自动撞出 bug） |
-| `check_note.py <L##.md> --vault .` | 讲解型笔记结构检查（自测块 / 误区 / 实例结果 / 出处 / 空链接 / verified） |
+| `check_note.py <L##.md> --vault .` | 讲解型笔记检查：结构（自测块 / 误区 / 出处 / 空链接）+ 内容（先讲问题 / 误区三段 / 练习数 / slide 覆盖）+ 真跑 verify.py 并逐题对账 + 公式常数对课件原文 full.md |
 | `mineru_extract.py <pdf> <outdir>` | 单份 PDF → markdown + images（MinerU API，lecture 用） |
 | `mineru_convert.py --paper-dir <dir>` | 论文 main + SI 批量转换，带 batch_id 缓存断点续跑 |
 | `extract_images.py <src> <outdir>` | PPT/PDF → 逐页 PNG，供 vision 核对 |

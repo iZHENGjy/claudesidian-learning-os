@@ -10,6 +10,8 @@ source_ppt: "[[_attachments/source/{{ORIGINAL_FILENAME}}]]"
 pages: "1-{{PAGE_COUNT}}"
 pages_skipped: "{{例: 1 (封面), 2 (目录)}}"
 verified: "{{_attachments/<stem>/verify.py 全部通过 | 无计算}}"
+source_md: "{{_attachments/<stem>/full.md | 无：<原因，如 PPT 输入 / MinerU 失败>}}"
+constants_manual: ""
 related: []
 ---
 
