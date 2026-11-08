@@ -389,6 +389,7 @@ def check_constants(note: Path, fm: str, lines: list[str], source_arg: str | Non
 
 def main() -> None:
     sys.stdout.reconfigure(encoding="utf-8")
+    sys.stderr.reconfigure(encoding="utf-8")
     ap = argparse.ArgumentParser()
     ap.add_argument("note")
     ap.add_argument("--vault", help="vault 根目录；给了才检查 [[链接]] 是否存在")

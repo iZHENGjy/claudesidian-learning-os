@@ -5,7 +5,7 @@
   },
   "metadata": {
     "description": "A personal learning OS for Claude Code + Obsidian: a domain-agnostic course/paper ingest framework with machine-verifiable feedback loops, plus swappable domain plugins (chemical engineering ships as the reference implementation). 通用学习操作系统框架：领域无关的课程/论文流水线 + 可替换的领域插件。",
-    "version": "0.3.0"
+    "version": "0.4.0"
   },
   "plugins": [
     {

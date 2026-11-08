@@ -12,7 +12,7 @@ A real chemical-engineering course run through the pipeline: 4 lectures, 3 tutor
 ```
 vault/CME222_传质/
 ├── L03_diffusion_coefficient_estimation.md   ← 新格式讲解型笔记（重点看这份）
-├── L01, L02, L04, T01–T03                    ← 旧格式笔记，作为复习库的来源
+├── L01, L02, L04, T01–T03                    ← 旧格式笔记，作为复习库的来源（未按新规则重写，过不了 check_note.py）
 ├── _attachments/verify.py                    ← L03 全部例题的验算脚本
 └── 复习库/
     ├── 00-总览.md        掌握度看板（含一轮测验后的状态）
@@ -31,7 +31,7 @@ before/L03_diffusion_coefficient_estimation.md  ← 同一讲的旧版笔记，�
 | Lecture examples worked to a number / 课件例题算到结果 | 0 / 4（只写思路） | **4 / 4**，`verify.py` 断言全部通过 |
 | Formula errors / 公式错误 | Brokaw 系数 0.196 写成 0.19 | 已改正；Brokaw 的 σ 按课件用几何平均 |
 | Data not on the slides / 课件外数据 | 无出处 | 核对后标出处，查不到的标"待核实" |
-| Self-checks / 自测 | AI 以"我"的口吻写的 5 个疑问，无答案 | 8 个"用自己的话说" + 4 个"暂停"预测题 + 10 道练习 |
+| Self-checks / 自测 | AI 以"我"的口吻写的 6 个疑问，无答案 | 8 个"用自己的话说" + 4 个"暂停"预测题 + 10 道练习 |
 | Common mistakes / 误区 | 无 | 每部分 1–2 条，带数字反例 |
 | Dead links / 空链接 | 10 个 | 0 个 |
 | `check_note.py` | 13 处问题 | 通过 |

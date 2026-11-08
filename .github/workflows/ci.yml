@@ -1,0 +1,100 @@
+name: CI
+
+on:
+  push:
+  pull_request:
+
+jobs:
+  checks:
+    runs-on: ubuntu-latest
+    env:
+      PYTHONIOENCODING: utf-8
+      PYTHONUTF8: "1"
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install test dependencies
+        run: pip install pytest
+
+      - name: Validate plugin manifests and marketplace
+        run: |
+          python - <<'PY'
+          import json, sys
+          from pathlib import Path
+
+          root = Path(".")
+          ok = True
+
+          def load(p: Path):
+              global ok
+              try:
+                  return json.loads(p.read_text(encoding="utf-8"))
+              except Exception as e:  # noqa: BLE001
+                  print(f"INVALID JSON {p}: {e}")
+                  ok = False
+                  return None
+
+          manifests = sorted(p for p in root.rglob("plugin.json") if ".git" not in p.parts)
+          for p in manifests:
+              if load(p) is not None:
+                  print(f"ok  {p}")
+
+          mp_path = root / ".claude-plugin" / "marketplace.json"
+          mp = load(mp_path)
+          if mp is None:
+              sys.exit(1)
+          print(f"ok  {mp_path}")
+
+          for entry in mp.get("plugins", []):
+              name, source = entry.get("name"), entry.get("source")
+              src = root / source
+              pj = src / ".claude-plugin" / "plugin.json"
+              if not pj.is_file():
+                  print(f"MISSING {pj} (marketplace plugin {name!r})")
+                  ok = False
+                  continue
+              data = load(pj)
+              if data is None:
+                  continue
+              if data.get("name") != name:
+                  print(f"NAME MISMATCH marketplace {name!r} vs {pj}: {data.get('name')!r}")
+                  ok = False
+              for skill in data.get("skills", []):
+                  d = src / skill
+                  if not (d / "SKILL.md").is_file():
+                      print(f"MISSING skill {d}/SKILL.md (plugin {name})")
+                      ok = False
+              for cmd in data.get("commands", []):
+                  if not (src / cmd).is_file():
+                      print(f"MISSING command {src / cmd} (plugin {name})")
+                      ok = False
+              print(f"ok  plugin {name}: {len(data.get('skills', []))} skills, "
+                    f"{len(data.get('commands', []))} commands")
+
+          sys.exit(0 if ok else 1)
+          PY
+
+      - name: Byte-compile all Python under plugins/ and tests/
+        run: |
+          find plugins tests -name '*.py' -print0 | xargs -0 python -m py_compile
+          echo "py_compile: ok"
+
+      - name: Run example verify.py scripts and the verify template
+        run: |
+          python "examples/CME222-mass-transfer/vault/CME222_传质/_attachments/verify.py"
+          python "examples/CME222-mass-transfer/vault/CME222_传质/复习库/verify.py"
+          python "plugins/claudesidian-notes/skills/ingest-lecture/assets/verify-template.py"
+
+      - name: check_note.py on the example lecture note
+        run: |
+          python plugins/claudesidian-notes/shared/scripts/check_note.py \
+            "examples/CME222-mass-transfer/vault/CME222_传质/L03_diffusion_coefficient_estimation.md" \
+            --vault examples/CME222-mass-transfer/vault \
+            --source tests/fixtures/source_excerpt.md
+
+      - name: pytest
+        run: pytest -q

@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1280" height="560" viewBox="0 0 1280 560" role="img" aria-labelledby="t d">
+  <title id="t">claudesidian-learning-os</title>
+  <desc id="d">Turn a course into notes that explain clearly, compute correctly, and get you through the exam. Claude Code and Obsidian plugins.</desc>
+  <defs>
+    <pattern id="grid" width="24" height="24" patternUnits="userSpaceOnUse">
+      <path d="M24 0H0V24" fill="none" stroke="#e3e7e1" stroke-width="1"/>
+    </pattern>
+    <style>
+      .serif { font-family: Georgia, 'Times New Roman', serif; }
+      .sans  { font-family: -apple-system, 'Segoe UI', Helvetica, Arial, sans-serif; }
+      .mono  { font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace; }
+    </style>
+  </defs>
+
+  <rect width="1280" height="560" fill="#f3f5f2"/>
+  <rect width="1280" height="560" fill="url(#grid)"/>
+
+  <text x="136" y="72" class="mono" font-size="14" fill="#5b6b72" letter-spacing="1.5">CLAUDE CODE + OBSIDIAN PLUGINS · MIT</text>
+
+  <g class="serif" font-size="58" font-weight="700" fill="#1f2a30">
+    <text x="136" y="156">Turn a course into notes that</text>
+    <text x="136" y="230"><tspan fill="#1f4e8c">explain clearly</tspan>, <tspan fill="#1f4e8c">compute correctly</tspan>,</text>
+    <text x="136" y="304">and <tspan fill="#1f4e8c">get you through the exam</tspan>.</text>
+  </g>
+
+  <g class="sans" font-size="20" fill="#3d4a50">
+    <text x="136" y="360">Drop in a lecture PDF; get a teaching note with every example worked to a number</text>
+    <text x="136" y="390">and checked by script. Before the exam: a review vault and quizzes that track what you miss.</text>
+  </g>
+
+  <rect x="136" y="426" width="640" height="56" rx="8" fill="#ffffff" stroke="#d8ddd6"/>
+  <text x="156" y="460" class="mono" font-size="17" fill="#1f2a30">/plugin marketplace add iZHENGjy/claudesidian-learning-os</text>
+</svg>

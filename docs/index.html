@@ -166,7 +166,7 @@ td.num { font-variant-numeric: tabular-nums; }
 .chip.g { background: var(--ok-soft); color: var(--ok); }
 
 /* checks */
-.checks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+.checks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px; }
 @media (max-width: 760px) { .checks { grid-template-columns: 1fr; } }
 .check { display: grid; gap: 8px; align-content: start; padding-top: 14px; border-top: 2px solid var(--ink); }
 .check p { font-size: 15px; color: var(--muted); }
@@ -249,7 +249,7 @@ footer { font-size: 14px; color: var(--muted); display: grid; gap: 6px; }
           <tr><td>课件例题算到结果</td><td class="before num">0 / 4</td><td class="after num">4 / 4，脚本断言验算</td></tr>
           <tr><td>公式错误</td><td class="before">1 处（0.196 写成 0.19）</td><td class="after">0</td></tr>
           <tr><td>课件外数据</td><td class="before">无出处</td><td class="after">核对后标出处，查不到标"待核实"</td></tr>
-          <tr><td>自测</td><td class="before">AI 以"我"的口吻写的 5 个疑问</td><td class="after num">8 个复述检查、4 道预测题、10 道练习</td></tr>
+          <tr><td>自测</td><td class="before">AI 以"我"的口吻写的 6 个疑问</td><td class="after num">8 个复述检查、4 道预测题、10 道练习</td></tr>
           <tr><td>空链接</td><td class="before num">10</td><td class="after num">0</td></tr>
         </tbody>
       </table>
@@ -282,10 +282,12 @@ footer { font-size: 14px; color: var(--muted); display: grid; gap: 6px; }
   <section aria-labelledby="chk-h">
     <div class="eyebrow">可校验</div>
     <h2 id="chk-h">每一份产出怎么被检查</h2>
+    <p class="lede">每份讲义笔记都要通过 <code>check_note.py</code> 才算完成。检查是脚本，不是提示词。</p>
     <div class="checks">
-      <div class="check"><h3>数字</h3><p>每讲一个 <code>verify.py</code>，把例题和练习答案逐个写成断言。先算后写，不过就改笔记，不改断言。</p></div>
-      <div class="check"><h3>结构</h3><p><code>check_note.py</code> 检查每节有没有复述自测、每部分有没有误区和预测题、例题有没有结果、链接是否都存在。</p></div>
-      <div class="check"><h3>出处</h3><p>课件以外的内容先上网核对教材或论文，标出处；核对不了的标"待核实"，不凭记忆当事实写。</p></div>
+      <div class="check"><h3>1 · 数字</h3><p>真的<b>运行</b>每讲的 <code>verify.py</code>，不信自报。每道例题在脚本里有对应段落，笔记里的结果必须出现在断言里，单位一致。抓到过：质量通量差 1000 倍。</p></div>
+      <div class="check"><h3>2 · 课件原文</h3><p>编号公式里的每个常数都要在课件原文里找到；课件印了答案的，用 <code>assert_slide()</code> 对答案。抓到过：0.196 抄成 0.19，笔记和脚本一起错。</p></div>
+      <div class="check"><h3>3 · 覆盖</h3><p>课件每一页，要么被某节引用，要么写明理由跳过。抓到过：3 页总结页没有任何一节引用。</p></div>
+      <div class="check"><h3>4 · 教学</h3><p>先讲问题再给定义；误区有带数字的反例；有预测题、至少 8 道练习；无空链接；课件以外的内容有出处或标"待核实"。</p></div>
     </div>
   </section>
 

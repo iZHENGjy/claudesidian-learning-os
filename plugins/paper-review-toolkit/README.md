@@ -1,72 +1,65 @@
 # paper-review-toolkit
 
-科研综述项目"markdown → 结构化数据 → 主 Excel"自动化的下游 plugin。从 ionogel 综述项目（150+ 论文）打磨出来。
+**文献综述数据抽取** — turns papers already processed by `ingest-paper` into rows of one master spreadsheet, plus a short reading note and a figure-by-figure checklist for review. Built on a real review project of 150+ papers (ionogels); the mechanics are domain-agnostic, the shipped column mapping is the ionogel example.
 
-## 跟 claudesidian-notes 的关系
+**Requires** `claudesidian-notes` (its `ingest-paper` skill produces the input) and `openpyxl`.
 
-```
-[ claudesidian-notes ]                    ← 已装 vault
-   ├── ingest-paper (PDF → markdown vision pipeline)
-   └── ...
-        │
-        ▼  main.md / si.md / images figN_xxx + alt text
-[ paper-review-toolkit ]                  ← 本 plugin
-   └── extract-paper-note (markdown → samples.yaml + notes + 主 Excel)
-```
+## How it fits
 
-**前置依赖**: `claudesidian-notes` plugin 必须先装（提供 ingest-paper）。
-
-## 包含什么
-
-```
-paper-review-toolkit/
-├── .claude-plugin/plugin.json
-├── skills/
-│   └── extract-paper-note/
-│       ├── SKILL.md
-│       ├── references/   字段规范 / notes 模板 / failure modes
-│       ├── scripts/      batch_append_to_excel.py
-│       ├── assets/       空白 notes 模板
-│       └── examples/     calibration 跑出的 SS-7 样例
-└── README.md (本文件)
+```text
+paper PDF (main + SI)
+   │  claudesidian-notes / ingest-paper
+   ▼
+main.md + si.md + images/figN_*.jpg (vision-checked alt text) + meta.yaml
+   │  paper-review-toolkit / extract-paper-note
+   ▼
+extract_handoff.json          columns already named as in the master spreadsheet
+notes.md · checklist.md       for you: what the paper did, and where each figure went
+   │  scripts/write_to_excel.py   (backs up first, writes mechanically, no judgement)
+   ▼
+master spreadsheet, 4 sheets  papers · sample data · sample cards · overview matrix
+   │  you review rows marked [ai] once, in one place
+   ▼
+verified data, ready to cite when writing the review
 ```
 
-## 工作流
+**Design rule:** the model reads the paper and decides what goes in each column; the script only finds the right place, backs up, and writes. No intermediate schema, no semantic decisions in code.
 
-```
-原 PDF
-  │
-  │  claudesidian-notes / ingest-paper
-  ▼
-main.md + si.md + images/figN_xxx.jpg + meta.yaml
-  │   (vision 核对，alt text 含数字+趋势+反直觉)
-  │
-  │  paper-review-toolkit / extract-paper-note
-  ▼
-samples.yaml + notes.md + checklist.md
-  │
-  │  scripts/batch_append_to_excel.py
-  ▼
-主 Excel auto-append (带 [ai] 标记 + verified flag + source_ref)
-  │
-  │  用户在主 Excel 一处审 (筛 [ai] → 打 ✓)
-  ▼
-verified data → 写综述时 AI 直接拿来用
-```
+## Skill: `extract-paper-note`
 
-## 依赖的外部资源（vault 提供）
-
-- 主 Excel `IONOGEL_dynamic.xlsx`（schema 来源 + 数据落地）
-- 综述大纲 docx 在 `00_Inbox/`（contributes_to slug 词表）
-
-## 触发
-
-| Skill | Trigger 关键词 |
+| Say | Not for |
 |---|---|
-| extract-paper-note | "抽这篇论文的数据" / "整理 SS-X 的数据" / "做 SS-X 的笔记" |
+| "抽这篇论文的数据" / "extract paper note" / "整理 SS-X 的数据" | papers not yet run through `ingest-paper`; reviews and perspectives; lectures or tutorials |
 
-## 后续要加的 skill
+Key rules (details in `SKILL.md`):
+- One control-experiment group = one variable code, one row per value. A condition that is only a measurement axis (e.g. temperature in an Arrhenius plot) is **not** a group.
+- Prefer fewer groups that match the paper's own design over inflating rows.
 
-- `outline-migrate` — 综述大纲改了后 batch update 所有 notes 的 contributes_to slug
-- `cross-paper-review` — 跨论文对比，填 notes.md 的"跨论文关系"placeholder
-- `extra-fields-promote` — 扫所有 samples.yaml 的 extra 字段，建议高频字段提升到主 Excel
+## Contents
+
+```text
+skills/extract-paper-note/
+├── SKILL.md
+├── references/
+│   ├── data-mapping-spec.md      how paper content maps to spreadsheet columns
+│   ├── notes-template-spec.md    notes.md structure
+│   ├── checklist-spec.md         checklist.md structure
+│   └── failure-modes.md          pitfalls from real runs
+├── scripts/write_to_excel.py     handoff.json → master spreadsheet
+└── assets/notes-blank-template.md
+```
+
+```bash
+python scripts/write_to_excel.py extract_handoff.json --master "path/to/master.xlsx"
+python scripts/write_to_excel.py extract_handoff.json --dry-run     # print what would be written
+```
+
+## Adapting to your own review
+
+The default master-spreadsheet path and the four sheet layouts come from the author's ionogel review. For another topic: point `--master` (or the `REVIEW_MASTER_XLSX` environment variable) at your spreadsheet, and rewrite `references/data-mapping-spec.md` for your columns. `write_to_excel.py` writes by column name, so the sheet structure is the only thing that needs to match.
+
+## Planned
+
+- `outline-migrate` — update every note's outline tags after the review outline changes
+- `cross-paper-review` — compare papers and fill the cross-paper section of `notes.md`
+- `extra-fields-promote` — suggest frequently used extra fields for promotion to real columns

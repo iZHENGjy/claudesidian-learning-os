@@ -1,0 +1,20 @@
+name: Idea or domain plugin / 想法或新领域插件
+description: Suggest an improvement, a new check, or a plugin for another field
+labels: ["enhancement"]
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: What problem does it solve? / 解决什么问题
+      description: A concrete situation where the current pipeline falls short. 现在的流水线在什么具体场景下不够用。
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposal / 方案
+  - type: textarea
+    id: verify
+    attributes:
+      label: How could it be checked? / 怎么验证它做对了
+      description: If it changes what notes contain, how could a script tell a good result from a bad one? 如果改动影响笔记内容，脚本怎么区分好坏？

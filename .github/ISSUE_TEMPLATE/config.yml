@@ -1,0 +1,5 @@
+blank_issues_enabled: true
+contact_links:
+  - name: Live demo / 在线展示
+    url: https://izhengjy.github.io/claudesidian-learning-os/
+    about: See the before/after example and try a quiz round in the browser.

@@ -1,6 +1,6 @@
 {
   "name": "claudesidian-notes",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Course notes pipeline: ingest lectures into step-by-step teaching notes (self-checks, script-verified examples, cited supplements) / tutorials / papers → distill _principles.md → reverse audit → build an exam review vault (cheat sheet, traps, question bank) → quiz with concept-level mastery tracking. 6 skills, 2 slash commands, shared scripts.",
   "author": {
     "name": "iZHENGjy"

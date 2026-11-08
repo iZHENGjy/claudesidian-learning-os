@@ -1,5 +1,7 @@
 # claudesidian-notes
 
+> **English summary.** The framework plugin: lecture slides → teaching notes with script-verified examples → numbered formula map → solutions audited against it → exam review vault → quizzes with per-concept mastery. Every lecture note must pass `shared/scripts/check_note.py` (numbers, slide source, coverage, teaching structure). Skill prompts below are in Chinese; see the [root README](../../README.md) for an English overview and quickstart.
+
 **课程笔记处理** plugin。从 PPT/tutorial → 讲解型笔记 → `_principles.md` 公式图谱 → 复习库 → 测验的全套流水线。
 
 > 论文处理（`ingest-paper`）跟课程笔记是不同领域（科研 vs 课程），流程也独立，但为了打包方便一起收在本 plugin 的 `skills/ingest-paper/`。
@@ -22,7 +24,7 @@
 | `/distill-all` | 扫 `01_Projects/CME*` 所有有 lecture 的课 → 批量跑 distill-principles |
 | `/audit-tutorials CMEXXX` | 扫一个课所有 `T##` → 批量反向校验 `_principles` → 汇总 bug 报告 |
 
-## 目录结构（当前实际状态）
+## 目录结构
 
 ```
 claudesidian-notes/
@@ -33,6 +35,7 @@ claudesidian-notes/
 │   │   ├── SKILL.md               主流程入口（含 §结课 MOC 升级独立入口）
 │   │   ├── assets/
 │   │   │   ├── lecture-topic.md   L## 笔记模板
+│   │   │   ├── verify-template.py 每讲 verify.py 模板（assert_slide + 实例段落编号）
 │   │   │   └── index-moc.md       index.md 三阶段模板（桩 / Week 追加 / 结课完整 MOC）
 │   │   └── references/            workflow-detail.md + lessons.md
 │   ├── ingest-tutorial/           同上结构（assets/tutorial.md）
@@ -59,18 +62,12 @@ claudesidian-notes/
         ├── extract_formulas.py
         ├── validate_principles.py
         ├── reverse_audit.py
-        ├── check_note.py          讲解型笔记结构检查
+        ├── check_note.py          讲解型笔记检查（结构 + 内容 + 数字 + 课件原文）
         ├── mineru_extract.py      PDF → markdown（MinerU API）
         ├── mineru_convert.py      论文 main + SI 批量转换
         ├── extract_images.py      逐页 PNG 渲染（供 vision 核对）
         └── process_si.py          SI 多格式 dispatcher
 ```
-
-**未来可能补充的**（按需）：
-- `shared/style-guides/textbook-style.md` — 把 distill-principles 的 style-guide 抽到共享（让 4 个 skill 都引用同一份）
-- `shared/schemas/formula-id.md` — (X.Y) 公式编号约定文档
-- `agents/` `hooks/` — 暂未用到
-- 各 skill 的 `scripts/` `assets/` `examples/` 子目录 — 按需创建，**不强求**
 
 ## 数据流（一个学期的典型使用）
 
@@ -97,7 +94,7 @@ L## + T## + _principles ─► build-review-vault ─► 复习库/（速查 · 
 
 ## 共享工具
 
-`shared/scripts/`（**已就绪**）：
+`shared/scripts/`：
 
 | 脚本 | 干啥 |
 |---|---|
@@ -110,9 +107,13 @@ L## + T## + _principles ─► build-review-vault ─► 复习库/（速查 · 
 | `extract_images.py <src> <outdir>` | PPT/PDF → 逐页 PNG，供 vision 核对 |
 | `process_si.py <paper-folder>` | SI 多格式（pdf/docx/xlsx/zip）dispatcher |
 
-**当前 plugin 不包含**：style-guides、schemas — 各 skill 自己的 `references/` 已经覆盖了风格规则，等真有跨 skill 重复时再抽出来。共享 assets 已有一个：`shared/assets/manifest-example.md`。
+共享模板：`shared/assets/manifest-example.md`（新课程的 manifest.md）。
 
 ## 版本
+
+完整记录见仓库根目录 [CHANGELOG.md](../../CHANGELOG.md)。
+
+v0.3.0 — `check_note.py` 从格式检查升级为内容 + 数字 + 课件原文检查（真跑 verify.py、实例双向对账、`assert_slide()` 对课件答案、公式常数对 MinerU full.md）；新增 `assets/verify-template.py`；§4.6 区分教学性解释与事实性断言
 
 v0.2.0 — ingest-lecture 改为讲解型笔记（借鉴 [Love Learning Anything](https://github.com/RAIZ-Zzz/love-learning-anything)，MIT）+ 例题强制 verify.py 验算 + `check_note.py`；新增 `build-review-vault`、`quiz`（借鉴 [tutor-skills](https://github.com/RoundTable02/tutor-skills)，MIT）
 

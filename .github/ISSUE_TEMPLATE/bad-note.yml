@@ -1,0 +1,42 @@
+name: Bad note / 笔记有问题
+description: A generated note is wrong, unclear, or passed the checks when it should not have
+labels: ["note-quality"]
+body:
+  - type: input
+    id: skill
+    attributes:
+      label: Skill / 用的 skill
+      placeholder: ingest-lecture
+    validations:
+      required: true
+  - type: input
+    id: topic
+    attributes:
+      label: Course and lecture topic / 课程和这一讲的主题
+      placeholder: "CME222 L03 — gas diffusion coefficients"
+  - type: textarea
+    id: wrong
+    attributes:
+      label: What is wrong / 哪里不对
+      description: Paste the part of the note and say what the correct content is (with the slide page if you can). 贴出有问题的段落，写明正确内容（最好带课件页码）。
+    validations:
+      required: true
+  - type: textarea
+    id: check
+    attributes:
+      label: check_note.py output / 检查脚本输出
+      description: "python plugins/claudesidian-notes/shared/scripts/check_note.py <note.md> --vault <vault>"
+      render: text
+  - type: dropdown
+    id: passed
+    attributes:
+      label: Did check_note.py pass? / 检查通过了吗？
+      options:
+        - "Yes — the checks missed it / 通过了（检查漏了）"
+        - "No — it reported the problem / 没通过（检查报出来了）"
+        - "Did not run / 没跑"
+  - type: input
+    id: version
+    attributes:
+      label: Plugin version / 插件版本
+      placeholder: "claudesidian-notes 0.3.0"
