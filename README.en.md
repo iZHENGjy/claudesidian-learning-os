@@ -53,66 +53,66 @@ flowchart LR
 |---|---|---|
 | After each lecture | "ingest this lecture" + the slides | A lecture note `L##.md` with its own check script |
 | Doing problem sets | "solve this tutorial" | Solutions `T##.md`, citing the formula map's equation numbers |
-| After a block of lectures | "distill CME222" | A formula map `_principles.md`: the course's formulas arranged as a derivation tree |
-| Before the exam | "build the review vault for CME222" | `复习库/` (review vault): formula sheet, common mistakes, question bank by topic |
-| Again and again | "quiz me on CME222" | Rounds of 4 multiple-choice questions + an optional explain-it-back, mastery tracked per concept |
+| After a block of lectures | "distill MATH101" | A formula map `_principles.md`: the course's formulas arranged as a derivation tree |
+| Before the exam | "build the review vault for MATH101" | `复习库/` (review vault): formula sheet, common mistakes, question bank by topic |
+| Again and again | "quiz me on MATH101" | Rounds of 4 multiple-choice questions + an optional explain-it-back, mastery tracked per concept |
 
 ## A course folder when it's done
 
-Everything for one course lives in one folder. File names below come from the example course [CME222 Mass Transfer](examples/CME222-mass-transfer); the example repo includes the notes, `index.md` and the review vault, but not the slide text, `manifest.md` or the formula map.
+The examples below use a calculus course (MATH101) for illustration. The [example course](examples/CME222-mass-transfer) in this repo is real output from a chemical-engineering course with the same structure.
+
+Everything for one course lives in one folder:
 
 ```text
-01_Projects/CME222_传质/
-├── index.md                              course map: one section per week, linking that week's notes and pitfalls
-├── manifest.md                           slide inventory: processing status and note link for each PDF
-├── L01_intro_to_mass_transfer.md         lecture notes, one per lecture
-├── L02_diffusive_mass_transfer.md
-├── L03_diffusion_coefficient_estimation.md
-├── L04_liquid_solid_pore_diffusivity.md
-├── T01_membrane_diffusion.md             tutorial solutions, one per problem set
-├── T02_diffusion_estimation_problems.md
-├── T03_liquid_solid_pore_diffusion_problems.md
-├── _principles.md                        formula map
-├── 复习库/                                review vault
-│   ├── 00-总览.md                         overview: topic map + mastery dashboard
-│   ├── 01-公式速查.md                      one-page formula sheet
-│   ├── 02-易错点.md                        every common mistake in the course
-│   ├── 题库/<topic>.md                     10 questions per topic, answers folded
-│   ├── 掌握度/<topic>.md                   right/wrong counts and reasons per concept
-│   └── verify.py                          checks every numeric answer in the question bank
+01_Projects/MATH101_Calculus/
+├── index.md                       course map: one section per week, linking that week's notes and pitfalls
+├── manifest.md                    slide inventory: processing status and note link for each PDF
+├── L01_limits.md                  lecture notes, one per lecture
+├── L02_derivatives.md
+├── L03_differentiation_rules.md
+├── L04_applications_of_derivatives.md
+├── T01_limit_problems.md          tutorial solutions, one per problem set
+├── T02_derivative_problems.md
+├── _principles.md                 formula map
+├── 复习库/                         review vault
+│   ├── 00-总览.md                  overview: topic map + mastery dashboard
+│   ├── 01-公式速查.md               one-page formula sheet
+│   ├── 02-易错点.md                 every common mistake in the course
+│   ├── 题库/<topic>.md              at least 10 questions per topic, answers folded
+│   ├── 掌握度/<topic>.md            right/wrong counts and reasons per concept
+│   └── verify.py                   checks every numeric answer in the question bank
 └── _attachments/
-    ├── source/                            original slides (not committed)
+    ├── source/                     original slides (not committed)
     └── <slide deck>/
-        ├── full.md                        text and formulas extracted from the PDF
-        ├── images/                        slide images, named course_lecture_page_topic
-        └── verify.py                      check script for every example in this lecture
+        ├── full.md                 text and formulas extracted from the PDF
+        ├── images/                 slide images, named course_lecture_page_topic
+        └── verify.py               check script for every example in this lecture
 ```
 
 ## How each note is built
 
 ### Lecture note L##
 
-One per lecture, written so you can understand the lecture without the slides. This is the actual structure of [L03](examples/CME222-mass-transfer/vault/CME222_传质/L03_diffusion_coefficient_estimation.md) (32 slides, 4 parts, 8 concepts):
+One per lecture, written so you can understand the lecture without the slides. Taking lecture 2, "Derivatives":
 
 ```text
-L03_diffusion_coefficient_estimation.md
+L02_derivatives.md
 ├── frontmatter            course, week, slide range, skipped slides and why, check result
 ├── At a glance            ≤ 3 sentences: what problem this lecture solves
 ├── Reading path           slide pages per part + one question you can answer after it
-├── Prerequisites          knowledge used but not taught here: assumed, or covered in which section
+├── Prerequisites          knowledge used but not taught here (e.g. limits): assumed, or covered in which section
 │
-├── Part 1 · What a diffusion coefficient is
-│   ├── 1.1 Dimension and magnitude (p.4–8)      ← every concept has the same 7 parts, see below
-│   ├── 1.2 Equality of binary coefficients (p.9)
+├── Part 1 · From average to instantaneous speed
+│   ├── 1.1 Average rate of change (p.3–5)     ← every concept has the same 7 parts, see below
+│   ├── 1.2 Definition of the derivative (p.6–9)
 │   ├── Misconceptions     wrong ideas students hold confidently: counterexample → why it's wrong → correct statement
 │   └── Pause              one "why" question + a prediction question in a new situation
-├── Part 2 · Deriving D from molecular motion      2.1 self-diffusion · 2.2 collision diameter and binary mixtures
-├── Part 3 · Two practical estimates               3.1 Hirschfelder equation · 3.2 Fuller correlation
-├── Part 4 · Polar gases and multicomponent mixtures   4.1 Brokaw equation · 4.2 Wilke equation
+├── Part 2 · Differentiation rules        2.1 power rule · 2.2 product and quotient rules
+├── Part 3 · The chain rule               3.1 composite functions · 3.2 chain rule
 │
 ├── Review and practice
 │   ├── Summary            one line per concept: a sentence + the key formula
-│   ├── Exercises (10)     mostly "why" questions, at least 2 linking two concepts, answers folded
+│   ├── Exercises (≥ 8)    mostly "why" questions, at least 2 linking two concepts, answers folded
 │   ├── Glossary           Chinese–English terms
 │   └── References         only sources actually cited and checked
 ├── Your notes             left for you; the AI doesn't write here
@@ -132,39 +132,41 @@ Every concept (`###` section) follows the same order:
 | In your own words | A folded self-check: 3 points you must mention + one model answer |
 
 <details>
-<summary><b>See a real concept: L03 §3.2 Fuller correlation (translated)</b></summary>
+<summary><b>See a complete concept: §1.2 Definition of the derivative</b></summary>
 
 <br>
 
 > **Why you need it**
-> Benzene diffusing in air: benzene's Lennard-Jones parameters often can't be found, so the Hirschfelder equation can't be used.
+> A car's position is $s(t) = 5t^2$ (metres). Between 2 s and 3 s its average speed is 25 m/s, but the speed keeps changing, and a speed camera wants how fast it is going exactly at $t = 2$ s. With a single instant and no time interval, the average-speed formula doesn't apply.
 >
 > **How it works**
-> Instead of $\sigma$ and $\varepsilon$, the Fuller correlation uses a "diffusion volume" $\Sigma v$ to stand for molecular size. Simple molecules are looked up in a table; for others, add up the atomic diffusion volumes, with a structural correction for an aromatic ring (p.23). The temperature exponent is 1.75, higher than the hard-sphere 1.5.
+> Make the time interval shorter and shorter: from 2 s to 2.1 s the average speed is 20.5 m/s; from 2 s to 2.01 s it is 20.05 m/s. As the interval shrinks, the average speed settles on one number — the instantaneous speed at $t = 2$ s. The derivative is the value the average rate of change approaches as the interval shrinks to zero.
 >
-> **On the slides** (p.22–23)
+> **On the slides** (p.6–7)
 >
-> $$D_{AB} = \frac{10^{-3}\,T^{1.75}\left(\frac{1}{M_A} + \frac{1}{M_B}\right)^{1/2}}{P\left[(\Sigma v)_A^{1/3} + (\Sigma v)_B^{1/3}\right]^2} \tag{3.3}$$
+> $$f'(x) = \lim_{h\to 0}\frac{f(x+h) - f(x)}{h} \tag{1.2}$$
 >
-> **Example 3.2**: diffusivity of benzene in air at 30 °C and 1 atm (p.24)
+> Geometrically, $f'(a)$ is the slope of the tangent to $y = f(x)$ at $x = a$.
 >
-> $$(\Sigma v)_{C_6H_6} = 6\times16.5 + 6\times1.98 - 20.2 = 90.68$$
+> **Example 1.2**: $s(t) = 5t^2$; find the instantaneous speed at $t = 2$ s (p.8)
 >
-> $$D_{AB} = \frac{10^{-3}\times303^{1.75}\left(\frac{1}{78} + \frac{1}{29}\right)^{1/2}}{1\times\left(90.68^{1/3} + 20.1^{1/3}\right)^2} = 0.0920\ \text{cm}^2/\text{s}$$
+> $$\frac{s(2+h) - s(2)}{h} = \frac{5(2+h)^2 - 20}{h} = \frac{20h + 5h^2}{h} = 20 + 5h$$
 >
-> **Result**: 0.0920 cm²/s, about 7% below the tabulated value scaled to 303 K.
+> $$s'(2) = \lim_{h\to 0}\,(20 + 5h) = 20\ \text{m/s}$$
 >
-> **In practice**: when Lennard-Jones parameters are unavailable, use the Fuller correlation with additive atomic diffusion volumes.
+> **Result**: the instantaneous speed at $t = 2$ s is 20 m/s.
+>
+> **In practice**: the derivative is a function's instantaneous rate of change at a point — the slope of its tangent line.
 >
 > **Pros and cons**
-> Only the molecular formula is needed, which makes it the easiest option. But Fuller and Hirschfelder both assume non-polar molecules; for polar ones like ammonia or SO₂, dipole interactions need another correction.
+> The definition works for any differentiable function and says exactly what a derivative is. But every derivative means computing a limit from scratch, which gets tedious for $x^7$ or $x^2\sin x$ — we need a way that doesn't take a limit every time.
 >
 > **In your own words**　your answer should include:
-> - [ ] diffusion volume replaces the Lennard-Jones parameters
-> - [ ] diffusion volumes add up by atom, with a correction for aromatic rings
-> - [ ] temperature exponent 1.75, no collision integral needed
+> - [ ] the derivative is the limit of the average rate of change as the interval goes to zero
+> - [ ] physically it is instantaneous speed; geometrically, the tangent slope
+> - [ ] the steps: write the difference quotient → simplify → let $h \to 0$
 
-That last "needs another correction" is exactly the "why you need it" of the next section, 4.1 Brokaw equation.
+That last "a way that doesn't take a limit every time" is exactly the "why you need it" of the next section, 2.1 power rule.
 
 </details>
 
@@ -173,7 +175,7 @@ That last "needs another correction" is exactly the "why you need it" of the nex
 One per problem set, written so you can solve it and write it up in an exam:
 
 ```text
-T02_diffusion_estimation_problems.md
+T02_derivative_problems.md
 ├── Formulas for this set      formulas used, cited by formula-map number (X.Y)
 ├── Data and constants         values + sources; anything not found is marked "please verify", never made up
 ├── Problem 1 … N
@@ -194,8 +196,8 @@ One per course: every lecture's formulas arranged by how they derive from each o
 ```text
 _principles.md
 ├── Nomenclature            Roman / Greek / sub- and superscripts, each in Chinese and English, look-alike symbols flagged
-├── §1 Starting points      conservation laws or axioms, equations (1.1), (1.2)…
-├── §2 … §N Derived results each says which equation it comes from and under what assumptions, with numbered steps
+├── §1 Starting points      the most basic definitions or axioms, e.g. the limit definition of the derivative (1.1)
+├── §2 … §N Derived results each says which equation it comes from and under what assumptions — e.g. the differentiation rules from (1.1) — with numbered steps
 └── Equation index          number → section
 ```
 
@@ -217,18 +219,18 @@ The whole course condensed into a review vault. It only reorganises existing not
 
 A question-bank entry:
 
-> **Q2 [recall] When is the diffusivity symmetric?**
-> Under what condition does $D_{AB} = D_{BA}$ hold?
+> **Q2 [recall] Geometric meaning of the derivative**
+> What does $f'(a)$ represent on the graph of a function?
 >
-> <details><summary>Answer</summary>A binary system at constant total molar concentration (for gases: constant T and P). Tests: L03 §1.2</details>
+> <details><summary>Answer</summary>The slope of the tangent to y = f(x) at x = a. Tests: L02 §1.2</details>
 
-Say "quiz me on CME222", choose what this round covers (untested topics, the weakest topic, or your pick), and answer 4 multiple-choice questions. Missed concepts are recorded with the reason and asked again in a new situation next round:
+Say "quiz me on MATH101", choose what this round covers (untested topics, the weakest topic, or your pick), and answer 4 multiple-choice questions. Missed concepts are recorded with the reason and asked again in a new situation next round:
 
 | Concept | Tried | Right | Status |
 |---|:---:|:---:|---|
-| Temperature dependence in Fuller | 1 | 1 | 🟢 |
-| How σ_AB is combined in Brokaw | 1 | 0 | 🔴 used the arithmetic mean from the non-polar equation; Brokaw uses the geometric mean |
-| Pressure in table J.1 | 1 | 0 | 🔴 read the $D_{AB}P$ column as $D_{AB}$ |
+| Limit definition of the derivative | 2 | 2 | 🟢 |
+| Chain rule | 2 | 1 | 🔴 differentiating $\sin 3x$, forgot to multiply by the inner derivative 3 |
+| Product rule | 1 | 0 | 🔴 wrote $(uv)'$ as $u'v'$ |
 
 ## Quality checks
 
@@ -300,13 +302,13 @@ Drop in some slides and say "ingest this lecture". The first time for a course, 
 |---|---|---|
 | "ingest this lecture" / "process these slides" | `ingest-lecture` | `L##_<topic>.md` + `verify.py`; updates `index.md` and `manifest.md` |
 | "solve this tutorial" | `ingest-tutorial` | `T##_<topic>.md` |
-| "distill CME222" | `distill-principles` | `_principles.md` |
-| "build the review vault for CME222" | `build-review-vault` | `复习库/` |
-| "quiz me on CME222" | `quiz` | a quiz round; updates `掌握度/` |
+| "distill MATH101" | `distill-principles` | `_principles.md` |
+| "build the review vault for MATH101" | `build-review-vault` | `复习库/` |
+| "quiz me on MATH101" | `quiz` | a quiz round; updates `掌握度/` |
 | "ingest this paper" | `ingest-paper` | `main.md`, `si.md` and figures named by figure number, in the paper's folder |
 | "generate the full index" | `ingest-lecture` | at the end of term, rewrites `index.md` as a complete course map |
 | `/distill-all` | command | builds a formula map for every course that doesn't have one |
-| `/audit-tutorials CME222` | command | audits all of a course's tutorial solutions against its formula map |
+| `/audit-tutorials MATH101` | command | audits all of a course's tutorial solutions against its formula map |
 
 ## Adding a plugin for your field
 
