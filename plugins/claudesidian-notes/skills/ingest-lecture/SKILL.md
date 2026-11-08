@@ -1,13 +1,13 @@
 ---
 name: ingest-lecture
-description: 把一份 lecture 材料（.pptx/.pdf/截图/文本）整理成知识块组织的课程笔记,写入 01_Projects/<CODE>_课名/L##.md,并更新 index.md 和 manifest.md。只要用户提到"整理这节课 / 处理这份 PPT / 把 slides 变成笔记 / ingest lecture / process slides",或附上课程 PPT/PDF 要做笔记,就用本 skill,即使没说"ingest"。用户说"生成完整 index / 结课整理 index / 升级 MOC"也用本 skill（走 §结课 MOC 升级独立入口,不跑常规步骤）。不要用于:tutorial/习题（→ ingest-tutorial）、科研论文（→ ingest-paper）、要交的作业报告（→ chemeng-coursework plugin）。
+description: 把一份 lecture 材料（.pptx/.pdf/截图/文本）整理成讲解型课程笔记（每个知识点：为什么需要它 → 怎么工作 → 课件概念 → 实例 → 优缺点 → 用自己的话说;每部分带误区与自测;例题全部算完并脚本验算）,写入 01_Projects/<CODE>_课名/L##.md,并更新 index.md 和 manifest.md。只要用户提到"整理这节课 / 处理这份 PPT / 把 slides 变成笔记 / ingest lecture / process slides",或附上课程 PPT/PDF 要做笔记,就用本 skill,即使没说"ingest"。用户说"生成完整 index / 结课整理 index / 升级 MOC"也用本 skill（走 §结课 MOC 升级独立入口,不跑常规步骤）。不要用于:tutorial/习题（→ ingest-tutorial）、科研论文（→ ingest-paper）、要交的作业报告（→ chemeng-coursework plugin）。
 ---
 
 # Skill: ingest-lecture
 
 ## Role
 
-把一份 lecture 材料(PPT / PDF / 截图 / 文本)转成**一份**知识块组织
+把一份 lecture 材料(PPT / PDF / 截图 / 文本)转成**一份**讲解型
 的 markdown 笔记。**不**逐 slide 镜像。用户会审,准确性优先于 polish。
 
 ## When to trigger
@@ -70,7 +70,7 @@ cp "<source_path>" "01_Projects/<CODE>_课名/_attachments/source/"
 #### 2a: PDF — 用 MinerU API 抽 markdown(基础底稿)
 
 ```bash
-py ${CLAUDE_PLUGIN_ROOT}/shared/scripts/mineru_extract.py "<pdf_path>" "01_Projects/<CODE>_课名/_attachments/" --model vlm
+python ${CLAUDE_PLUGIN_ROOT}/shared/scripts/mineru_extract.py "<pdf_path>" "01_Projects/<CODE>_课名/_attachments/" --model vlm
 ```
 
 输出:
@@ -82,7 +82,7 @@ py ${CLAUDE_PLUGIN_ROOT}/shared/scripts/mineru_extract.py "<pdf_path>" "01_Proje
 #### 2b: 逐页渲染 PNG(供 vision 核对;PPT 唯一处理方式)
 
 ```bash
-py ${CLAUDE_PLUGIN_ROOT}/shared/scripts/extract_images.py "<source>" "01_Projects/<CODE>_课名/_attachments/_pages/" --prefix <CODE>_L## --pages --dpi 150
+python ${CLAUDE_PLUGIN_ROOT}/shared/scripts/extract_images.py "<source>" "01_Projects/<CODE>_课名/_attachments/_pages/" --prefix <CODE>_L## --pages --dpi 150
 ```
 
 **PDF 也跑 2b**(供 vision 对照 MinerU 结果,补 MinerU 漏抽的内容)。
@@ -126,11 +126,26 @@ Read `_attachments/<pdf_stem>/full.md`,作为内容基础底稿。
   4. Write 前列「v2 章节 vs v1 章节」对照清单,**v2 章节数 ≥ v1 章节数**
 - **不存在或空**:按 `${CLAUDE_PLUGIN_ROOT}/skills/ingest-lecture/assets/lecture-topic.md` 模板从零写。
 
-模板字段含义、知识块/术语/图片嵌入/内容层次的完整规则 → 见 `references/workflow-detail.md` §4。
+笔记是**讲解型**:每个知识点按"为什么需要它 → 它怎么工作 → 课件里的概念 → 实例 → 专业说法 → 优缺点 → 用自己的话说"固定顺序写;每部分结尾有"误区与陷阱"和"暂停"自测。完整规则 → 见 `references/workflow-detail.md` §4(写之前必读)。
+
+#### Step 4.5: 验算所有数字(强制)
+
+把课件例题、实例、练习答案里的每个数字写进 `01_Projects/<CODE>_课名/_attachments/<pdf_stem>/verify.py`,每个结果一条 `assert`,然后:
+
+```bash
+python "01_Projects/<CODE>_课名/_attachments/<pdf_stem>/verify.py"
+```
+
+不通过 → 改笔记,不许改断言凑数。通过后在 frontmatter 写 `verified: "_attachments/<pdf_stem>/verify.py 全部通过"`;本讲无计算则写 `verified: "无计算"`。
 
 ### Step 5: 自检
 
-- **slide 覆盖率**:每页核心信息是否在某知识块?未覆盖标"跳过(装饰
+- **结构检查(脚本)**:
+  ```bash
+  python ${CLAUDE_PLUGIN_ROOT}/shared/scripts/check_note.py "01_Projects/<CODE>_课名/L##_topic_snake.md" --vault .
+  ```
+  检查:每个知识点有"用自己的话说"、每部分有"误区与陷阱"和"暂停"、每个实例以"计算结果"收尾、补充都有来源且在参考文献里、`[[链接]]` 都指向已存在的笔记、`verified:` 已填。退出码 0 = 通过;1 = 按输出修。
+- **slide 覆盖率**:每页核心信息是否在某个知识点小节?未覆盖标"跳过(装饰
   /过渡)"或补充。报告 `Slides 覆盖: 18/20`。
 - **术语自洽**:首次术语是否已定义?未定义补完。
 - **Tutorial 反向校验**(若同目录有对应 `T##*.md`):
@@ -147,7 +162,7 @@ Read `_attachments/<pdf_stem>/full.md`,作为内容基础底稿。
   3. 对每条公式/术语,在新生成的 L## 笔记里 grep 同名公式 / 术语 /
      wiki link(`[[术语]]`)。**找不到 = 缺漏**。
   4. 报告 `Tutorial 反向校验: N/N 命中` — 若有缺漏,列出缺哪些 +
-     建议在哪个知识块补,**让用户决定是否补**(不要擅自加,避免动到用户
+     建议在哪个小节补,**让用户决定是否补**(不要擅自加,避免动到用户
      已审阅过的内容)。
   5. 若当前 L## 是新讲(对应 T## 还没生成),跳过这条,Step 7 报告里提示
      "T## 生成后建议回头跑一次反向校验"。
@@ -174,8 +189,8 @@ rm -rf 01_Projects/<CODE>_课名/_attachments/_pages/
 
 - [[L##_topic_snake]]
 
-**本周疑问**:
-- (汇总笔记里的 1-3 个关键疑问)
+**本周易错**:
+- (从笔记"误区与陷阱"里挑 1-3 条,一句话)
 ```
 
 **Append-only**:不修改已有 Week 段落。
@@ -202,28 +217,33 @@ rm -rf 01_Projects/<CODE>_课名/_attachments/_pages/
 
 **笔记**: [[L##_topic_snake]]
 **Slides 覆盖**: X/Y(跳过 Z 页:课程信息页/装饰页)
-**术语自洽**: N/N(全部已定义或已链接)
+**知识点**: N 节(每节含"用自己的话说")/ 误区 M 条 / 练习 K 题
+**实例**: N 道,verify.py 全部通过
+**课件以外内容**: N 条,均已上网核对并标出处(或:K 条标"待核实")
 **图片**: N 张嵌入
-**疑问汇总**:
-- (笔记里的疑问)
+**结构检查**: check_note.py 通过
 ```
+
+课程有多讲笔记、快考试时,提示用户可以跑 `build-review-vault` 生成复习库。
 
 ## §结课 MOC 升级(独立入口)
 
 用户明说"生成完整 index / 结课整理 index / 升级 MOC"时走这里(不跑 Step 1-7):
 
 1. Glob `01_Projects/<CODE>_课名/L*.md` + `T*.md`,确认 lecture 齐了(缺很多就提醒用户,问要不要继续)
-2. Read 全部 L##(至少读每份的标题层级 + 核心公式段)+ 现有 index.md 的各 Week 疑问段
+2. Read 全部 L##(至少读每份的标题层级 + 核心公式段)+ 现有 index.md 的各 Week 易错段
 3. 按 `assets/index-moc.md` **阶段③** 的 10 段结构**整体重写** index.md
    (这是唯一允许重写 index 的场合)
-4. 写完报告:Phase 划分 / 覆盖 lecture 数 / 疑问汇总条数,让用户审
+4. 写完报告:Phase 划分 / 覆盖 lecture 数 / 易错汇总条数,让用户审
 
 ## Rules
 
 1. **不编造 slide 内容** — PPT 文字稀疏时写"原文未明",不要自己编
-2. **解读长度匹配 slide 密度** — 一行 slide 一行解读。术语首次定义除外
-3. **AI 延伸必须用 `> [!tip] 延伸(非 PPT 内容)` callout** — 不混进正文
-4. **MOC 更新 append-only** — 不改已有 Week 段落(唯一例外:§结课 MOC 升级是显式整体重写)
+2. **先讲问题,再给名字** — 任何知识点都不以术语、定义或公式开头
+3. **课件以外的内容必须有出处** — 先上网核对,写进 `> [!info]- 补充:…` 并标 `来源:[作者, 年份]`;核对不了就删或标"待核实"
+4. **每个数字都验算** — 例题算到题目要的量和单位,verify.py 通过才算完成
+5. **只链接已存在的笔记** — 不预留空链接
+6. **MOC 更新 append-only** — 不改已有 Week 段落(唯一例外:§结课 MOC 升级是显式整体重写)
 
 ## Reference index
 
@@ -232,5 +252,5 @@ rm -rf 01_Projects/<CODE>_课名/_attachments/_pages/
 | `assets/lecture-topic.md` | Step 4 写 L## 笔记时的模板 |
 | `assets/index-moc.md` | 一切 index.md 操作:Step 1 建桩(阶段①)/ Step 6 追加 Week(阶段②)/ §结课 MOC 升级(阶段③) |
 | `../../shared/assets/manifest-example.md` | 给课程新建 manifest.md 时照抄 |
-| `references/workflow-detail.md` | 改 sub-agent 协议（§3b 块 1/2/3 字段）/ 主线程聚合三步细节（§3c）/ 笔记模板规则（§4 frontmatter / 知识块 / 术语 / 图片嵌入 / 内容层次） |
+| `references/workflow-detail.md` | 改 sub-agent 协议（§3b 块 1/2/3 字段）/ 主线程聚合三步细节（§3c）/ 讲解型笔记规则（§4 开头三件套 / 知识点固定结构 / 误区与暂停 / 实例验算 / 出处 / 链接） |
 | `references/lessons.md` | 遇到怪现象先查 Failure modes 表 / 写笔记前看 Good 示例对齐风格 |

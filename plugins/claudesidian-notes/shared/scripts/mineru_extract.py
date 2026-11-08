@@ -6,7 +6,7 @@ mineru_extract.py — MinerU API 调用封装
 Token 从运行目录（vault 根）的 .env 读取(MINERU_API_TOKEN=...)。
 
 用法:
-    py ${CLAUDE_PLUGIN_ROOT}/shared/scripts/mineru_extract.py <pdf_path> <output_dir> [--model vlm|pipeline]
+    python ${CLAUDE_PLUGIN_ROOT}/shared/scripts/mineru_extract.py <pdf_path> <output_dir> [--model vlm|pipeline]
 
 输出:
     <output_dir>/<pdf_stem>/full.md       # 主 markdown(图片用相对路径)

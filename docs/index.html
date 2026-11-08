@@ -1,0 +1,377 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="把课件变成讲解型笔记、复习库和测验的 Claude Code + Obsidian 插件：例题全部脚本验算，附真实课程新旧对比。">
+<meta property="og:title" content="Claudesidian Learning OS">
+<meta property="og:description" content="把课件变成讲解型笔记、复习库和测验的 Claude Code + Obsidian 插件：例题全部脚本验算，附真实课程新旧对比。">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://izhengjy.github.io/claudesidian-learning-os/">
+<meta property="og:image" content="https://izhengjy.github.io/claudesidian-learning-os/assets/showcase.png">
+<meta name="twitter:card" content="summary_large_image">
+<title>Claudesidian Learning OS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root { color-scheme: light; padding-top: env(safe-area-inset-top, 0px); padding-bottom: env(safe-area-inset-bottom, 0px); }
+body { margin: 0; }
+img { max-width: 100%; }
+[hidden] { display: none !important; }
+</style>
+<style>
+/* Layout: an engineering calculation pad — faint grid paper, ink-blue working, red-pencil corrections on the "before" side */
+:root {
+  --paper: #f4f6f3;
+  --grid: #dfe6e0;
+  --ink: #1d2a33;
+  --muted: #5b6b72;
+  --blue: #1f4e8c;
+  --blue-soft: #e3ebf5;
+  --red: #b8412c;
+  --red-soft: #f6e4df;
+  --ok: #2f7a4c;
+  --ok-soft: #e1f0e6;
+  --card: #ffffff;
+  --line: #cfd8d2;
+  --f-display: "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
+  --f-body: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --paper: #12181c; --grid: #1c252b; --ink: #e3e9ec; --muted: #9aa9b0;
+    --blue: #8fb4e8; --blue-soft: #1a2a3d; --red: #e8846f; --red-soft: #3a2420;
+    --ok: #7fc79a; --ok-soft: #1b3326; --card: #182026; --line: #2b363d;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --paper: #12181c; --grid: #1c252b; --ink: #e3e9ec; --muted: #9aa9b0;
+  --blue: #8fb4e8; --blue-soft: #1a2a3d; --red: #e8846f; --red-soft: #3a2420;
+  --ok: #7fc79a; --ok-soft: #1b3326; --card: #182026; --line: #2b363d;
+  color-scheme: dark;
+}
+
+* { box-sizing: border-box; }
+body {
+  background-color: var(--paper);
+  background-image:
+    linear-gradient(var(--grid) 1px, transparent 1px),
+    linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+  color: var(--ink);
+  font-family: var(--f-body);
+  font-size: 16px;
+  line-height: 1.7;
+}
+.wrap {
+  max-width: 1040px;
+  margin: 0 auto;
+  padding-left: max(16px, env(safe-area-inset-left, 0px));
+  padding-right: max(16px, env(safe-area-inset-right, 0px));
+  padding-block: 48px 72px;
+  display: grid;
+  gap: 72px;
+}
+h1, h2, h3 { font-family: var(--f-display); text-wrap: balance; margin: 0; line-height: 1.25; }
+h2 { font-size: clamp(24px, 3.4vw, 32px); font-weight: 900; }
+h3 { font-size: 18px; font-weight: 600; }
+p { margin: 0; max-width: 65ch; }
+a { color: var(--blue); }
+a:focus-visible, button:focus-visible { outline: 2px solid var(--blue); outline-offset: 2px; }
+.eyebrow { font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); }
+.mono { font-family: var(--f-mono); }
+section { display: grid; gap: 24px; }
+.lede { color: var(--muted); }
+
+/* hero */
+.hero { display: grid; gap: 20px; }
+.hero h1 { font-size: clamp(34px, 6vw, 60px); font-weight: 900; letter-spacing: -.01em; }
+.hero h1 em { font-style: normal; color: var(--blue); }
+.hero .sub { font-size: 18px; max-width: 46ch; }
+.cmd {
+  display: flex; flex-wrap: wrap; gap: 10px; align-items: center;
+  background: var(--card); border: 1px solid var(--line); border-radius: 6px;
+  padding: 10px 12px; max-width: 640px;
+}
+.cmd code { font-family: var(--f-mono); font-size: 14px; flex: 1 1 260px; min-width: 0; overflow-wrap: anywhere; }
+.btn {
+  font: 500 14px var(--f-body); border: 1px solid var(--blue); background: var(--blue); color: var(--paper);
+  border-radius: 4px; padding: 6px 12px; cursor: pointer;
+}
+.btn.ghost { background: transparent; color: var(--blue); }
+.links { display: flex; flex-wrap: wrap; gap: 16px; font-size: 15px; }
+
+/* pipeline */
+.pipe { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 0; border: 1px solid var(--line); border-radius: 6px; overflow: hidden; background: var(--card); }
+.step { padding: 16px; display: grid; gap: 6px; align-content: start; border-right: 1px solid var(--line); min-width: 0; }
+.step:last-child { border-right: 0; }
+.step .n { font-family: var(--f-mono); font-size: 12px; color: var(--muted); }
+.step b { font-family: var(--f-display); font-size: 16px; }
+.step span { font-size: 14px; color: var(--muted); }
+.step.new { background: var(--blue-soft); }
+.step.new .n::after { content: " · 新"; color: var(--blue); }
+@media (max-width: 760px) {
+  .pipe { grid-template-columns: 1fr; }
+  .step { border-right: 0; border-bottom: 1px solid var(--line); }
+  .step:last-child { border-bottom: 0; }
+}
+
+/* before / after */
+.compare { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+@media (max-width: 760px) { .compare { grid-template-columns: 1fr; } }
+.sheet { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 18px; display: grid; gap: 12px; align-content: start; min-width: 0; }
+.sheet header { display: flex; justify-content: space-between; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.tag { font-family: var(--f-mono); font-size: 12px; padding: 2px 8px; border-radius: 999px; }
+.tag.bad { background: var(--red-soft); color: var(--red); }
+.tag.good { background: var(--ok-soft); color: var(--ok); }
+.snip { font-family: var(--f-mono); font-size: 13px; line-height: 1.65; background: var(--paper); border-radius: 4px; padding: 12px; overflow-x: auto; white-space: pre; }
+.snip .x { color: var(--red); text-decoration: line-through; text-decoration-thickness: 2px; }
+.snip .note { color: var(--red); }
+.snip .res { color: var(--ok); font-weight: 600; }
+.snip .h { color: var(--blue); font-weight: 600; }
+
+/* metrics table */
+.tablebox { overflow-x: auto; background: var(--card); border: 1px solid var(--line); border-radius: 6px; }
+table { border-collapse: collapse; width: 100%; min-width: 560px; font-size: 15px; }
+th, td { text-align: left; padding: 12px 16px; border-bottom: 1px solid var(--line); vertical-align: top; }
+th { font-family: var(--f-mono); font-size: 12px; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); font-weight: 400; }
+tr:last-child td { border-bottom: 0; }
+td.before { color: var(--red); }
+td.after { color: var(--ok); font-weight: 500; }
+td.num { font-variant-numeric: tabular-nums; }
+
+/* quiz demo */
+.quiz { display: grid; grid-template-columns: minmax(0, 1.4fr) minmax(0, 1fr); gap: 16px; align-items: start; }
+@media (max-width: 760px) { .quiz { grid-template-columns: 1fr; } }
+.q { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 18px; display: grid; gap: 12px; }
+.q .meta { display: flex; justify-content: space-between; gap: 8px; flex-wrap: wrap; }
+.opts { display: grid; gap: 8px; }
+.opt {
+  text-align: left; font: 15px var(--f-body); color: var(--ink); background: var(--paper);
+  border: 1px solid var(--line); border-radius: 4px; padding: 10px 12px; cursor: pointer;
+}
+.opt:hover { border-color: var(--blue); }
+.opt.right { border-color: var(--ok); background: var(--ok-soft); }
+.opt.wrong { border-color: var(--red); background: var(--red-soft); }
+.opt:disabled { cursor: default; }
+.feedback { font-size: 14px; color: var(--muted); min-height: 1.7em; }
+.qnav { display: flex; gap: 8px; flex-wrap: wrap; }
+.board { background: var(--card); border: 1px solid var(--line); border-radius: 6px; padding: 18px; display: grid; gap: 10px; }
+.row { display: flex; justify-content: space-between; gap: 8px; font-size: 14px; align-items: center; }
+.chip { font-family: var(--f-mono); font-size: 12px; padding: 1px 8px; border-radius: 999px; background: var(--paper); color: var(--muted); white-space: nowrap; }
+.chip.r { background: var(--red-soft); color: var(--red); }
+.chip.g { background: var(--ok-soft); color: var(--ok); }
+
+/* checks */
+.checks { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 16px; }
+@media (max-width: 760px) { .checks { grid-template-columns: 1fr; } }
+.check { display: grid; gap: 8px; align-content: start; padding-top: 14px; border-top: 2px solid var(--ink); }
+.check p { font-size: 15px; color: var(--muted); }
+.check code { font-family: var(--f-mono); font-size: 13px; color: var(--ink); }
+
+footer { font-size: 14px; color: var(--muted); display: grid; gap: 6px; }
+@media (prefers-reduced-motion: no-preference) { .opt { transition: background .15s, border-color .15s; } }
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="hero">
+    <div class="eyebrow">Claude Code + Obsidian 插件 · MIT</div>
+    <h1>把一门课，变成<em>讲得清、算得对、考得到</em>的笔记</h1>
+    <p class="sub">丢一份课件 PDF，得到一份先讲问题、例题全部算完并经脚本验算的讲解型笔记；考前一句话，整门课压成复习库，再出题考你，记下哪些概念还没懂。</p>
+    <div class="cmd">
+      <code id="install">/plugin marketplace add iZHENGjy/claudesidian-learning-os</code>
+      <button class="btn" id="copyBtn" type="button">复制</button>
+    </div>
+    <div class="links">
+      <a href="https://github.com/iZHENGjy/claudesidian-learning-os">GitHub 仓库</a>
+      <a href="https://github.com/iZHENGjy/claudesidian-learning-os/tree/main/examples/CME222-mass-transfer">真实课程示例（传质）</a>
+    </div>
+  </header>
+
+  <section aria-labelledby="pipe-h">
+    <div class="eyebrow">流水线</div>
+    <h2 id="pipe-h">一个学期的五步</h2>
+    <div class="pipe">
+      <div class="step new"><span class="n">1 · ingest-lecture</span><b>讲解型笔记</b><span>每讲一份。先讲为什么需要，再给概念；例题算到结果。</span></div>
+      <div class="step"><span class="n">2 · ingest-tutorial</span><b>习题解答</b><span>量级估算、推导、英文作答、知识盲区。</span></div>
+      <div class="step"><span class="n">3 · distill-principles</span><b>公式图谱</b><span>整门课压成带编号的第一原理推导树。</span></div>
+      <div class="step new"><span class="n">4 · build-review-vault</span><b>复习库</b><span>公式速查、易错点合集、按主题的题库。</span></div>
+      <div class="step new"><span class="n">5 · quiz</span><b>测验</b><span>零提示选择题 + 复述题，按概念记录掌握度。</span></div>
+    </div>
+  </section>
+
+  <section aria-labelledby="cmp-h">
+    <div class="eyebrow">CME222 传质 · L03 · 同一份 32 页课件</div>
+    <h2 id="cmp-h">同一道例题，新旧笔记</h2>
+    <p class="lede">课件例 3：373 K 下氨在空气中的扩散系数（Brokaw 方法）。</p>
+    <div class="compare">
+      <article class="sheet">
+        <header><h3>旧版笔记</h3><span class="tag bad">停在思路</span></header>
+<div class="snip"><span class="h">### 例题 3: NH₃ 在空气中</span>
+
+思路: 计算 δ_NH₃ → 修正后的 σ, ε/k
+→ T* → 修正 Ω_D → 代 Hirschfelder。
+
+Ω_D,polar = Ω_D + <span class="x">0.19</span> δ_AB² / T*
+<span class="note">  ↑ 课件 p.25 写的是 0.196</span>
+
+<span class="note">（没有数字结果）</span></div>
+      </article>
+      <article class="sheet">
+        <header><h3>新版笔记</h3><span class="tag good">verify.py 通过</span></header>
+<div class="snip"><span class="h">实例 4.1：NH₃–空气，373 K（p.27）</span>
+① δ_NH₃ = 1.94e3×1.46² / (25.8×239.81)
+       = 0.668，空气 δ = 0 ⇒ δ_AB = 0
+② σ_AB = √(2.958 × 3.619) = 3.272 Å
+   <span class="note">几何平均，课件 p.26</span>
+③ T* = 373 / √(447.3×93.0) = 1.829
+   Ω_D = 1.110
+④ D = 0.001858×373^1.5×(1/17+1/29)^½
+      / (1 × 3.272² × 1.110)
+
+<span class="res">计算结果：D = 0.344 cm²/s</span></div>
+      </article>
+    </div>
+  </section>
+
+  <section aria-labelledby="num-h">
+    <div class="eyebrow">L03 整讲对比</div>
+    <h2 id="num-h">改了多少</h2>
+    <div class="tablebox">
+      <table>
+        <thead><tr><th>检查项</th><th>旧版</th><th>新版</th></tr></thead>
+        <tbody>
+          <tr><td>课件例题算到结果</td><td class="before num">0 / 4</td><td class="after num">4 / 4，脚本断言验算</td></tr>
+          <tr><td>公式错误</td><td class="before">1 处（0.196 写成 0.19）</td><td class="after">0</td></tr>
+          <tr><td>课件外数据</td><td class="before">无出处</td><td class="after">核对后标出处，查不到标"待核实"</td></tr>
+          <tr><td>自测</td><td class="before">AI 以"我"的口吻写的 5 个疑问</td><td class="after num">8 个复述检查、4 道预测题、10 道练习</td></tr>
+          <tr><td>空链接</td><td class="before num">10</td><td class="after num">0</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section aria-labelledby="quiz-h">
+    <div class="eyebrow">复习库 · 5 个主题 · 50 题</div>
+    <h2 id="quiz-h">试一轮测验</h2>
+    <p class="lede">下面 3 道题取自示例复习库的"气体扩散系数"题库。答错的概念会进入右边的掌握度记录。</p>
+    <div class="quiz">
+      <div class="q" id="quizCard">
+        <div class="meta"><span class="eyebrow" id="qIndex">第 1 / 3 题</span><span class="chip" id="qTopic">气体扩散系数</span></div>
+        <h3 id="qText"></h3>
+        <div class="opts" id="qOpts"></div>
+        <div class="feedback" id="qFeedback" aria-live="polite"></div>
+        <div class="qnav">
+          <button class="btn ghost" id="nextBtn" type="button" hidden>下一题</button>
+          <button class="btn ghost" id="resetBtn" type="button" hidden>重新开始</button>
+        </div>
+      </div>
+      <aside class="board">
+        <div class="eyebrow">掌握度 · 气体扩散系数</div>
+        <div id="boardRows"></div>
+        <div class="row"><span>本轮</span><span class="chip" id="score">0 / 0</span></div>
+      </aside>
+    </div>
+  </section>
+
+  <section aria-labelledby="chk-h">
+    <div class="eyebrow">可校验</div>
+    <h2 id="chk-h">每一份产出怎么被检查</h2>
+    <div class="checks">
+      <div class="check"><h3>数字</h3><p>每讲一个 <code>verify.py</code>，把例题和练习答案逐个写成断言。先算后写，不过就改笔记，不改断言。</p></div>
+      <div class="check"><h3>结构</h3><p><code>check_note.py</code> 检查每节有没有复述自测、每部分有没有误区和预测题、例题有没有结果、链接是否都存在。</p></div>
+      <div class="check"><h3>出处</h3><p>课件以外的内容先上网核对教材或论文，标出处；核对不了的标"待核实"，不凭记忆当事实写。</p></div>
+    </div>
+  </section>
+
+  <footer>
+    <span>讲解型笔记结构借鉴 Love Learning Anything，复习库与测验借鉴 tutor-skills（均为 MIT）。</span>
+    <span>示例课程的课件原图和课程行政信息未收录。</span>
+  </footer>
+</div>
+
+<script>
+(function () {
+  var copyBtn = document.getElementById('copyBtn');
+  copyBtn.addEventListener('click', function () {
+    var text = document.getElementById('install').textContent;
+    function done() { copyBtn.textContent = '已复制'; setTimeout(function () { copyBtn.textContent = '复制'; }, 1600); }
+    function fallback() {
+      var r = document.createRange(); r.selectNodeContents(document.getElementById('install'));
+      var s = window.getSelection(); s.removeAllRanges(); s.addRange(r);
+      copyBtn.textContent = '已选中，按 Ctrl+C';
+    }
+    try { navigator.clipboard.writeText(text).then(done, fallback); } catch (e) { fallback(); }
+  });
+
+  var questions = [
+    { concept: 'Fuller 的温度依赖', text: '用 Fuller 关联式，压力不变，温度从 300 K 升到 600 K，扩散系数变为原来的多少倍？',
+      opts: ['2.00 倍', '2.83 倍', '3.36 倍', '4.00 倍'], answer: 2,
+      why: 'Fuller 中 D ∝ T^1.75，2^1.75 ≈ 3.36。2.83 倍是硬球模型的 T^1.5。' },
+    { concept: 'Brokaw 中 σ_AB 的组合', text: 'Brokaw 方法里，两种分子的碰撞直径 σ_A、σ_B 怎样组合成 σ_AB？',
+      opts: ['算术平均 (σ_A + σ_B)/2', '几何平均 √(σ_A σ_B)', '取较大者', '调和平均'], answer: 1,
+      why: '课件 p.26 规定 Brokaw 用几何平均；非极性 Hirschfelder 才用算术平均。' },
+    { concept: '表 J.1 的压力换算', text: '表 J.1 中 CO₂–空气 273 K 一栏为 0.136 cm²·atm/s。同温 2 atm 下 D_AB 是多少？',
+      opts: ['0.068 cm²/s', '0.272 cm²/s', '0.136 cm²/s', '0.034 cm²/s'], answer: 0,
+      why: '那一列是 D_AB·P，要除以实际压力：0.136 / 2 = 0.068。' }
+  ];
+  var state = { i: 0, right: 0, done: 0, record: {} };
+  var qText = document.getElementById('qText'), qOpts = document.getElementById('qOpts'),
+      qFeedback = document.getElementById('qFeedback'), qIndex = document.getElementById('qIndex'),
+      nextBtn = document.getElementById('nextBtn'), resetBtn = document.getElementById('resetBtn'),
+      boardRows = document.getElementById('boardRows'), score = document.getElementById('score');
+
+  function renderBoard() {
+    boardRows.innerHTML = '';
+    questions.forEach(function (q) {
+      var row = document.createElement('div'); row.className = 'row';
+      var name = document.createElement('span'); name.textContent = q.concept;
+      var chip = document.createElement('span'); var r = state.record[q.concept];
+      chip.className = 'chip' + (r === true ? ' g' : r === false ? ' r' : '');
+      chip.textContent = r === true ? '🟢 已掌握' : r === false ? '🔴 未掌握' : '未测';
+      row.appendChild(name); row.appendChild(chip); boardRows.appendChild(row);
+    });
+    score.textContent = state.right + ' / ' + state.done;
+  }
+
+  function render() {
+    var q = questions[state.i];
+    qIndex.textContent = '第 ' + (state.i + 1) + ' / ' + questions.length + ' 题';
+    qText.textContent = q.text;
+    qFeedback.textContent = '';
+    nextBtn.hidden = true; resetBtn.hidden = true;
+    qOpts.innerHTML = '';
+    q.opts.forEach(function (label, k) {
+      var b = document.createElement('button'); b.type = 'button'; b.className = 'opt'; b.textContent = label;
+      b.addEventListener('click', function () { choose(k); });
+      qOpts.appendChild(b);
+    });
+  }
+
+  function choose(k) {
+    var q = questions[state.i], buttons = qOpts.querySelectorAll('button');
+    buttons.forEach(function (b, j) {
+      b.disabled = true;
+      if (j === q.answer) b.classList.add('right');
+      else if (j === k) b.classList.add('wrong');
+    });
+    var ok = k === q.answer;
+    state.done += 1; if (ok) state.right += 1;
+    state.record[q.concept] = ok;
+    qFeedback.textContent = (ok ? '答对。' : '答错。') + q.why;
+    renderBoard();
+    if (state.i < questions.length - 1) nextBtn.hidden = false; else resetBtn.hidden = false;
+  }
+
+  nextBtn.addEventListener('click', function () { state.i += 1; render(); });
+  resetBtn.addEventListener('click', function () { state = { i: 0, right: 0, done: 0, record: {} }; render(); renderBoard(); });
+  render(); renderBoard();
+})();
+</script>
+</body>
+</html>

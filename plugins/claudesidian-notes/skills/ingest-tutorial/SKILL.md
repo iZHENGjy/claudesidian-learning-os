@@ -118,7 +118,7 @@ Read `01_Projects/<CODE>_课名/_principles.md`(若存在),拿到整门课的**�
 
 ### Step 3: 公式速查表
 
-从相关 lecture 的知识块里提取本 tutorial 要用的公式,填 `## 本次公式速查`:
+从相关 lecture 的知识点小节里提取本 tutorial 要用的公式,填 `## 本次公式速查`:
 
 | 公式 | 含义 | _principles 编号 |
 |---|---|---|

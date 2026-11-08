@@ -1,18 +1,18 @@
 ---
-description: 扫所有 CME* 课程，批量跑 distill-principles 蒸馏所有还没 _principles.md 的课。期末复习前一键搞定。
+description: 扫 01_Projects/ 下所有有 lecture 笔记的课程，批量跑 distill-principles 蒸馏还没 _principles.md 的课。期末复习前一键搞定。
 ---
 
 # /distill-all
 
-批量蒸馏所有 CME 课程的 `_principles.md`。
+批量蒸馏所有课程的 `_principles.md`（任何学科、任何课程代码）。
 
 ## 执行步骤
 
 1. **扫课程列表**：
    ```bash
-   ls -d 01_Projects/CME*/
+   ls -d 01_Projects/*/
    ```
-   列出所有 `<CODE>_课名/` 文件夹。
+   列出所有 `<CODE>_课名/` 文件夹。文献综述等非课程项目（没有 `L*.md`）在下一步自然被筛掉。
 
 2. **筛选**：对每门课
    - 检查 `01_Projects/<CODE>_*/L*.md` 是否存在（至少 1 节 lecture，否则没东西可蒸馏）
@@ -22,9 +22,9 @@ description: 扫所有 CME* 课程，批量跑 distill-principles 蒸馏所有�
 
 3. **跟用户确认清单**：
    ```
-   待蒸馏：CME223 / CME217 / CME113 / CME212 / CME211
-   已蒸馏（跳过）：CME213 / CME222
-   预期总时间：5 课 × 5-10 分钟 ≈ 30-50 分钟
+   待蒸馏：CME223 / CS162 / ECON101
+   已蒸馏（跳过）：CME222
+   预期总时间：3 课 × 5-10 分钟 ≈ 15-30 分钟
    ```
    用户 OK 后继续。
 
@@ -40,7 +40,7 @@ description: 扫所有 CME* 课程，批量跑 distill-principles 蒸馏所有�
    | 课程 | 行数 | 公式数 | 根本起点 | 自检 |
    |---|---|---|---|---|
    | CME223 | 312 | 28 | 3 | ✓ |
-   | CME217 | 298 | 35 | 3 | ✓ |
+   | CS162 | 298 | 35 | 3 | ✓ |
    | ...
 
    建议：

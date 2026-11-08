@@ -5,13 +5,13 @@
   },
   "metadata": {
     "description": "A personal learning OS for Claude Code + Obsidian: a domain-agnostic course/paper ingest framework with machine-verifiable feedback loops, plus swappable domain plugins (chemical engineering ships as the reference implementation). 通用学习操作系统框架：领域无关的课程/论文流水线 + 可替换的领域插件。",
-    "version": "0.2.0"
+    "version": "0.3.0"
   },
   "plugins": [
     {
       "name": "claudesidian-notes",
       "source": "./plugins/claudesidian-notes",
-      "description": "Framework layer — study pipeline for ANY subject: ingest lectures/tutorials/papers (MinerU + vision check) → distill first-principles formula maps → reverse-audit solutions against them. Battle-tested on engineering, economics, CS and physics courses. 通用课程/论文流水线（任何学科可用）。"
+      "description": "Framework layer — study pipeline for ANY subject: lectures become step-by-step teaching notes with self-checks and script-verified examples; distill first-principles formula maps; reverse-audit solutions; then build an exam review vault and quiz yourself with concept-level mastery tracking. 通用课程流水线：讲解型笔记 → 公式图谱 → 复习库 → 测验。"
     },
     {
       "name": "chemeng-coursework",

@@ -87,7 +87,7 @@ description: 从 ingest-paper 处理过的论文文件夹抽数据，逆向实�
 ### Step 3 — 跑脚本写入主 Excel
 
 ```
-py ${CLAUDE_PLUGIN_ROOT}/skills/extract-paper-note/scripts/write_to_excel.py <paper_dir>/extract_handoff.json
+python ${CLAUDE_PLUGIN_ROOT}/skills/extract-paper-note/scripts/write_to_excel.py <paper_dir>/extract_handoff.json
 ```
 脚本自动备份 → 写 3 个 sheet（大矩阵靠公式联动）。先 `--dry-run` 看落点再真写。
 
