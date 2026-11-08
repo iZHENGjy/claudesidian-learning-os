@@ -4,6 +4,11 @@ All notable changes to this project. The repository version is the marketplace v
 
 Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); versions follow [Semantic Versioning](https://semver.org/).
 
+## [Unreleased]
+
+### Changed
+- README rewritten again, shorter and led by real output: the main `README.md` is now Chinese and shows an actual note section, a question-bank entry and the mastery table from the example course; the checks are one short section. English moved to `README.en.md`; `README.zh-CN.md` removed.
+
 ## [0.4.0] — 2026-11-08
 
 `claudesidian-notes` 0.3.0
@@ -50,6 +55,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); version
 ### Added
 - Initial public release: course and paper ingest pipeline (`ingest-lecture`, `ingest-tutorial`, `distill-principles`, `ingest-paper`), formula audits, MinerU extraction scripts, the literature-review toolkit, and the chemical-engineering domain plugin as a reference implementation.
 
-[0.4.0]: https://github.com/iZHENGjy/claudesidian-learning-os/compare/0e2698e...HEAD
+[Unreleased]: https://github.com/iZHENGjy/claudesidian-learning-os/compare/cd38960...HEAD
+[0.4.0]: https://github.com/iZHENGjy/claudesidian-learning-os/compare/0e2698e...cd38960
 [0.3.0]: https://github.com/iZHENGjy/claudesidian-learning-os/compare/b6d73f0...0e2698e
 [0.2.0]: https://github.com/iZHENGjy/claudesidian-learning-os/commit/b6d73f0
