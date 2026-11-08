@@ -152,7 +152,7 @@ Every concept (`###` section) follows the same order:
 >
 > $$\frac{s(2+h) - s(2)}{h} = \frac{5(2+h)^2 - 20}{h} = \frac{20h + 5h^2}{h} = 20 + 5h$$
 >
-> $$s'(2) = \lim_{h\to 0}\,(20 + 5h) = 20\ \text{m/s}$$
+> $$s'(2) = \lim_{h\to 0} (20 + 5h) = 20\ \text{m/s}$$
 >
 > **Result**: the instantaneous speed at $t = 2$ s is 20 m/s.
 >

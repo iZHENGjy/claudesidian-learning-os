@@ -146,15 +146,15 @@ L02_derivatives.md
 >
 > $$f'(x) = \lim_{h\to 0}\frac{f(x+h) - f(x)}{h} \tag{1.2}$$
 >
-> 几何上，$f'(a)$ 是曲线 $y = f(x)$ 在 $x = a$ 处切线的斜率。
+> 几何上， $f'(a)$ 是曲线 $y = f(x)$ 在 $x = a$ 处切线的斜率。
 >
-> **实例 1.2**：$s(t) = 5t^2$，求 $t = 2$ s 时的瞬时速度（p.8）
+> **实例 1.2**： $s(t) = 5t^2$，求 $t = 2$ s 时的瞬时速度（p.8）
 >
 > $$\frac{s(2+h) - s(2)}{h} = \frac{5(2+h)^2 - 20}{h} = \frac{20h + 5h^2}{h} = 20 + 5h$$
 >
-> $$s'(2) = \lim_{h\to 0}\,(20 + 5h) = 20\ \text{m/s}$$
+> $$s'(2) = \lim_{h\to 0} (20 + 5h) = 20\ \text{m/s}$$
 >
-> **计算结果**：$t = 2$ s 时的瞬时速度为 20 m/s。
+> **计算结果**： $t = 2$ s 时的瞬时速度为 20 m/s。
 >
 > **专业说法**：导数是函数在一点的瞬时变化率，几何上是切线斜率。*EN: The derivative is the instantaneous rate of change of a function at a point — the slope of its tangent line.*
 >
