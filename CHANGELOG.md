@@ -7,7 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); version
 ## [Unreleased]
 
 ### Changed
-- README rewritten again, shorter and led by real output: the main `README.md` is now Chinese and shows an actual note section, a question-bank entry and the mastery table from the example course; the checks are one short section. English moved to `README.en.md`; `README.zh-CN.md` removed.
+- README rewritten around what the project produces: the main `README.md` is now Chinese, with the semester workflow, the full folder a course ends up as, the complete structure of each output (lecture note, tutorial solutions, formula map, review vault) with a real excerpt, the repository layout, and a command reference. English moved to `README.en.md`; `README.zh-CN.md` removed.
 
 ## [0.4.0] — 2026-11-08
 
