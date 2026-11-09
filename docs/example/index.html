@@ -329,7 +329,10 @@ window.MathJax = {
     return cache.get(path);
   }
 
+  let navId = 0;   // 每次切换递增；等待中的旧渲染发现自己过时就放弃，不再滚动页面
+
   async function show() {
+    const id = ++navId;
     const params = new URLSearchParams(location.hash.slice(1));
     const path = resolve(params.get("n")) || ALL[0];
     const heading = params.get("h");
@@ -349,9 +352,11 @@ window.MathJax = {
     let text;
     try { text = await load(path); }
     catch (e) {
+      if (id !== navId) return;
       content.innerHTML = `<p class="state">没能读取这份笔记（${esc(e.message)}）。可以直接在 <a href="${sourceUrl}">GitHub 上查看源文件</a>。</p>`;
       return;
     }
+    if (id !== navId) return;
     const [props, body] = splitFrontmatter(text);
     const keys = ["course", "week", "lecture", "pages", "pages_skipped", "verified", "topic", "type"].filter(k => props[k]);
     document.getElementById("props").innerHTML = keys.map(k => `<span>${k}: <b>${esc(props[k])}</b></span>`).join("");
@@ -367,9 +372,12 @@ window.MathJax = {
     if (target) reveal(target); else window.scrollTo(0, 0);
 
     await mathjaxReady();
+    if (id !== navId) return;
     MathJax.typesetClear([content]);
     await MathJax.typesetPromise([content]);
-    if (target) reveal(target);
+    if (id !== navId || !target) return;
+    reveal(target);                                                   // 公式排版后页面变长，重新定位
+    document.fonts.ready.then(() => { if (id === navId) reveal(target); });   // 字体加载完再校正一次
   }
 
   function mathjaxReady() {
