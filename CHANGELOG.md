@@ -7,6 +7,7 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); version
 ## [Unreleased]
 
 ### Added
+- Online reader for the example (`docs/example/`, on GitHub Pages at `/example/`): renders the Obsidian notes as Obsidian does — foldable callouts, numbered equations, wikilinks between notes, self-check boxes — reading the files live from the repo. GitHub's file view can't render Obsidian callouts and stacks `\tag`-numbered equations in Chrome; READMEs and the demo site now link to the reader.
 - `check_note.py` check 16 (warning only): math that GitHub can't render — inline `$…$` directly after CJK text, and `\,` `\;` `\!` `\{` `\}` `\\` inside math, which GitHub's Markdown escaping eats. `tests/test_examples_markdown.py` enforces it for every example file.
 
 ### Fixed

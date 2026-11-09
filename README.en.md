@@ -14,7 +14,7 @@ Claude Code plugins · any subject · slides in any language
 
 [简体中文](README.md) · **English**
 
-[Live demo](https://izhengjy.github.io/claudesidian-learning-os/) · [Example course](examples/CME222-mass-transfer) · [Quickstart](#quickstart)
+[Live demo](https://izhengjy.github.io/claudesidian-learning-os/) · [Read the example notes](https://izhengjy.github.io/claudesidian-learning-os/example/) · [Quickstart](#quickstart)
 
 </div>
 
@@ -59,7 +59,7 @@ flowchart LR
 
 ## A course folder when it's done
 
-Everything for one course lives in one folder. The examples below use a calculus course (MATH101) for illustration; for real output, see the [example](examples/CME222-mass-transfer): lecture 3 of a chemical-engineering course, taken all the way from slides to a quiz.
+Everything for one course lives in one folder. The examples below use a calculus course (MATH101) for illustration; for real output, see the [example](https://izhengjy.github.io/claudesidian-learning-os/example/): lecture 3 of a chemical-engineering course, taken all the way from slides to a quiz ([source files](examples/CME222-mass-transfer)).
 
 ```text
 01_Projects/MATH101_Calculus/

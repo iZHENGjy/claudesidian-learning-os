@@ -1,0 +1,387 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="description" content="Claudesidian Learning OS 示例笔记的在线阅读版：一门真实化工课第 3 讲的讲义笔记、复习库和测验记录，按 Obsidian 的样子渲染。">
+<title>示例笔记 · Claudesidian Learning OS</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@600;900&family=Noto+Sans+SC:wght@400;500;700&family=JetBrains+Mono:wght@400;600&display=swap">
+<style>
+:root {
+  color-scheme: light;
+  --paper: #f4f6f3; --grid: #dfe6e0; --ink: #1d2a33; --muted: #5b6b72;
+  --blue: #1f4e8c; --blue-soft: #e3ebf5; --red: #b8412c; --red-soft: #f6e4df;
+  --ok: #2f7a4c; --ok-soft: #e1f0e6; --amber: #9a6a12; --amber-soft: #f6eedb;
+  --violet: #5b4a9a; --violet-soft: #ebe7f6; --card: #ffffff; --line: #cfd8d2;
+  --f-display: "Noto Serif SC", "Songti SC", "SimSun", Georgia, serif;
+  --f-body: "Noto Sans SC", "PingFang SC", "Microsoft YaHei", system-ui, sans-serif;
+  --f-mono: "JetBrains Mono", "SFMono-Regular", Consolas, monospace;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --paper: #12181c; --grid: #1c252b; --ink: #e3e9ec; --muted: #9aa9b0;
+    --blue: #8fb4e8; --blue-soft: #1a2a3d; --red: #e8846f; --red-soft: #3a2420;
+    --ok: #7fc79a; --ok-soft: #1b3326; --amber: #e3b866; --amber-soft: #352a14;
+    --violet: #b6a6ee; --violet-soft: #26213a; --card: #182026; --line: #2b363d;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --paper: #12181c; --grid: #1c252b; --ink: #e3e9ec; --muted: #9aa9b0;
+  --blue: #8fb4e8; --blue-soft: #1a2a3d; --red: #e8846f; --red-soft: #3a2420;
+  --ok: #7fc79a; --ok-soft: #1b3326; --amber: #e3b866; --amber-soft: #352a14;
+  --violet: #b6a6ee; --violet-soft: #26213a; --card: #182026; --line: #2b363d;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 24px; }
+body {
+  margin: 0; color: var(--ink); font: 16px/1.75 var(--f-body);
+  background-color: var(--paper);
+  background-image: linear-gradient(var(--grid) 1px, transparent 1px), linear-gradient(90deg, var(--grid) 1px, transparent 1px);
+  background-size: 24px 24px;
+}
+a { color: var(--blue); text-underline-offset: 3px; }
+[hidden] { display: none !important; }
+
+/* ---------- layout ---------- */
+.shell { display: grid; grid-template-columns: 260px minmax(0, 1fr); gap: 32px; max-width: 1180px; margin: 0 auto; padding: 32px 24px 80px; }
+.side { position: sticky; top: 24px; align-self: start; max-height: calc(100vh - 48px); overflow: auto; font-size: 14px; }
+.side .brand { display: block; font-family: var(--f-mono); font-size: 12px; letter-spacing: .08em; color: var(--muted); text-decoration: none; margin-bottom: 18px; }
+.side h2 { font: 600 12px/1 var(--f-mono); letter-spacing: .08em; color: var(--muted); margin: 22px 0 8px; text-transform: uppercase; }
+.side ul { list-style: none; margin: 0; padding: 0; }
+.side li a { display: block; padding: 5px 10px; border-radius: 6px; color: var(--ink); text-decoration: none; border-left: 2px solid transparent; }
+.side li a:hover { background: var(--blue-soft); }
+.side li a[aria-current="page"] { background: var(--card); border-left-color: var(--blue); font-weight: 500; }
+.side .toc a { padding: 3px 10px; color: var(--muted); font-size: 13px; }
+.side .toc a.l3 { padding-left: 24px; }
+.side .src { margin-top: 22px; font-size: 13px; color: var(--muted); }
+
+.mobile-nav { display: none; }
+@media (max-width: 860px) {
+  .shell { grid-template-columns: minmax(0, 1fr); padding: 16px 16px 64px; gap: 16px; }
+  .side { display: none; }
+  .mobile-nav { display: flex; gap: 8px; align-items: center; }
+  .mobile-nav select { flex: 1; min-width: 0; font: inherit; padding: 8px 10px; border-radius: 8px; border: 1px solid var(--line); background: var(--card); color: var(--ink); }
+}
+
+/* ---------- note ---------- */
+.note { background: var(--card); border: 1px solid var(--line); border-radius: 12px; padding: 40px 48px 56px; min-width: 0; }
+@media (max-width: 860px) { .note { padding: 24px 18px 40px; } }
+.banner { display: flex; flex-wrap: wrap; gap: 6px 14px; align-items: baseline; font-size: 13px; color: var(--muted); border-bottom: 1px dashed var(--line); padding-bottom: 14px; margin-bottom: 24px; }
+.banner b { color: var(--ink); font-weight: 500; }
+.props { display: flex; flex-wrap: wrap; gap: 6px; margin: -8px 0 24px; }
+.props span { font: 12px/1.6 var(--f-mono); background: var(--paper); border: 1px solid var(--line); border-radius: 999px; padding: 1px 10px; color: var(--muted); }
+.props span b { color: var(--ink); font-weight: 600; }
+
+.md h1 { font: 900 30px/1.3 var(--f-display); margin: 0 0 20px; }
+.md h2 { font: 600 23px/1.4 var(--f-display); margin: 44px 0 14px; padding-top: 12px; border-top: 2px solid var(--ink); }
+.md h3 { font: 600 19px/1.45 var(--f-display); margin: 32px 0 10px; }
+.md h4 { font-size: 16px; margin: 22px 0 6px; }
+.md p { margin: 10px 0; }
+.md hr { border: 0; border-top: 1px solid var(--line); margin: 32px 0; }
+.md ul, .md ol { padding-left: 1.4em; }
+.md li { margin: 3px 0; }
+.md li.task { list-style: none; margin-left: -1.4em; }
+.md li.task input { margin: 0 8px 0 0; accent-color: var(--ok); transform: translateY(1px); }
+.md code { font: 13.5px var(--f-mono); background: var(--paper); border: 1px solid var(--line); border-radius: 4px; padding: 0 4px; }
+.md pre { background: var(--paper); border: 1px solid var(--line); border-radius: 8px; padding: 12px 14px; overflow: auto; }
+.md pre code { border: 0; padding: 0; background: none; }
+.md table { border-collapse: collapse; margin: 14px 0; display: block; overflow-x: auto; max-width: 100%; font-size: 14.5px; }
+.md th, .md td { border: 1px solid var(--line); padding: 6px 10px; vertical-align: top; }
+.md th { background: var(--paper); font-weight: 600; text-align: left; }
+.md blockquote { margin: 14px 0; padding: 2px 16px; border-left: 3px solid var(--line); color: var(--muted); }
+.md a.wl { text-decoration: none; border-bottom: 1px solid color-mix(in srgb, var(--blue) 35%, transparent); }
+.md a.wl:hover { border-bottom-color: var(--blue); }
+.md .wl-missing { color: var(--muted); border-bottom: 1px dotted var(--muted); cursor: help; }
+.md .math-display { display: block; overflow-x: auto; overflow-y: hidden; margin: 10px 0; }
+.md mjx-container[display="true"] { margin: 6px 0 !important; }
+
+/* ---------- callouts ---------- */
+.callout { --c: var(--blue); --cs: var(--blue-soft); border: 1px solid color-mix(in srgb, var(--c) 30%, var(--line)); border-left: 4px solid var(--c); background: var(--cs); border-radius: 8px; margin: 14px 0; color: var(--ink); }
+.callout > .ct { display: flex; gap: 8px; align-items: baseline; padding: 9px 14px; font-weight: 600; color: var(--c); list-style: none; }
+.callout > summary.ct { cursor: pointer; user-select: none; }
+.callout > summary.ct::-webkit-details-marker { display: none; }
+.callout > summary.ct::after { content: "›"; margin-left: auto; transition: transform .15s; font-weight: 400; }
+.callout[open] > summary.ct::after { transform: rotate(90deg); }
+.callout .ct .tag { font: 600 11px/1.9 var(--f-mono); letter-spacing: .06em; text-transform: uppercase; opacity: .8; flex: none; }
+.callout > .cb { padding: 0 16px 10px; }
+.callout > .cb > :first-child { margin-top: 0; }
+.callout .callout { background: var(--card); }
+.c-example  { --c: var(--blue);   --cs: var(--blue-soft); }
+.c-abstract, .c-info, .c-note { --c: var(--violet); --cs: var(--violet-soft); }
+.c-failure, .c-danger { --c: var(--red); --cs: var(--red-soft); }
+.c-success, .c-answer { --c: var(--ok); --cs: var(--ok-soft); }
+.c-question, .c-hint, .c-warning { --c: var(--amber); --cs: var(--amber-soft); }
+
+.state { padding: 40px 0; color: var(--muted); }
+.foot { margin-top: 40px; padding-top: 14px; border-top: 1px dashed var(--line); font-size: 13px; color: var(--muted); }
+</style>
+</head>
+<body>
+<div class="shell">
+  <aside class="side" aria-label="示例文件">
+    <a class="brand" href="../">← CLAUDESIDIAN LEARNING OS</a>
+    <nav id="files"></nav>
+    <h2>本页目录</h2>
+    <ul class="toc" id="toc"></ul>
+    <p class="src">笔记按 Obsidian 的样子渲染，内容实时读取自 <a href="https://github.com/iZHENGjy/claudesidian-learning-os/tree/main/examples/CME222-mass-transfer">GitHub 仓库</a>。</p>
+  </aside>
+
+  <main class="note">
+    <div class="mobile-nav"><a href="../">←</a><select id="mobileFiles" aria-label="选择文件"></select></div>
+    <div class="banner" id="banner"></div>
+    <div class="props" id="props"></div>
+    <article class="md" id="content"><p class="state">正在载入…</p></article>
+    <p class="foot" id="foot"></p>
+  </main>
+</div>
+
+<script>
+window.MathJax = {
+  tex: { inlineMath: [["\\(", "\\)"]], displayMath: [["\\[", "\\]"]], processEscapes: false },
+  chtml: { displayAlign: "center" },
+  options: { skipHtmlTags: ["script", "noscript", "style", "textarea", "pre", "code"] },
+  startup: { typeset: false },
+};
+</script>
+<script src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/mathjax@3.2.2/es5/tex-chtml.js" async></script>
+<script>
+(() => {
+  const REPO = "iZHENGjy/claudesidian-learning-os";
+  const BASE = "examples/CME222-mass-transfer/CME222_传质/";
+  const RAW = `https://raw.githubusercontent.com/${REPO}/main/`;
+  const BLOB = `https://github.com/${REPO}/blob/main/`;
+
+  const GROUPS = [
+    { title: "讲义", files: [
+      ["L03_diffusion_coefficient_estimation", "L03 · 扩散系数的估算"],
+      ["index", "课程地图 index"],
+    ]},
+    { title: "复习库", files: [
+      ["复习库/00-总览", "00 · 总览与掌握度"],
+      ["复习库/01-公式速查", "01 · 公式速查"],
+      ["复习库/02-易错点", "02 · 易错点"],
+      ["复习库/题库/气体扩散系数", "题库 · 气体扩散系数"],
+      ["复习库/掌握度/气体扩散系数", "掌握度 · 气体扩散系数"],
+    ]},
+  ];
+  const ALL = GROUPS.flatMap(g => g.files.map(f => f[0]));
+  const LABEL = Object.fromEntries(GROUPS.flatMap(g => g.files));
+  const EXTRA = { "_attachments/CME 222 Lecture 3/verify.py": "验算脚本" };
+
+  const TYPE_LABEL = { example: "示例", abstract: "摘要", info: "补充", note: "注", failure: "误区", danger: "易错",
+    success: "要点", answer: "答案", question: "问题", hint: "提示", warning: "注意" };
+
+  const md = window.markdownit({ html: false, breaks: true, linkify: false, typographer: false });
+  const cache = new Map();
+
+  // ---------- helpers ----------
+  const esc = s => s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;");
+  const norm = s => s.replace(/\s+/g, " ").trim();
+  const resolve = name => {
+    if (!name) return null;
+    const n = name.replace(/\.md$/, "");
+    return ALL.find(p => p === n) || ALL.find(p => p.endsWith("/" + n)) || ALL.find(p => p.split("/").pop() === n.split("/").pop()) || null;
+  };
+  const hrefFor = (path, heading) => "#" + new URLSearchParams(heading ? { n: path, h: heading } : { n: path }).toString();
+
+  function splitFrontmatter(text) {
+    const m = text.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
+    if (!m) return [{}, text];
+    const props = {};
+    for (const line of m[1].split(/\r?\n/)) {
+      const kv = line.match(/^([A-Za-z_]+):\s*(.*)$/);
+      if (kv) props[kv[1]] = kv[2].replace(/^["']|["']$/g, "");
+    }
+    return [props, text.slice(m[0].length)];
+  }
+
+  // Protect code and math from Markdown, turn wikilinks into links.
+  function preprocess(src, current) {
+    const math = [];
+    const out = src.replace(/(```[\s\S]*?```|`[^`\n]*`)|(\$\$[\s\S]+?\$\$)|((?<![\\$])\$(?!\$)[^$\n]+?(?<!\\)\$(?!\$))|(!?\[\[((?:[^\]\\]|\\.)+?)\]\])/g,
+      (all, code, display, inline, wiki, target) => {
+        if (code) return code;
+        if (display || inline) {
+          math.push({ display: !!display, tex: display ? display.slice(2, -2) : inline.slice(1, -1) });
+          return `${math.length - 1}`;
+        }
+        return wikilink(target.replace(/\\\|/g, "|"), current);
+      });
+    return [out, math];
+  }
+
+  function wikilink(inner, current) {
+    const [ref, alias] = inner.split("|");
+    const [file, heading] = ref.split("#");
+    const path = file ? resolve(file) : current;
+    const text = (alias || (heading ? (file ? `${file.split("/").pop()} › ${heading}` : heading) : file)).replace(/[[\]]/g, "");
+    if (path) return `[${text}](${hrefFor(path, heading || "")} "wikilink")`;
+    if (EXTRA[file]) return `[${text}](${BLOB + encodeURI(BASE + file)} "external")`;
+    return `${text}`;
+  }
+
+  function restore(html, math) {
+    return html
+      .replace(/(\d+)/g, (_, i) => {
+        const m = math[+i];
+        return m.display ? `<span class="math-display">\\[${esc(m.tex)}\\]</span>` : `\\(${esc(m.tex)}\\)`;
+      })
+      .replace(/([\s\S]*?)/g, '<span class="wl-missing" title="不在示例中（课件原文不随仓库分发）">$1</span>');
+  }
+
+  // Obsidian callouts: > [!type]± title
+  function callouts(root) {
+    for (const bq of [...root.querySelectorAll("blockquote")]) {
+      const first = bq.firstElementChild;
+      if (!first || first.tagName !== "P") continue;
+      const m = first.innerHTML.match(/^\s*\[!(\w+)\]([+-]?)[ \t]*([\s\S]*?)(?:<br>\n?|$)/);
+      if (!m) continue;
+      const type = m[1].toLowerCase(), fold = m[2];
+      const box = document.createElement(fold ? "details" : "div");
+      box.className = `callout c-${type}`;
+      if (fold === "+") box.open = true;
+      const head = document.createElement(fold ? "summary" : "div");
+      head.className = "ct";
+      head.innerHTML = `<span class="tag">${TYPE_LABEL[type] || type}</span><span>${m[3].trim() || ""}</span>`;
+      const body = document.createElement("div");
+      body.className = "cb";
+      first.innerHTML = first.innerHTML.slice(m[0].length);
+      if (!first.textContent.trim() && !first.querySelector(".math-display, mjx-container")) first.remove();
+      while (bq.firstChild) body.appendChild(bq.firstChild);
+      box.append(head, body);
+      bq.replaceWith(box);
+    }
+  }
+
+  function tasks(root) {
+    for (const li of root.querySelectorAll("li")) {
+      const node = li.firstChild?.nodeType === 3 ? li.firstChild : li.firstElementChild?.tagName === "P" ? li.firstElementChild.firstChild : null;
+      if (!node || node.nodeType !== 3) continue;
+      const m = node.textContent.match(/^\[( |x)\]\s+/i);
+      if (!m) continue;
+      node.textContent = node.textContent.slice(m[0].length);
+      const box = document.createElement("input");
+      box.type = "checkbox";
+      box.checked = m[1].toLowerCase() === "x";
+      box.setAttribute("aria-label", "自测勾选");
+      li.classList.add("task");
+      (node.parentNode === li ? li : node.parentNode).prepend(box);
+    }
+  }
+
+  function links(root) {
+    for (const a of root.querySelectorAll("a[title]")) {
+      if (a.title === "wikilink") { a.classList.add("wl"); a.removeAttribute("title"); }
+      if (a.title === "external") { a.target = "_blank"; a.rel = "noopener"; a.removeAttribute("title"); }
+    }
+  }
+
+  function headings(root) {
+    const toc = document.getElementById("toc");
+    toc.innerHTML = "";
+    let i = 0;
+    for (const h of root.querySelectorAll("h2, h3")) {
+      h.id = "s" + (++i);
+      if (h.closest(".callout")) continue;
+      const li = document.createElement("li");
+      li.innerHTML = `<a class="${h.tagName === "H3" ? "l3" : ""}" href="#">${esc(h.textContent)}</a>`;
+      li.firstChild.addEventListener("click", e => { e.preventDefault(); reveal(h); });
+      toc.appendChild(li);
+    }
+  }
+
+  function reveal(el) {
+    for (let d = el.closest("details"); d; d = d.parentElement.closest("details")) d.open = true;
+    el.scrollIntoView({ block: "start" });
+  }
+
+  function findHeading(root, text) {
+    const want = norm(text);
+    return [...root.querySelectorAll("h1, h2, h3, h4")].find(h => norm(h.textContent) === want) || null;
+  }
+
+  // ---------- navigation ----------
+  function buildNav() {
+    const nav = document.getElementById("files");
+    const sel = document.getElementById("mobileFiles");
+    for (const g of GROUPS) {
+      nav.insertAdjacentHTML("beforeend", `<h2>${g.title}</h2><ul>${g.files.map(([p, l]) => `<li><a href="${hrefFor(p)}" data-p="${p}">${l}</a></li>`).join("")}</ul>`);
+      const og = document.createElement("optgroup");
+      og.label = g.title;
+      for (const [p, l] of g.files) og.appendChild(new Option(l, p));
+      sel.appendChild(og);
+    }
+    nav.insertAdjacentHTML("beforeend", `<h2>脚本</h2><ul><li><a href="${BLOB + encodeURI(BASE + "_attachments/CME 222 Lecture 3/verify.py")}" target="_blank" rel="noopener">L03 验算脚本 verify.py ↗</a></li></ul>`);
+    sel.addEventListener("change", () => { location.hash = hrefFor(sel.value).slice(1); });
+  }
+
+  async function load(path) {
+    if (!cache.has(path)) {
+      const res = await fetch(RAW + encodeURI(BASE + path + ".md"));
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      cache.set(path, await res.text());
+    }
+    return cache.get(path);
+  }
+
+  async function show() {
+    const params = new URLSearchParams(location.hash.slice(1));
+    const path = resolve(params.get("n")) || ALL[0];
+    const heading = params.get("h");
+    for (const a of document.querySelectorAll("#files a[data-p]")) {
+      if (a.dataset.p === path) a.setAttribute("aria-current", "page"); else a.removeAttribute("aria-current");
+    }
+    document.getElementById("mobileFiles").value = path;
+    document.title = `${LABEL[path]} · 示例笔记`;
+
+    const content = document.getElementById("content");
+    const sourceUrl = BLOB + encodeURI(BASE + path + ".md");
+    document.getElementById("banner").innerHTML =
+      `<span><b>示例 · CME222 传质 第 3 讲</b></span><span>${esc(BASE + path)}.md</span><a href="${sourceUrl}" target="_blank" rel="noopener">查看源文件 ↗</a>`;
+    document.getElementById("foot").innerHTML =
+      `这是 Obsidian 笔记的在线阅读版。课件原图和课件原文不随仓库分发，笔记里对应位置用占位说明代替。<a href="../">返回项目主页</a>`;
+
+    let text;
+    try { text = await load(path); }
+    catch (e) {
+      content.innerHTML = `<p class="state">没能读取这份笔记（${esc(e.message)}）。可以直接在 <a href="${sourceUrl}">GitHub 上查看源文件</a>。</p>`;
+      return;
+    }
+    const [props, body] = splitFrontmatter(text);
+    const keys = ["course", "week", "lecture", "pages", "pages_skipped", "verified", "topic", "type"].filter(k => props[k]);
+    document.getElementById("props").innerHTML = keys.map(k => `<span>${k}: <b>${esc(props[k])}</b></span>`).join("");
+
+    const [src, math] = preprocess(body, path);
+    content.innerHTML = restore(md.render(src), math);
+    callouts(content);
+    tasks(content);
+    links(content);
+    headings(content);
+
+    const target = heading ? findHeading(content, heading) : null;
+    if (target) reveal(target); else window.scrollTo(0, 0);
+
+    await mathjaxReady();
+    MathJax.typesetClear([content]);
+    await MathJax.typesetPromise([content]);
+    if (target) reveal(target);
+  }
+
+  function mathjaxReady() {
+    if (window.MathJax?.startup?.promise) return MathJax.startup.promise;
+    return new Promise(res => document.querySelector('script[src*="mathjax"]')
+      .addEventListener("load", () => MathJax.startup.promise.then(res), { once: true }));
+  }
+
+  buildNav();
+  window.addEventListener("hashchange", show);
+  show();
+})();
+</script>
+</body>
+</html>

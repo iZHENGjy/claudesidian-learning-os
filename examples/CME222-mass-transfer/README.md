@@ -4,6 +4,8 @@
 
 文件夹 `CME222_传质/` 就是它在 vault 里的样子（对应 `01_Projects/CME222_传质/`），可以直接复制进 Obsidian 打开。
 
+**[在线阅读这份示例 →](https://izhengjy.github.io/claudesidian-learning-os/example/)** 笔记是按 Obsidian 写的，在线阅读页按 Obsidian 的样子显示：折叠块可以点开，带编号的公式、笔记之间的链接都正常。GitHub 的文件页不支持 Obsidian 的折叠块，只能近似显示。
+
 > 课件原图和课件原文不随仓库分发，笔记里的课件截图位置用占位说明代替。
 
 ## 文件

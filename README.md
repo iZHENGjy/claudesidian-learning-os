@@ -14,7 +14,7 @@ Claude Code 插件 · 任何学科 · 任何语言的课件
 
 **简体中文** · [English](README.en.md)
 
-[在线展示](https://izhengjy.github.io/claudesidian-learning-os/) · [示例课程](examples/CME222-mass-transfer) · [快速上手](#快速上手)
+[在线展示](https://izhengjy.github.io/claudesidian-learning-os/) · [在线阅读示例笔记](https://izhengjy.github.io/claudesidian-learning-os/example/) · [快速上手](#快速上手)
 
 </div>
 
@@ -59,7 +59,7 @@ flowchart LR
 
 ## 一门课生成后的样子
 
-一门课的所有产出都在一个文件夹里。下面用一门微积分课（MATH101）做示意；真实产出见[示例](examples/CME222-mass-transfer)：一门化工课的第 3 讲，从课件一路做到测验。
+一门课的所有产出都在一个文件夹里。下面用一门微积分课（MATH101）做示意；真实产出见[示例](https://izhengjy.github.io/claudesidian-learning-os/example/)：一门化工课的第 3 讲，从课件一路做到测验（[源文件](examples/CME222-mass-transfer)）。
 
 ```text
 01_Projects/MATH101_微积分/
