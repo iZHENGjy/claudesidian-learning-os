@@ -32,7 +32,7 @@ Rules / 原则:
 | SI dispatcher | `shared/scripts/process_si.py` | multi-format supplementary-info handling |
 | Manifest mechanism | each course's `manifest.md` | declare materials/indexes; skills grep on demand, never hardcode globs |
 | Note templates | each skill's `assets/*.md`, `ingest-lecture/assets/verify-template.py` | lecture / tutorial / principles skeletons; per-lecture check script with `assert_slide()` |
-| Note checker | `shared/scripts/check_note.py` | 15 checks on every lecture note: structure, teaching order, coverage, runs `verify.py`, formula constants against the slide text |
+| Note checker | `shared/scripts/check_note.py` | 16 checks on every lecture note: structure, teaching order, coverage, runs `verify.py`, formula constants against the slide text |
 | Formula loop | `shared/scripts/extract_formulas.py` / `validate_principles.py` / `reverse_audit.py` | force-scan (no LLM recall) / self-check / solutions-vs-principles audit |
 | Review loop | `build-review-vault` + `quiz` skills | condense a course into a review vault; quiz with per-concept mastery tracking |
 | Data honesty rule | ingest-lecture / ingest-tutorial SKILL | outside claims need a checked source; unfound reference data gets "please verify", never fabricated |

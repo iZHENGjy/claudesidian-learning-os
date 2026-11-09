@@ -28,6 +28,10 @@
 15. 带 `\\tag{}` 的公式里每个小数常数都能在课件原文里找到（"补充"块里的外部公式除外）；
     OCR 漏抽的，对照原页 PNG 后写进 frontmatter `constants_manual`
 
+GitHub 兼容（只提示，不判失败）:
+16. 公式在 GitHub 上能渲染：行内 `$…$` 不紧贴中文；公式里不用会被 Markdown 转义吃掉的
+    `\\,` `\\;` `\\!` `\\{` `\\}` `\\\\`（改用 \\thinspace \\thickspace \\negthinspace \\lbrace \\rbrace \\cr）
+
 用法:
     python check_note.py <note.md> [--vault <vault 根目录>] [--source <full.md>] [--no-run]
 
@@ -385,6 +389,34 @@ def check_constants(note: Path, fm: str, lines: list[str], source_arg: str | Non
         errors.append(f"公式常数 {s} 在课件原文里找不到——对照原页确认；OCR 漏抽的写进 frontmatter `constants_manual`")
 
 
+# ---------- GitHub 兼容 ----------
+
+CJK_CHAR = re.compile(r"[　-〿一-鿿＀-￯]")
+MATH_SPAN = re.compile(r"\$\$.+?\$\$|(?<!\$)\$(?!\$)[^$\n]+?(?<!\$)\$(?!\$)", re.S)
+INLINE_MATH = re.compile(r"(?<!\$)\$(?!\$)[^$\n]+?(?<!\$)\$(?!\$)")
+ESCAPED_IN_MATH = re.compile(r"\\[,;!{}\\]")
+
+
+def check_github_math(lines: list[str], warns) -> None:
+    """GitHub 先做 Markdown 转义再交给 MathJax：$ 紧贴中文时不识别，\\, \\{ \\\\ 等会被吃掉。"""
+    in_code, body = False, []
+    for l in lines:
+        if l.lstrip().startswith("```"):
+            in_code = not in_code
+            continue
+        body.append("" if in_code else re.sub(r"`[^`]*`", "", l))   # 行内代码里的 $ 不是公式
+    after_cjk = sum(
+        1 for l in body if "$$" not in l
+        for m in INLINE_MATH.finditer(l) if m.start() > 0 and CJK_CHAR.match(l[m.start() - 1])
+    )
+    escaped = sum(len(ESCAPED_IN_MATH.findall(m.group(0))) for m in MATH_SPAN.finditer("\n".join(body)))
+    if after_cjk:
+        warns.append(f"GitHub 兼容：{after_cjk} 处行内公式紧贴中文，在 GitHub 上不渲染（在 $ 前加一个空格）")
+    if escaped:
+        warns.append(f"GitHub 兼容：公式里有 {escaped} 处 \\, \\; \\! \\{{ \\}} \\\\，GitHub 会吃掉反斜杠"
+                     "（改用 \\thinspace \\thickspace \\negthinspace \\lbrace \\rbrace \\cr）")
+
+
 # ---------- main ----------
 
 def main() -> None:
@@ -482,6 +514,9 @@ def main() -> None:
     # 15. 公式常数对课件原文
     if lessons:
         check_constants(path, fm, lines, args.source, errors, warns)
+
+    # 16. GitHub 兼容（只提示）
+    check_github_math(lines, warns)
 
     print()
     for w in warns:

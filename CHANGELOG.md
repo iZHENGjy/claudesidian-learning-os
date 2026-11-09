@@ -6,6 +6,12 @@ Format follows [Keep a Changelog](https://keepachangelog.com/en/1.1.0/); version
 
 ## [Unreleased]
 
+### Added
+- `check_note.py` check 16 (warning only): math that GitHub can't render — inline `$…$` directly after CJK text, and `\,` `\;` `\!` `\{` `\}` `\\` inside math, which GitHub's Markdown escaping eats. `tests/test_examples_markdown.py` enforces it for every example file.
+
+### Fixed
+- Example notes now render on GitHub as in Obsidian: 105 inline formulas spaced off CJK text; `\,` `\{ \}` `\\` replaced by `\thinspace` `\lbrace \rbrace` `\cr`. The lecture template and the ingest-lecture rules use the same safe syntax.
+
 ### Changed
 - README rewritten around what the project produces: the main `README.md` is now Chinese, with the semester workflow, the full folder a course ends up as, the complete structure of each output (lecture note, tutorial solutions, formula map, review vault), the repository layout, numbered quickstart steps and a command reference. Examples use a general calculus course (MATH101) so any reader can follow them. English moved to `README.en.md`; `README.zh-CN.md` removed.
 - The example is now one lecture end to end — lecture note, its check script, a one-topic review vault and a quiz record — laid out exactly as a course folder in a vault: `examples/CME222-mass-transfer/CME222_传质/`. Its `index.md`, frontmatter and `verify.py` location (`_attachments/<deck>/verify.py`) now match the templates.

@@ -123,7 +123,7 @@ Read `01_Projects/<CODE>_课名/_principles.md`(若存在),拿到整门课的**�
 | 公式 | 含义 | _principles 编号 |
 |---|---|---|
 | $J_A = -D_{AB} \frac{dc_A}{dz}$ | Fick 第一定律 | [[_principles#§1.2 Fick 第一定律\|(1.2)]] |
-| $c_A = S\,p_A$ | Solution-Diffusion 致密膜 | ⚠️ _principles 缺 |
+| $c_A = S\thinspace p_A$ | Solution-Diffusion 致密膜 | ⚠️ _principles 缺 |
 
 规则:
 - 只列实际要用的(不超 ~10 个)

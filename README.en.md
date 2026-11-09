@@ -241,6 +241,7 @@ A lecture note isn't done until it passes [`check_note.py`](plugins/claudesidian
 | Coverage | Every slide is cited by a section or skipped with a stated reason |
 | Structure | Each concept opens with a concrete problem; misconceptions have numeric counterexamples; each part has a prediction question; ≥ 8 exercises; no links to notes that don't exist |
 | Sources | Anything beyond the slides is cited or marked "to verify" |
+| Display | Math is written so it renders in both Obsidian and GitHub (a warning, not a failure) |
 
 The checker itself has [48 tests](tests) that run on every push in CI.
 

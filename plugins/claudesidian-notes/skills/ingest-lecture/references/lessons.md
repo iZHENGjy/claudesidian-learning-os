@@ -26,6 +26,7 @@
 | 例题依赖课件外数据 | L03 例题要 Lennard-Jones 参数、沸点下摩尔体积，课件没给 | 上网核对后标出处；核对不了标"待核实"，verify.py 里同样注明 |
 | verify.py 通过但公式是错的 | 笔记和 verify.py 用同一个抄错的系数，assert 照样全过 | check_note.py 用 MinerU full.md 核对公式常数；有课件答案的实例用 assert_slide() 对答案 |
 | 总结页没人引用 | L03 的 Take Home Message（p.30–32）内容写进了本讲小结，但没标页码，旧检查没发现 | check_note.py 按 frontmatter `pages` 逐页查覆盖；总结页在"本讲小结"里标 p.N |
+| 公式在 Obsidian 正常、在 GitHub 乱掉 | GitHub 先按 Markdown 处理反斜杠：`\,` 变逗号、`\{ \}` 消失、`\\` 换行失效；`$` 紧跟中文标点时不识别为公式 | 公式里用 `\thinspace` `\lbrace` `\rbrace` `\cr`；行内 `$…$` 前留一个空格。check_note.py 会提示 |
 
 ---
 
@@ -46,7 +47,7 @@ Example 3 里管子一端 He 分压 0.6 atm，另一端 0.2 atm，相距 0.2 m�
 $$J_{A,z} = -D_{AB}\frac{dc_A}{dz} \tag{3.2}$$
 
 > [!example] 实例 3.1：He–N₂ 管中扩散（p.18）
-> $$\begin{aligned}J_{A,z} &= -D_{AB}\frac{c_{A,2}-c_{A,1}}{\Delta z} = -0.687\times10^{-4}\times\frac{8.18-24.54}{0.2}\ &= 5.62\times10^{-3}\ \text{mol/(m}^2\text{·s)}\end{aligned}$$
+> $$\begin{aligned}J_{A,z} &= -D_{AB}\frac{c_{A,2}-c_{A,1}}{\Delta z} = -0.687\times10^{-4}\times\frac{8.18-24.54}{0.2}\cr &= 5.62\times10^{-3}\ \text{mol/(m}^2\text{·s)}\end{aligned}$$
 > **计算结果：** $J_{He} = 5.62\times10^{-3}$ mol/(m²·s)，$j_{He} = 2.25\times10^{-5}$ kg/(m²·s)。
 
 **专业说法：** 扩散通量与浓度梯度成正比、方向相反。*EN: Fick's first law: diffusive flux is proportional and opposite to the concentration gradient.*

@@ -30,15 +30,15 @@ related: []
 
 | 前置知识 | 本讲是否用到 | 处理 |
 | --- | --- | --- |
-| Fick 第一定律、$D_{AB}$ 的含义 | 用到（全讲） | 默认已掌握（上一讲内容） |
-| 理想气体、$c = P/RT$ | 用到（p.9、11） | 默认已掌握 |
+| Fick 第一定律、 $D_{AB}$ 的含义 | 用到（全讲） | 默认已掌握（上一讲内容） |
+| 理想气体、 $c = P/RT$ | 用到（p.9、11） | 默认已掌握 |
 | 摩尔分数 | 用到（p.28） | 默认已掌握 |
 
 ---
 
 ## 第 1 部分 · 扩散系数是什么
 
-这一部分先弄清 $D$ 的单位、大小，以及一个常被默认的性质：$D_{AB} = D_{BA}$。
+这一部分先弄清 $D$ 的单位、大小，以及一个常被默认的性质： $D_{AB} = D_{BA}$。
 
 ### 1.1 扩散系数的量纲与量级（Dimension & magnitude）（p.4–8）
 
@@ -46,7 +46,7 @@ related: []
 上一讲例 4 里，碳在铁里的 $D$ 是 $3\times10^{-11}$ m²/s；例 3 里氦在氮里是 $0.687\times10^{-4}$ m²/s，两者差了六个数量级。拿到一个 $D$ 的数值，如果心里没有"气体大概多少、固体大概多少"的尺子，就看不出它是不是单位抄错了。
 
 **它怎么工作**
-由 Fick 定律，通量（mol/(m²·s)）除以浓度梯度（mol/m⁴）得到 $D$，单位是 m²/s，也常用 cm²/s。$D$ 不是物质自身的常数，它取决于压力、温度、组成，以及在什么介质里扩散。分子之间越松散，越容易挤过去，所以气体最大、液体次之、固体最小。课件 p.5–8 给出了教材附录的实验值表：气体（表 J.1）、液体（表 J.2）、固体（表 J.3）。查得到就直接用表值。
+由 Fick 定律，通量（mol/(m²·s)）除以浓度梯度（mol/m⁴）得到 $D$，单位是 m²/s，也常用 cm²/s。 $D$ 不是物质自身的常数，它取决于压力、温度、组成，以及在什么介质里扩散。分子之间越松散，越容易挤过去，所以气体最大、液体次之、固体最小。课件 p.5–8 给出了教材附录的实验值表：气体（表 J.1）、液体（表 J.2）、固体（表 J.3）。查得到就直接用表值。
 
 **课件里的概念**
 - 单位：cm²/s 或 m²/s（p.4）
@@ -59,7 +59,7 @@ related: []
 **专业说法：** 先按相态估量级，查得到实验值就用实验值。*EN: Know the order of magnitude by phase; use tabulated experimental values when available.*
 
 **优缺点**
-表值最可靠，但表里只有少数物系和少数温度。表里没有的物系，就需要从分子性质去估，这是第 2、3 部分的任务。在那之前，还要先确认一个性质：$D_{AB}$ 和 $D_{BA}$ 是否相等。
+表值最可靠，但表里只有少数物系和少数温度。表里没有的物系，就需要从分子性质去估，这是第 2、3 部分的任务。在那之前，还要先确认一个性质： $D_{AB}$ 和 $D_{BA}$ 是否相等。
 
 > [!question]- 用自己的话说：扩散系数的量级
 > 合上笔记，用 3–5 句大白话讲清楚。然后打开检查。
@@ -81,7 +81,7 @@ related: []
 设想一根管子里只有 A 和 B，温度、压力不变，所以总摩尔浓度 $c = P/RT$ 处处相同。A 的浓度往右减少多少，B 就必须往右增加多少，两者的梯度大小相等、方向相反。如果 A 每秒往右扩散 1 mol，为了保持总浓度不变，B 就得往左扩散 1 mol，所以 $J_A = -J_B$。把 Fick 定律分别写给 A 和 B，代入后两个梯度抵消，剩下的只能是 $D_{AB} = D_{BA}$。
 
 > [!note] 此处在 vault 中嵌入课件 p.9 截图（示例仓库不附课件原图）
-*图 1.1 · p.9 · 推导只用了两个条件：总浓度不变（$c_A + c_B = c = P/RT$）和等量反向扩散（$J_A = -J_B$）。*
+*图 1.1 · p.9 · 推导只用了两个条件：总浓度不变（ $c_A + c_B = c = P/RT$）和等量反向扩散（ $J_A = -J_B$）。*
 
 **课件里的概念**（p.9）
 
@@ -96,7 +96,7 @@ $$-D_{AB}\frac{dc_A}{dz} = -\left(-D_{BA}\frac{dc_B}{dz}\right)\ \Rightarrow\ D_
 **优缺点**
 表里只要存一个方向的数据。但多数物系连一个方向都查不到，必须能从分子性质算出 $D$。
 
-> [!question]- 用自己的话说：$D_{AB} = D_{BA}$
+> [!question]- 用自己的话说： $D_{AB} = D_{BA}$
 > > [!success]- 关键环节：你的回答应包含
 > > - [ ] 前提是二元、总浓度不变（气体即恒温恒压）
 > > - [ ] 总浓度不变迫使 A 和 B 等量反向扩散
@@ -108,7 +108,7 @@ $$-D_{AB}\frac{dc_A}{dz} = -\left(-D_{BA}\frac{dc_B}{dz}\right)\ \Rightarrow\ D_
 ### 误区与陷阱
 
 > [!failure] 陷阱 1.1：直接把表 J.1 的第三列当成 $D_{AB}$
-> **反例：** 表 J.1 中 CO₂–空气 273 K 一栏是 0.136 cm²·atm/s。如果压力是 2 atm，$D_{AB}$ 是 0.068 cm²/s，不是 0.136（p.5）。
+> **反例：** 表 J.1 中 CO₂–空气 273 K 一栏是 0.136 cm²·atm/s。如果压力是 2 atm， $D_{AB}$ 是 0.068 cm²/s，不是 0.136（p.5）。
 > **为什么不对：** 那一列是 $D_{AB}P$，气体的 $D$ 与压力成反比，见 [[#1.1 扩散系数的量纲与量级（Dimension & magnitude）（p.4–8）|§1.1]]。
 > **正确说法：** 查表值要除以实际压力（atm）。*EN: Divide the tabulated D_AB·P by the actual pressure.*
 
@@ -134,22 +134,22 @@ $$-D_{AB}\frac{dc_A}{dz} = -\left(-D_{BA}\frac{dc_B}{dz}\right)\ \Rightarrow\ D_
 表里查不到的物系，只能从分子本身的性质算 $D$。最简单的起点是：一种气体在它自己的同位素里扩散，分子大小、质量都一样，只剩下"分子跑多快、跑多远撞一次"这两件事。
 
 **它怎么工作**
-把分子想成互不吸引的硬球（p.11 的假设：理想气体、低密度、刚性球、弹性碰撞）。一个分子沿直线飞，飞一段撞一次，再换方向。两次碰撞之间的平均距离叫平均自由程 $\lambda$；分子的平均速率叫 $u$。扩散快慢正比于"每次跑多远 × 跑多快"，系数 1/3 来自三个方向平均。分子越稀（压力低），越少碰撞，$\lambda$ 越长（p.14）；温度越高，$u$ 越大。把 $\lambda$ 和 $u$ 的表达式代进去，就得到只含 $T$、$P$、分子直径和分子量的公式。
+把分子想成互不吸引的硬球（p.11 的假设：理想气体、低密度、刚性球、弹性碰撞）。一个分子沿直线飞，飞一段撞一次，再换方向。两次碰撞之间的平均距离叫平均自由程 $\lambda$；分子的平均速率叫 $u$。扩散快慢正比于"每次跑多远 × 跑多快"，系数 1/3 来自三个方向平均。分子越稀（压力低），越少碰撞， $\lambda$ 越长（p.14）；温度越高， $u$ 越大。把 $\lambda$ 和 $u$ 的表达式代进去，就得到只含 $T$、 $P$、分子直径和分子量的公式。
 
 **课件里的概念**（p.12–13）
 
 $$D_{AA^*} = \frac{1}{3}\lambda u \tag{2.1}$$
 
-$$\lambda = \frac{\kappa T}{\sqrt{2}\,\pi\sigma_A^2 P},\qquad u = \sqrt{\frac{8\kappa N T}{\pi M_A}} \tag{2.2}$$
+$$\lambda = \frac{\kappa T}{\sqrt{2}\thinspace \pi\sigma_A^2 P},\qquad u = \sqrt{\frac{8\kappa N T}{\pi M_A}} \tag{2.2}$$
 
 $$D_{AA^*} = \frac{2T^{3/2}}{3\pi^{3/2}\sigma_A^2 P}\left(\frac{\kappa^3 N}{M_A}\right)^{1/2} \tag{2.3}$$
 
-其中 $M_A$ 单位 kg/mol，$N = 6.022\times10^{23}$ /mol，$P$ 单位 Pa，$T$ 单位 K，$\kappa = 1.38\times10^{-23}$ J/K，$\sigma$ 为分子（Lennard-Jones）直径，单位 m。
+其中 $M_A$ 单位 kg/mol， $N = 6.022\times10^{23}$ /mol， $P$ 单位 Pa， $T$ 单位 K， $\kappa = 1.38\times10^{-23}$ J/K， $\sigma$ 为分子（Lennard-Jones）直径，单位 m。
 
 **专业说法：** 硬球动力学理论给出 $D \propto T^{3/2}/(P\sigma^2\sqrt{M})$。*EN: Hard-sphere kinetic theory gives D ∝ T^{3/2} / (P σ² √M).*
 
 **优缺点**
-公式清楚地告诉我们 $D$ 怎样随 $T$、$P$ 变化。但它只适用于同一种分子，而真实问题里 A、B 大小和质量都不同。
+公式清楚地告诉我们 $D$ 怎样随 $T$、 $P$ 变化。但它只适用于同一种分子，而真实问题里 A、B 大小和质量都不同。
 
 > [!question]- 用自己的话说：自扩散系数
 > > [!success]- 关键环节：你的回答应包含
@@ -166,14 +166,14 @@ $$D_{AA^*} = \frac{2T^{3/2}}{3\pi^{3/2}\sigma_A^2 P}\left(\frac{\kappa^3 N}{M_A}
 CO₂ 在空气里扩散，两种分子直径和质量都不一样，式 2.3 用不了。
 
 **它怎么工作**
-两个分子能靠多近，由它们之间的作用力决定：离得很近时强烈排斥，所以存在一个最近距离，这就是碰撞直径（p.15）。直径越小，越不容易撞上，平均自由程越长。A、B 直径不同时，碰撞距离取两者的平均；质量不同时，用两者质量倒数的组合。结果仍然是 $T^{3/2}$、$1/P$ 的形式，这就让我们可以把一个已知条件下的 $D$ 换算到别的温度和压力（p.17）。
+两个分子能靠多近，由它们之间的作用力决定：离得很近时强烈排斥，所以存在一个最近距离，这就是碰撞直径（p.15）。直径越小，越不容易撞上，平均自由程越长。A、B 直径不同时，碰撞距离取两者的平均；质量不同时，用两者质量倒数的组合。结果仍然是 $T^{3/2}$、 $1/P$ 的形式，这就让我们可以把一个已知条件下的 $D$ 换算到别的温度和压力（p.17）。
 
 **课件里的概念**（p.15–17）
 - 碰撞直径（Lennard-Jones diameter）：两分子中心能靠近的最小距离，即分子间势能为零的距离；直径越小，平均自由程越大（p.15）
 
-$$D_{AB} = \frac{2}{3}\left(\frac{\kappa}{\pi}\right)^{3/2} N^{1/2} T^{3/2}\,\frac{\left(\dfrac{1}{2M_A} + \dfrac{1}{2M_B}\right)^{1/2}}{P\left(\dfrac{\sigma_A + \sigma_B}{2}\right)^2},\qquad D_{AB} = D_{BA} \tag{2.4}$$
+$$D_{AB} = \frac{2}{3}\left(\frac{\kappa}{\pi}\right)^{3/2} N^{1/2} T^{3/2}\thinspace \frac{\left(\dfrac{1}{2M_A} + \dfrac{1}{2M_B}\right)^{1/2}}{P\left(\dfrac{\sigma_A + \sigma_B}{2}\right)^2},\qquad D_{AB} = D_{BA} \tag{2.4}$$
 
-- 气相扩散依赖压力和温度，可用来预测不同 $P$、$T$ 下的 $D$（p.17）
+- 气相扩散依赖压力和温度，可用来预测不同 $P$、 $T$ 下的 $D$（p.17）
 
 **专业说法：** 二元气体的硬球扩散系数用平均碰撞直径和两者的质量组合。*EN: Binary hard-sphere diffusivity uses the mean collision diameter and the pair's combined molar masses.*
 
@@ -192,7 +192,7 @@ $$D_{AB} = \frac{2}{3}\left(\frac{\kappa}{\pi}\right)^{3/2} N^{1/2} T^{3/2}\,\fr
 ### 误区与陷阱
 
 > [!failure] 误区 2.1：气体扩散系数只和温度有关，压力变了不影响
-> **反例：** 实例 4.2 的 SiH₄–N₂ 在 900 K、100 Pa 下 $D \approx 1091$ cm²/s，大约是常压同温度下的一千倍（$D \propto 1/P$，100 Pa 约为 1 atm 的千分之一）。
+> **反例：** 实例 4.2 的 SiH₄–N₂ 在 900 K、100 Pa 下 $D \approx 1091$ cm²/s，大约是常压同温度下的一千倍（ $D \propto 1/P$，100 Pa 约为 1 atm 的千分之一）。
 > **为什么不对：** 压力低 → 分子稀 → 平均自由程长 → $D$ 大，见 [[#2.1 自扩散系数：平均自由程乘平均速度（Self-diffusion coefficient）（p.11–14）|§2.1]]。
 > **正确说法：** 气体 $D$ 与压力成反比。*EN: Gas diffusivity is inversely proportional to pressure.*
 
@@ -202,9 +202,9 @@ $$D_{AB} = \frac{2}{3}\left(\frac{\kappa}{\pi}\right)^{3/2} N^{1/2} T^{3/2}\,\fr
 > > - [ ] 温度高 → 分子速度大
 > > - [ ] 压力高 → 分子密 → 自由程短
 >
-> > [!question]- 预测：按硬球模型，压力不变、温度从 300 K 升到 600 K，$D$ 变为原来的多少倍？
+> > [!question]- 预测：按硬球模型，压力不变、温度从 300 K 升到 600 K， $D$ 变为原来的多少倍？
 > > > [!success]- 展开答案
-> > > $2^{3/2} \approx 2.83$ 倍（$D \propto T^{3/2}$）。检验的是"$T^{3/2}$ 依赖"一环。
+> > > $2^{3/2} \approx 2.83$ 倍（ $D \propto T^{3/2}$）。检验的是"$T^{3/2}$ 依赖"一环。
 
 ---
 
@@ -216,30 +216,30 @@ $$D_{AB} = \frac{2}{3}\left(\frac{\kappa}{\pi}\right)^{3/2} N^{1/2} T^{3/2}\,\fr
 硬球模型不考虑分子间的吸引和排斥。工程上要估一个非极性气体对的 $D$，需要一个把这部分作用力也算进去的公式。
 
 **它怎么工作**
-Hirschfelder 方程的结构和式 2.4 一样（$T^{3/2}$、$1/P$、分子量、碰撞直径），只是分母多了一个碰撞积分 $\Omega_D$，用来修正分子间作用力。$\Omega_D$ 只取决于无量纲温度 $T^* = \kappa T/\varepsilon_{AB}$，其中 $\varepsilon_{AB}$ 是两分子之间的作用能。温度越高，分子动能越大，越接近硬球碰撞，$\Omega_D$ 越小，$D$ 越大（p.20）。用法：查 A、B 的 Lennard-Jones 参数 $\sigma$ 和 $\varepsilon/\kappa$ → 混合规则得 $\sigma_{AB}$、$\varepsilon_{AB}$ → 算 $T^*$ → 查 $\Omega_D$ → 代入方程。注意这个式子的单位是"混合单位"：$D$ 为 cm²/s，$P$ 为 atm，$\sigma$ 为 Å，$M$ 为 g/mol。
+Hirschfelder 方程的结构和式 2.4 一样（ $T^{3/2}$、 $1/P$、分子量、碰撞直径），只是分母多了一个碰撞积分 $\Omega_D$，用来修正分子间作用力。 $\Omega_D$ 只取决于无量纲温度 $T^* = \kappa T/\varepsilon_{AB}$，其中 $\varepsilon_{AB}$ 是两分子之间的作用能。温度越高，分子动能越大，越接近硬球碰撞， $\Omega_D$ 越小， $D$ 越大（p.20）。用法：查 A、B 的 Lennard-Jones 参数 $\sigma$ 和 $\varepsilon/\kappa$ → 混合规则得 $\sigma_{AB}$、 $\varepsilon_{AB}$ → 算 $T^*$ → 查 $\Omega_D$ → 代入方程。注意这个式子的单位是"混合单位"： $D$ 为 cm²/s， $P$ 为 atm， $\sigma$ 为 Å， $M$ 为 g/mol。
 
 > [!note] 此处在 vault 中嵌入课件 p.19 截图（示例仓库不附课件原图）
-*图 3.1 · p.19 · 碰撞积分 $\Omega_D$ 随无量纲温度 $\kappa T/\varepsilon_{AB}$ 下降：$T^*$ 在 2 附近 $\Omega_D \approx 1.07$，到 10 附近降到约 0.74。*
+*图 3.1 · p.19 · 碰撞积分 $\Omega_D$ 随无量纲温度 $\kappa T/\varepsilon_{AB}$ 下降： $T^*$ 在 2 附近 $\Omega_D \approx 1.07$，到 10 附近降到约 0.74。*
 
 **课件里的概念**（p.18–20）
 
-$$D_{AB} = \frac{0.001858\,T^{3/2}\left(\dfrac{1}{M_A} + \dfrac{1}{M_B}\right)^{1/2}}{P\,\sigma_{AB}^2\,\Omega_D} \tag{3.1}$$
+$$D_{AB} = \frac{0.001858\thinspace T^{3/2}\left(\dfrac{1}{M_A} + \dfrac{1}{M_B}\right)^{1/2}}{P\thinspace \sigma_{AB}^2\thinspace \Omega_D} \tag{3.1}$$
 
-$D_{AB}$：cm²/s；$T$：K；$M_A, M_B$：g/mol；$P$：atm；$\sigma_{AB}$：碰撞直径，Å；$\Omega_D$：碰撞积分，无量纲。适用于非极性、不反应的气体对（p.18）。
+$D_{AB}$：cm²/s； $T$：K； $M_A, M_B$：g/mol； $P$：atm； $\sigma_{AB}$：碰撞直径，Å； $\Omega_D$：碰撞积分，无量纲。适用于非极性、不反应的气体对（p.18）。
 
-$$D_{AB}\big|_{T_2,P_2} = D_{AB}\big|_{T_1,P_1}\,\frac{P_1}{P_2}\left(\frac{T_2}{T_1}\right)^{3/2}\frac{\Omega_D\big|_{T_1}}{\Omega_D\big|_{T_2}} \tag{3.2}$$
+$$D_{AB}\big|_{T_2,P_2} = D_{AB}\big|_{T_1,P_1}\thinspace \frac{P_1}{P_2}\left(\frac{T_2}{T_1}\right)^{3/2}\frac{\Omega_D\big|_{T_1}}{\Omega_D\big|_{T_2}} \tag{3.2}$$
 
 $\Omega_D$ 可由图 3.1 查，也可用课件 p.26 给出的关联式算（式 4.4）。
 
 > [!info]- 补充：Lennard-Jones 参数与混合规则
-> 计算需要各分子的 $\sigma$ 和 $\varepsilon/\kappa$。本讲用到：CO₂ 3.996 Å / 190 K；N₂ 3.681 Å / 91.5 K；H₂ 2.968 Å / 33.3 K（出自 Welty 教材附录，经 [Pearce et al., 2020] 的表格核对）。空气 3.617 Å / 97.0 K（待核实：未找到可访问的原始表格核对）。非极性气体对的混合规则：$\sigma_{AB} = (\sigma_A + \sigma_B)/2$，$\varepsilon_{AB} = \sqrt{\varepsilon_A\varepsilon_B}$。
+> 计算需要各分子的 $\sigma$ 和 $\varepsilon/\kappa$。本讲用到：CO₂ 3.996 Å / 190 K；N₂ 3.681 Å / 91.5 K；H₂ 2.968 Å / 33.3 K（出自 Welty 教材附录，经 [Pearce et al., 2020] 的表格核对）。空气 3.617 Å / 97.0 K（待核实：未找到可访问的原始表格核对）。非极性气体对的混合规则： $\sigma_{AB} = (\sigma_A + \sigma_B)/2$， $\varepsilon_{AB} = \sqrt{\varepsilon_A\varepsilon_B}$。
 > 来源：[Pearce et al., 2020]
 
 > [!example] 实例 3.1：20 °C、1 atm 下 CO₂ 在空气中的扩散系数（p.21）
 > ① 混合参数：
-> $$\begin{aligned}\sigma_{AB} &= \frac{\sigma_{CO_2} + \sigma_{air}}{2} = \frac{3.996 + 3.617}{2} = 3.806\ \text{Å}\\ \frac{\varepsilon_{AB}}{\kappa} &= \sqrt{190\times97.0} = 135.8\ \text{K}\\ T^* &= \frac{293}{135.8} = 2.158\ \Rightarrow\ \Omega_D = 1.048\end{aligned}$$
+> $$\begin{aligned}\sigma_{AB} &= \frac{\sigma_{CO_2} + \sigma_{air}}{2} = \frac{3.996 + 3.617}{2} = 3.806\ \text{Å}\cr  \frac{\varepsilon_{AB}}{\kappa} &= \sqrt{190\times97.0} = 135.8\ \text{K}\cr  T^* &= \frac{293}{135.8} = 2.158\ \Rightarrow\ \Omega_D = 1.048\end{aligned}$$
 > ② 代入式 3.1：
-> $$\begin{aligned}D_{AB} &= \frac{0.001858\times293^{3/2}\left(\dfrac{1}{44} + \dfrac{1}{29}\right)^{1/2}}{1\times3.806^2\times1.048}\\ &= 0.147\ \text{cm}^2/\text{s}\end{aligned}$$
+> $$\begin{aligned}D_{AB} &= \frac{0.001858\times293^{3/2}\left(\dfrac{1}{44} + \dfrac{1}{29}\right)^{1/2}}{1\times3.806^2\times1.048}\cr  &= 0.147\ \text{cm}^2/\text{s}\end{aligned}$$
 > ③ 与表 J.1 比较：表中 273 K 下 $D_{AB}P = 0.136$ cm²·atm/s，用式 3.2 外推到 293 K：
 > $$D_{AB}\big|_{293} = 0.136\times\left(\frac{293}{273}\right)^{3/2}\times\frac{\Omega_D\big|_{273}}{\Omega_D\big|_{293}} = 0.155\ \text{cm}^2/\text{s}$$
 >
@@ -272,15 +272,15 @@ Fuller 关联式不用 $\sigma$ 和 $\varepsilon$，改用"扩散体积" $\Sigma
 
 **课件里的概念**（p.22–23）
 
-$$D_{AB} = \frac{10^{-3}\,T^{1.75}\left(\dfrac{1}{M_A} + \dfrac{1}{M_B}\right)^{1/2}}{P\left[(\Sigma v)_A^{1/3} + (\Sigma v)_B^{1/3}\right]^2} \tag{3.3}$$
+$$D_{AB} = \frac{10^{-3}\thinspace T^{1.75}\left(\dfrac{1}{M_A} + \dfrac{1}{M_B}\right)^{1/2}}{P\left[(\Sigma v)_A^{1/3} + (\Sigma v)_B^{1/3}\right]^2} \tag{3.3}$$
 
-$D_{AB}$：cm²/s；$T$：K；$P$：atm；$v$：扩散体积。
+$D_{AB}$：cm²/s； $T$：K； $P$：atm； $v$：扩散体积。
 
 > [!example] 实例 3.2：30 °C、1 atm 下苯在空气中的扩散系数（p.24）
 > ① 苯 C₆H₆ 的扩散体积（含一个芳香环）：
 > $$(\Sigma v)_{C_6H_6} = 6\times16.5 + 6\times1.98 - 20.2 = 90.68$$
-> ② 代入式 3.3（$M_{C_6H_6} = 78$，$M_{air} = 29$，$(\Sigma v)_{air} = 20.1$）：
-> $$\begin{aligned}D_{AB} &= \frac{10^{-3}\times303^{1.75}\left(\dfrac{1}{78} + \dfrac{1}{29}\right)^{1/2}}{1\times\left(90.68^{1/3} + 20.1^{1/3}\right)^2}\\ &= 0.0920\ \text{cm}^2/\text{s}\end{aligned}$$
+> ② 代入式 3.3（ $M_{C_6H_6} = 78$， $M_{air} = 29$， $(\Sigma v)_{air} = 20.1$）：
+> $$\begin{aligned}D_{AB} &= \frac{10^{-3}\times303^{1.75}\left(\dfrac{1}{78} + \dfrac{1}{29}\right)^{1/2}}{1\times\left(90.68^{1/3} + 20.1^{1/3}\right)^2}\cr  &= 0.0920\ \text{cm}^2/\text{s}\end{aligned}$$
 > ③ 对照：表 J.1 中苯–空气 298 K 为 0.0962 cm²/s，按 $T^{1.75}$ 换算到 303 K 约 0.0990 cm²/s。
 >
 > **计算结果：** $D_{C_6H_6\text{-}air} = 0.0920$ cm²/s $= 9.20\times10^{-6}$ m²/s，比表值换算结果低约 7%。
@@ -302,8 +302,8 @@ $D_{AB}$：cm²/s；$T$：K；$P$：atm；$v$：扩散体积。
 ### 误区与陷阱
 
 > [!failure] 陷阱 3.1：把 SI 单位直接代进 Hirschfelder 或 Fuller 方程
-> **反例：** 实例 3.1 若把 $P$ 写成 101325 Pa、$\sigma$ 写成 $3.806\times10^{-10}$ m，结果会错十几个数量级。
-> **为什么不对：** 两个式子的系数 0.001858 和 $10^{-3}$ 是按混合单位给出的：$D$ 为 cm²/s、$P$ 为 atm、$\sigma$ 为 Å、$M$ 为 g/mol，见 [[#3.1 Hirschfelder 方程与碰撞积分（Hirschfelder equation & collision integral）（p.18–21）|§3.1]]。
+> **反例：** 实例 3.1 若把 $P$ 写成 101325 Pa、 $\sigma$ 写成 $3.806\times10^{-10}$ m，结果会错十几个数量级。
+> **为什么不对：** 两个式子的系数 0.001858 和 $10^{-3}$ 是按混合单位给出的： $D$ 为 cm²/s、 $P$ 为 atm、 $\sigma$ 为 Å、 $M$ 为 g/mol，见 [[#3.1 Hirschfelder 方程与碰撞积分（Hirschfelder equation & collision integral）（p.18–21）|§3.1]]。
 > **正确说法：** 按方程规定的单位代入，算完再把 cm²/s 换成 m²/s（×10⁻⁴）。*EN: Substitute in the units the correlation uses, then convert cm²/s to m²/s.*
 
 > [!question]- 暂停：什么时候用 Hirschfelder，什么时候用 Fuller？
@@ -312,7 +312,7 @@ $D_{AB}$：cm²/s；$T$：K；$P$：atm；$v$：扩散体积。
 > > - [ ] 有 Lennard-Jones 参数 → Hirschfelder
 > > - [ ] 没有参数、只知道分子式 → Fuller
 >
-> > [!question]- 预测：用 Fuller 关联式，压力不变、温度从 300 K 升到 600 K，$D$ 变为原来的多少倍？
+> > [!question]- 预测：用 Fuller 关联式，压力不变、温度从 300 K 升到 600 K， $D$ 变为原来的多少倍？
 > > > [!success]- 展开答案
 > > > $2^{1.75} \approx 3.36$ 倍，比硬球模型的 2.83 倍大。检验的是"Fuller 温度指数 1.75"一环。
 
@@ -326,32 +326,32 @@ $D_{AB}$：cm²/s；$T$：K；$P$：atm；$v$：扩散体积。
 吸收塔要用水吸收废气里的氨（p.27）。氨分子有偶极矩，分子之间除了普通的吸引排斥，还有偶极作用，非极性的 $\Omega_D$ 不够准。
 
 **它怎么工作**
-Brokaw 方法仍然用 Hirschfelder 方程（式 3.1），只是换一种办法算参数。第一步，用偶极矩、沸点下液体摩尔体积和沸点算出极性参数 $\delta$。第二步，用 $\delta$ 和沸点数据算每个分子的 $\sigma$ 和 $\varepsilon/\kappa$（这样就不需要查 Lennard-Jones 表），再用**几何平均**得到 $\sigma_{AB}$ 和 $\varepsilon_{AB}$。第三步，算 $T^*$ 和非极性部分 $\Omega_{D0}$，再加上一项极性修正 $0.196\,\delta_{AB}^2/T^*$。
+Brokaw 方法仍然用 Hirschfelder 方程（式 3.1），只是换一种办法算参数。第一步，用偶极矩、沸点下液体摩尔体积和沸点算出极性参数 $\delta$。第二步，用 $\delta$ 和沸点数据算每个分子的 $\sigma$ 和 $\varepsilon/\kappa$（这样就不需要查 Lennard-Jones 表），再用**几何平均**得到 $\sigma_{AB}$ 和 $\varepsilon_{AB}$。第三步，算 $T^*$ 和非极性部分 $\Omega_{D0}$，再加上一项极性修正 $0.196\thinspace \delta_{AB}^2/T^*$。
 
 **课件里的概念**（p.25–26）
 
-$$\Omega_D = \Omega_{D0} + \frac{0.196\,\delta_{AB}^2}{T^*},\qquad \delta_{AB} = (\delta_A\delta_B)^{1/2},\qquad \delta = \frac{1.94\times10^3\,\mu_p^2}{V_bT_b} \tag{4.1}$$
+$$\Omega_D = \Omega_{D0} + \frac{0.196\thinspace \delta_{AB}^2}{T^*},\qquad \delta_{AB} = (\delta_A\delta_B)^{1/2},\qquad \delta = \frac{1.94\times10^3\thinspace \mu_p^2}{V_bT_b} \tag{4.1}$$
 
-$\mu_p$：偶极矩（Debye）；$V_b$：沸点下液体摩尔体积（cm³/mol）；$T_b$：正常沸点（K）。
+$\mu_p$：偶极矩（Debye）； $V_b$：沸点下液体摩尔体积（cm³/mol）； $T_b$：正常沸点（K）。
 
-$$T^* = \frac{\kappa T}{\varepsilon_{AB}},\quad \frac{\varepsilon_{AB}}{\kappa} = \left(\frac{\varepsilon_A}{\kappa}\frac{\varepsilon_B}{\kappa}\right)^{1/2},\quad \frac{\varepsilon}{\kappa} = 1.18\,(1 + 1.3\,\delta^2)\,T_b \tag{4.2}$$
+$$T^* = \frac{\kappa T}{\varepsilon_{AB}},\quad \frac{\varepsilon_{AB}}{\kappa} = \left(\frac{\varepsilon_A}{\kappa}\frac{\varepsilon_B}{\kappa}\right)^{1/2},\quad \frac{\varepsilon}{\kappa} = 1.18\thinspace (1 + 1.3\thinspace \delta^2)\thinspace T_b \tag{4.2}$$
 
-$$\sigma_{AB} = (\sigma_A\sigma_B)^{1/2},\qquad \sigma = \left(\frac{1.585\,V_b}{1 + 1.3\,\delta^2}\right)^{1/3} \tag{4.3}$$
+$$\sigma_{AB} = (\sigma_A\sigma_B)^{1/2},\qquad \sigma = \left(\frac{1.585\thinspace V_b}{1 + 1.3\thinspace \delta^2}\right)^{1/3} \tag{4.3}$$
 
 $$\Omega_{D0} = \frac{A}{(T^*)^B} + \frac{C}{\exp(DT^*)} + \frac{E}{\exp(FT^*)} + \frac{G}{\exp(HT^*)} \tag{4.4}$$
 
-$A = 1.06036$，$B = 0.15610$，$C = 0.19300$，$D = 0.47635$，$E = 1.03587$，$F = 1.52996$，$G = 1.76474$，$H = 3.89411$。
+$A = 1.06036$， $B = 0.15610$， $C = 0.19300$， $D = 0.47635$， $E = 1.03587$， $F = 1.52996$， $G = 1.76474$， $H = 3.89411$。
 
 **注意：** Brokaw 方法里 $\sigma_{AB}$ 用几何平均（式 4.3），而非极性的 Hirschfelder 用法用算术平均。两者不要混用。
 
 > [!example] 实例 4.1：373 K、101325 Pa 下氨在空气中的扩散系数（Brokaw）（p.27）
-> 已知：$T_{b,NH_3} = 239.81$ K，$T_{b,air} = 78.8$ K，$\mu_{p,NH_3} = 1.46$ D，空气偶极矩为 0。沸点下液体摩尔体积取 NH₃ 25.8、空气 29.9 cm³/mol（待核实：题目未给，未找到可访问的原始表格核对）。
+> 已知： $T_{b,NH_3} = 239.81$ K， $T_{b,air} = 78.8$ K， $\mu_{p,NH_3} = 1.46$ D，空气偶极矩为 0。沸点下液体摩尔体积取 NH₃ 25.8、空气 29.9 cm³/mol（待核实：题目未给，未找到可访问的原始表格核对）。
 >
 > ① 极性参数：
 > $$\delta_{NH_3} = \frac{1.94\times10^3\times1.46^2}{25.8\times239.81} = 0.668,\qquad \delta_{air} = 0\ \Rightarrow\ \delta_{AB} = 0$$
 > ② 分子参数（式 4.2、4.3）：
-> $$\begin{aligned}\sigma_{NH_3} &= \left(\frac{1.585\times25.8}{1 + 1.3\times0.668^2}\right)^{1/3} = 2.958\ \text{Å},\quad \sigma_{air} = (1.585\times29.9)^{1/3} = 3.619\ \text{Å}\\ \sigma_{AB} &= \sqrt{2.958\times3.619} = 3.272\ \text{Å}\\ \frac{\varepsilon_{NH_3}}{\kappa} &= 1.18\times(1 + 1.3\times0.668^2)\times239.81 = 447.3\ \text{K},\quad \frac{\varepsilon_{air}}{\kappa} = 1.18\times78.8 = 93.0\ \text{K}\\ T^* &= \frac{373}{\sqrt{447.3\times93.0}} = 1.829\end{aligned}$$
-> ③ 碰撞积分（式 4.1、4.4）：$\Omega_D = \Omega_{D0} + 0.196\times0^2/T^* = 1.110$
+> $$\begin{aligned}\sigma_{NH_3} &= \left(\frac{1.585\times25.8}{1 + 1.3\times0.668^2}\right)^{1/3} = 2.958\ \text{Å},\quad \sigma_{air} = (1.585\times29.9)^{1/3} = 3.619\ \text{Å}\cr  \sigma_{AB} &= \sqrt{2.958\times3.619} = 3.272\ \text{Å}\cr  \frac{\varepsilon_{NH_3}}{\kappa} &= 1.18\times(1 + 1.3\times0.668^2)\times239.81 = 447.3\ \text{K},\quad \frac{\varepsilon_{air}}{\kappa} = 1.18\times78.8 = 93.0\ \text{K}\cr  T^* &= \frac{373}{\sqrt{447.3\times93.0}} = 1.829\end{aligned}$$
+> ③ 碰撞积分（式 4.1、4.4）： $\Omega_D = \Omega_{D0} + 0.196\times0^2/T^* = 1.110$
 > ④ 代入式 3.1：
 > $$D_{AB} = \frac{0.001858\times373^{3/2}\left(\dfrac{1}{17} + \dfrac{1}{29}\right)^{1/2}}{1\times3.272^2\times1.110} = 0.344\ \text{cm}^2/\text{s}$$
 >
@@ -360,7 +360,7 @@ $A = 1.06036$，$B = 0.15610$，$C = 0.19300$，$D = 0.47635$，$E = 1.03587$，
 **专业说法：** 极性气体用 Brokaw 修正的碰撞积分，参数由沸点数据和偶极矩估算。*EN: For polar gases, use Brokaw's corrected collision integral, with parameters estimated from boiling-point data and dipole moments.*
 
 **优缺点**
-不需要查 Lennard-Jones 表，只要沸点、沸点下液体摩尔体积和偶极矩。本例中空气无极性，$\delta_{AB} = 0$，极性修正项正好消失；但氨的 $\sigma$、$\varepsilon$ 仍是按极性公式算的。剩下的问题是：混合物里不止两种气体时怎么办。
+不需要查 Lennard-Jones 表，只要沸点、沸点下液体摩尔体积和偶极矩。本例中空气无极性， $\delta_{AB} = 0$，极性修正项正好消失；但氨的 $\sigma$、 $\varepsilon$ 仍是按极性公式算的。剩下的问题是：混合物里不止两种气体时怎么办。
 
 > [!question]- 用自己的话说：Brokaw 方程
 > > [!success]- 关键环节：你的回答应包含
@@ -385,13 +385,13 @@ $$D_{1\text{-mixture}} = \frac{1}{\dfrac{y_2'}{D_{1\text{-}2}} + \dfrac{y_3'}{D_
 
 $$y_2' = \frac{y_2}{y_2 + y_3 + \cdots + y_n} = \frac{y_2}{1 - y_1} \tag{4.6}$$
 
-$D_{1\text{-}n}$：组分 1 对组分 n 的二元扩散系数；$y_n'$：按不含组分 1 计的摩尔分数。
+$D_{1\text{-}n}$：组分 1 对组分 n 的二元扩散系数； $y_n'$：按不含组分 1 计的摩尔分数。
 
 > [!example] 实例 4.2：900 K、100 Pa 下 SiH₄ 在 H₂/N₂ 混合气中的扩散系数（p.29）
-> 已知 $y_{SiH_4} = 0.0075$，$y_{H_2} = 0.015$，$y_{N_2} = 0.9775$；SiH₄ 的 $\varepsilon/\kappa = 207.6$ K、$\sigma = 4.08$ Å。H₂、N₂ 参数见 §3.1 的补充。$P = 100/101325 = 9.87\times10^{-4}$ atm。
+> 已知 $y_{SiH_4} = 0.0075$， $y_{H_2} = 0.015$， $y_{N_2} = 0.9775$；SiH₄ 的 $\varepsilon/\kappa = 207.6$ K、 $\sigma = 4.08$ Å。H₂、N₂ 参数见 §3.1 的补充。 $P = 100/101325 = 9.87\times10^{-4}$ atm。
 >
 > ① 二元 $D$（式 3.1，非极性，算术平均 σ）：
-> $$\begin{aligned}D_{SiH_4\text{-}H_2}:&\ \sigma_{AB} = \frac{4.08 + 2.968}{2},\ T^* = \frac{900}{\sqrt{207.6\times33.3}}\ \Rightarrow\ D = 4059\ \text{cm}^2/\text{s}\\ D_{SiH_4\text{-}N_2}:&\ \sigma_{AB} = \frac{4.08 + 3.681}{2},\ T^* = \frac{900}{\sqrt{207.6\times91.5}}\ \Rightarrow\ D = 1091\ \text{cm}^2/\text{s}\end{aligned}$$
+> $$\begin{aligned}D_{SiH_4\text{-}H_2}:&\ \sigma_{AB} = \frac{4.08 + 2.968}{2},\ T^* = \frac{900}{\sqrt{207.6\times33.3}}\ \Rightarrow\ D = 4059\ \text{cm}^2/\text{s}\cr  D_{SiH_4\text{-}N_2}:&\ \sigma_{AB} = \frac{4.08 + 3.681}{2},\ T^* = \frac{900}{\sqrt{207.6\times91.5}}\ \Rightarrow\ D = 1091\ \text{cm}^2/\text{s}\end{aligned}$$
 > ② 无 SiH₄ 基准的摩尔分数（式 4.6）：
 > $$y_{H_2}' = \frac{0.015}{1 - 0.0075} = 0.0151,\qquad y_{N_2}' = \frac{0.9775}{1 - 0.0075} = 0.9849$$
 > ③ Wilke 方程（式 4.5）：
@@ -416,7 +416,7 @@ $D_{1\text{-}n}$：组分 1 对组分 n 的二元扩散系数；$y_n'$：按不�
 ### 误区与陷阱
 
 > [!failure] 陷阱 4.1：Brokaw 方法里 σ_AB 也用算术平均
-> **反例：** 实例 4.1 若用算术平均 $(2.958 + 3.619)/2 = 3.288$ Å，$D$ 会算成 0.341 cm²/s；按课件用几何平均 3.272 Å 得 0.344 cm²/s。
+> **反例：** 实例 4.1 若用算术平均 $(2.958 + 3.619)/2 = 3.288$ Å， $D$ 会算成 0.341 cm²/s；按课件用几何平均 3.272 Å 得 0.344 cm²/s。
 > **为什么不对：** 课件 p.26 规定 Brokaw 方法中 $\sigma_{AB} = (\sigma_A\sigma_B)^{1/2}$，见 [[#4.1 极性气体：Brokaw 方程（Polar gases: Brokaw equation）（p.25–27）|§4.1]]。
 > **正确说法：** 非极性 Hirschfelder 用算术平均，Brokaw 用几何平均。*EN: Arithmetic-mean σ for the non-polar Hirschfelder route; geometric-mean σ for Brokaw.*
 
@@ -431,7 +431,7 @@ $D_{1\text{-}n}$：组分 1 对组分 n 的二元扩散系数；$y_n'$：按不�
 > > - [ ] 非极性：有 LJ 参数用 Hirschfelder，没有用 Fuller
 > > - [ ] 极性用 Brokaw；三种以上组分用 Wilke 组合二元值
 >
-> > [!question]- 预测：实例 4.2 中如果 H₂ 和 N₂ 的比例对调（$y_{H_2} = 0.9775$，$y_{N_2} = 0.015$），$D_{SiH_4\text{-mix}}$ 会更接近哪个二元值？
+> > [!question]- 预测：实例 4.2 中如果 H₂ 和 N₂ 的比例对调（ $y_{H_2} = 0.9775$， $y_{N_2} = 0.015$）， $D_{SiH_4\text{-mix}}$ 会更接近哪个二元值？
 > > > [!success]- 展开答案
 > > > 更接近 $D_{SiH_4\text{-}H_2} \approx 4059$ cm²/s，因为权重由占多数的气体决定。检验的是"按无溶质摩尔分数加权"一环。
 
@@ -459,7 +459,7 @@ $D_{1\text{-}n}$：组分 1 对组分 n 的二元扩散系数；$y_n'$：按不�
 #### 练习 1 · 量级判断
 有人算出某气体对的 $D = 2\times10^{-9}$ m²/s。这个数可信吗？
 > [!success]- 展开答案
-> 不可信。气体的 $D$ 在 $10^{-6}$–$10^{-5}$ m²/s，$10^{-9}$ 是液体的量级，很可能单位或公式用错了。
+> 不可信。气体的 $D$ 在 $10^{-6}$–$10^{-5}$ m²/s， $10^{-9}$ 是液体的量级，很可能单位或公式用错了。
 
 #### 练习 2 · 对称性的前提
 $D_{AB} = D_{BA}$ 需要什么前提？
@@ -469,7 +469,7 @@ $D_{AB} = D_{BA}$ 需要什么前提？
 #### 练习 3 · 压力的作用
 为什么低压 CVD 反应器里的扩散系数比常压大得多？
 > [!success]- 展开答案
-> 压力低 → 分子稀 → 平均自由程长 → $D$ 大，$D \propto 1/P$。
+> 压力低 → 分子稀 → 平均自由程长 → $D$ 大， $D \propto 1/P$。
 
 #### 练习 4 · 碰撞积分的方向
 温度升高时 $\Omega_D$ 怎么变？对 $D$ 有什么影响？
@@ -484,7 +484,7 @@ $D_{AB} = D_{BA}$ 需要什么前提？
 #### 练习 6 · 单位
 Hirschfelder 方程中 $P$ 和 $\sigma$ 分别用什么单位？
 > [!success]- 展开答案
-> $P$ 用 atm，$\sigma$ 用 Å；结果 $D$ 为 cm²/s。
+> $P$ 用 atm， $\sigma$ 用 Å；结果 $D$ 为 cm²/s。
 
 #### 练习 7 · 连接 §1 和 §3
 用表 J.1 的 273 K 数据外推到 293 K 时，为什么要乘 $\Omega_D$ 的比值？
@@ -494,7 +494,7 @@ Hirschfelder 方程中 $P$ 和 $\sigma$ 分别用什么单位？
 #### 练习 8 · 极性修正何时消失
 氨在空气中扩散时，为什么 Brokaw 的极性修正项为零？
 > [!success]- 展开答案
-> 空气偶极矩为 0，所以 $\delta_{air} = 0$，$\delta_{AB} = \sqrt{\delta_{NH_3}\delta_{air}} = 0$，修正项 $0.196\delta_{AB}^2/T^*$ 为零。
+> 空气偶极矩为 0，所以 $\delta_{air} = 0$， $\delta_{AB} = \sqrt{\delta_{NH_3}\delta_{air}} = 0$，修正项 $0.196\delta_{AB}^2/T^*$ 为零。
 
 #### 练习 9 · Wilke 的权重
 Wilke 方程里为什么要用扣除组分 1 后的摩尔分数？
@@ -533,7 +533,7 @@ Wilke 方程里为什么要用扣除组分 1 后的摩尔分数？
 > [!info]- PPT 原文（Slides 1–32）
 > **Slides 1–3**: 封面 / 目录 / 章节页
 > **Slide 4**: $D$ 的量纲与单位；依赖压力、温度、组成、介质；气体、液体、固体的量级
-> **Slides 5–6**: 表 J.1 气体二元扩散系数（$D_{AB}P$）
+> **Slides 5–6**: 表 J.1 气体二元扩散系数（ $D_{AB}P$）
 > **Slide 7**: 表 J.2 液体二元扩散系数
 > **Slide 8**: 表 J.3 固体二元扩散系数
 > **Slide 9**: $D_{AB} = D_{BA}$ 的条件与推导
@@ -542,15 +542,15 @@ Wilke 方程里为什么要用扣除组分 1 后的摩尔分数？
 > **Slides 12–13**: 自扩散系数 $D_{AA^*} = \lambda u/3$，平均自由程与平均速度，代入后的式子及符号单位
 > **Slide 14**: 平均自由程的定义与随分子数密度的变化
 > **Slide 15**: Lennard-Jones / 碰撞直径的定义
-> **Slide 16**: 二元混合物硬球公式，$D_{AB} = D_{BA}$
-> **Slide 17**: 气相扩散依赖 $P$、$T$，可用于换算
+> **Slide 16**: 二元混合物硬球公式， $D_{AB} = D_{BA}$
+> **Slide 17**: 气相扩散依赖 $P$、 $T$，可用于换算
 > **Slide 18**: Hirschfelder 方程及符号单位
-> **Slide 19**: 碰撞积分与无量纲温度，$\Omega_D$ 曲线
-> **Slide 20**: $\Omega_D$ 随温度下降；$P$、$T$、$\Omega_D$ 外推式
+> **Slide 19**: 碰撞积分与无量纲温度， $\Omega_D$ 曲线
+> **Slide 20**: $\Omega_D$ 随温度下降； $P$、 $T$、 $\Omega_D$ 外推式
 > **Slide 21**: Example 1（CO₂–空气，20 °C，与表 J.1 比较）
 > **Slides 22–23**: Fuller 关联式；原子和分子扩散体积表
 > **Slide 24**: Example 2（苯–空气，30 °C，1 atm）
-> **Slides 25–26**: Brokaw 方程：极性修正、$\delta$、$\varepsilon/\kappa$、$\sigma$ 的估算式与 $\Omega_{D0}$ 关联式常数
+> **Slides 25–26**: Brokaw 方程：极性修正、 $\delta$、 $\varepsilon/\kappa$、 $\sigma$ 的估算式与 $\Omega_{D0}$ 关联式常数
 > **Slide 27**: Example 3（NH₃–空气，373 K）
 > **Slide 28**: Wilke 方程与无溶质摩尔分数
 > **Slide 29**: Example 4（SiH₄ CVD，900 K，100 Pa）

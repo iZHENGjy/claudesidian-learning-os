@@ -112,6 +112,7 @@
 
 - 课件上的每一道例题都写成 `> [!example] 实例 x.y` 块，**算到数字结果为止**，最后一行 `**计算结果：**` 写**题目问的那个量和单位**（问质量通量就给 kg/(m²·s)，不能只给摩尔通量）。
 - 每一步先写公式，再逐行代数（`\begin{aligned}`），读者能看到每个数从哪来。
+- **公式写法要在 Obsidian 和 GitHub 上都能渲染**：行内 `$…$` 前留一个空格，不要紧贴中文或中文标点；公式里换行用 `\cr`、细空格用 `\thinspace`、花括号用 `\lbrace` `\rbrace`，不用 `\\` `\,` `\{` `\}`（GitHub 会把它们当成 Markdown 转义吃掉）。
 - 单位先全部换成 SI 再代。分子量用 kg/mol 时写明，避免 g/kg 混用。
 - **验算脚本（强制）**：从 `assets/verify-template.py` 复制，把本讲所有实例、练习答案里的数字写进 `_attachments/<pdf_stem>/verify.py`，每个结果一条 `assert`（能用 `fractions.Fraction` 精确算的就精确算），跑通才算完成，frontmatter `verified:` 写结果。脚本不过 → 改笔记，不许改断言凑数。
 - **verify.py 自己不能证明自己对**：笔记和 verify.py 是同一次理解写出来的，公式抄错会两边一起错、assert 照样通过。所以要有两个外部锚点：

@@ -16,7 +16,7 @@ from conftest import Workspace
 NOTE_RESULT_41 = r"$D_{NH_3\text{-}air} = 0.344$ cm²/s $= 3.44\times10^{-5}$ m²/s"
 NOTE_WHY_11 = "**为什么需要它**\n上一讲例 4 里"
 NOTE_TRAP_11_COUNTER = ("> **反例：** 表 J.1 中 CO₂–空气 273 K 一栏是 0.136 cm²·atm/s。"
-                        "如果压力是 2 atm，$D_{AB}$ 是 0.068 cm²/s，不是 0.136（p.5）。")
+                        "如果压力是 2 atm， $D_{AB}$ 是 0.068 cm²/s，不是 0.136（p.5）。")
 VERIFY_ASSERT_D3 = "assert round(D3, 3) == 0.344"
 VERIFY_MARK_32 = "# 实例 3.2（p.24）：苯–空气，303 K，1 atm，Fuller。课件未给答案（扩散体积取自课件 p.23）"
 VERIFIED_LINE = 'verified: "_attachments/CME 222 Lecture 3/verify.py 全部通过"'
@@ -68,7 +68,7 @@ def test_encoding_variants_still_pass(ws: Workspace, variant):
 def test_wrong_constant_in_both_note_and_verify_is_caught_by_source(ws: Workspace, source_excerpt):
     """0.196 -> 0.19 in the tagged equation AND in verify.py: verify.py still
     passes (delta_AB = 0 so the term vanishes), only the source check can see it."""
-    ws.mutate_note(r"\frac{0.196\,\delta_{AB}^2}{T^*}", r"\frac{0.19\,\delta_{AB}^2}{T^*}")
+    ws.mutate_note(r"\frac{0.196\thinspace \delta_{AB}^2}{T^*}", r"\frac{0.19\thinspace \delta_{AB}^2}{T^*}")
     ws.mutate_verify("0.196 * delta_AB**2", "0.19 * delta_AB**2")
     r = ws.run("--source", str(source_excerpt))
     assert not r.passed
@@ -77,7 +77,7 @@ def test_wrong_constant_in_both_note_and_verify_is_caught_by_source(ws: Workspac
 
 
 def test_wrong_constant_in_note_only_is_caught_by_source(ws: Workspace, source_excerpt):
-    ws.mutate_note(r"\frac{1.585\,V_b}", r"\frac{1.858\,V_b}")
+    ws.mutate_note(r"\frac{1.585\thinspace V_b}", r"\frac{1.858\thinspace V_b}")
     r = ws.run("--source", str(source_excerpt))
     assert not r.passed
     assert r.has_error("公式常数 1.858 在课件原文里找不到"), r.summary()
@@ -414,3 +414,25 @@ def test_nonexistent_note_path(ws: Workspace):
     assert r.stderr.startswith("ERROR:")
     assert "missing.md" in r.stderr
     assert r.stdout == ""
+
+
+# ---------- 16. GitHub-compatible math (warning only) ----------
+
+def test_example_has_no_github_math_warning(ws: Workspace):
+    r = ws.run()
+    assert r.passed, r.summary()
+    assert "GitHub 兼容" not in r.stdout
+
+
+def test_inline_math_after_cjk_is_flagged_but_not_fatal(ws: Workspace):
+    ws.mutate_note("| 用到（全讲） | 默认已掌握（上一讲内容） |", "| 用到（全讲） | 默认已掌握：$D_{AB}$ |")
+    r = ws.run()
+    assert r.passed, r.summary()                     # a warning, not an error
+    assert "GitHub 兼容：1 处行内公式紧贴中文" in r.stdout
+
+
+def test_markdown_escapes_inside_math_are_flagged(ws: Workspace):
+    ws.mutate_note(r"\frac{0.196\thinspace \delta_{AB}^2}{T^*}", r"\frac{0.196\,\delta_{AB}^2}{T^*}")
+    r = ws.run()
+    assert r.passed, r.summary()
+    assert "GitHub 兼容：公式里有 1 处" in r.stdout
